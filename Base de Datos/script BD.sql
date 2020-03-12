@@ -72,3 +72,5 @@ alter table cuentas add constraint mnt_lim check (monto>0);
 
 
 
+
+
