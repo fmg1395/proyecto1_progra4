@@ -8,10 +8,29 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Banco Islas Caiman</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link href="styles.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div id="wrapper">
+            <header>
+                <div id="Encabezado">
+                    <p>
+                        <b>Bienvenido al Banco Islas Caiman</b>
+                    </p>
+                </div>
+                <div id="content">
+                    <form id="formulario" action="ServicioFormulario" method="post"
+                      accept-charset="UTF-8">
+                        <table class="tablaFormulario">
+                            
+                        </table>
+                    </form>
+                    
+                </div>
+            </header>
+        </div>
+        
     </body>
 </html>

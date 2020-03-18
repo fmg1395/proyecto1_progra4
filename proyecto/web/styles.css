@@ -1,0 +1,38 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15/03/2020, 02:21:12 AM
+    Author     : frank
+*/
+
+#wrapper {
+    font-family: sans-serif;
+    font-size: 20pt;
+}
+
+#Encabezado
+{
+    background: red;
+    padding: 10pt;
+    margin: 20px;
+}
+#Login
+{
+    float: right;
+    background: paleturquoise;
+    padding: 5pt;
+    font-size: 15pt;
+}
+
+#formulario .tablaFormulario {
+    border: 1px solid darkgray;
+    border-collapse: separate;
+}
+
+body
+{
+    
+}
