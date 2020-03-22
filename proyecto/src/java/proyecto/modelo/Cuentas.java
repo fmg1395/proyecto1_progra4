@@ -53,7 +53,7 @@ public class Cuentas implements Serializable {
     private List<Cuentas> cuentasList1;
     @JoinColumn(name = "cliente", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Cliente clientes;
+    private Usuario usuarios;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentas")
     private List<Movimientos> movimientosList;
 
@@ -109,12 +109,12 @@ public class Cuentas implements Serializable {
         this.cuentasList1 = cuentasList1;
     }
 
-    public Cliente getClientes() {
-        return clientes;
+    public Usuario getUsuarios() {
+        return usuarios;
     }
 
-    public void setClientes(Cliente clientes) {
-        this.clientes = clientes;
+    public void setUsuarios(Usuario usuarios) {
+        this.usuarios = usuarios;
     }
 
     public List<Movimientos> getMovimientosList() {

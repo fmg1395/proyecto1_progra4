@@ -51,6 +51,8 @@ public class Movimientos implements Serializable {
     private String idDepos;
     @Column(name = "nombre_depos")
     private String nombreDepos;
+    @Column(name = "detalle")
+    private String detalle;
     @JoinColumn(name = "cuenta_des", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Cuentas cuentas;
@@ -115,6 +117,14 @@ public class Movimientos implements Serializable {
 
     public void setNombreDepos(String nombreDepos) {
         this.nombreDepos = nombreDepos;
+    }
+
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
     }
 
     public Cuentas getCuentas() {

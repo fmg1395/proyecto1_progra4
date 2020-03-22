@@ -7,32 +7,33 @@ package proyecto.modelo;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-/**
- *
- * @author frank
- */
+public class Usuario implements Serializable {
 
-public class Cliente implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-   
     private String id;
     private String nombre;
     private String clave;
-    private Integer telefono; 
+    private String rol;
+    private Integer telefono;
     private List<Cuentas> cuentasList;
 
-    public Cliente() {
-        this("0","John Doe","jd123",0);
+    public Usuario() {
     }
 
-
-    public Cliente(String id, String nombre, String clave,int telefono) {
+    public Usuario(String id, String nombre, String clave, String rol) {
         this.id = id;
         this.nombre = nombre;
         this.clave = clave;
-        this.telefono = telefono;
+        this.rol = rol;
     }
 
     public String getId() {
@@ -59,6 +60,14 @@ public class Cliente implements Serializable {
         this.clave = clave;
     }
 
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
     public Integer getTelefono() {
         return telefono;
     }
@@ -74,20 +83,10 @@ public class Cliente implements Serializable {
     public void setCuentasList(List<Cuentas> cuentasList) {
         this.cuentasList = cuentasList;
     }
-    
-    public Object[] toArray() {
-        return new Object[]{
-            id,
-            nombre,
-            clave,
-            telefono,
-        };
-    }
 
     @Override
     public String toString() {
-        String s = String.format("[ %s, %s, %s]",this.id,this.nombre,this.clave);
-        return s;
+        return "proyecto.modelo.Usuarios[ id=" + id + " ]";
     }
-    
+
 }

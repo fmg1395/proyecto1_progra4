@@ -8,20 +8,20 @@ package proyecto.modelo;
 public class modelo {
 
     public modelo() {
-        cliente = null;
+        usuario = null;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Usuario getCliente() {
+        return usuario;
     }
 
    
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(Usuario usuario) {
+        this.usuario = usuario;
     }
     
     
     
     
-    private Cliente cliente;
+    private Usuario usuario;
 }
