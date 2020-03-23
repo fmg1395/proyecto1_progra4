@@ -26,11 +26,11 @@
                     <form id="formulario" action="ServicioFormulario" method="post"
                           accept-charset="UTF-8">
                         <label for="Nombre de Usuario">Usuario</label>
-                        <input type="text" placeholder="Ingrese su usuario">
+                        <input type="text" id="logUsuario" name= "logUsuario" placeholder="Ingrese su usuario">
 
 
                         <label for="Contraseña">Contraseña</label>
-                        <input type="password" placeholder="Ingrese su contraseña">
+                        <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
                        
                         <input type="submit" value="Log in">
 
