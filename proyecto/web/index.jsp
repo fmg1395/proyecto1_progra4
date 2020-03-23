@@ -21,16 +21,31 @@
                     </p>
                 </div>
                 <div id="content">
+                    <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
+                    <h1>Login here</h1>
                     <form id="formulario" action="ServicioFormulario" method="post"
-                      accept-charset="UTF-8">
+                          accept-charset="UTF-8">
+                        <label for="Nombre de Usuario">Usuario</label>
+                        <input type="text" placeholder="Ingrese su usuario">
+
+
+                        <label for="Contraseña">Contraseña</label>
+                        <input type="password" placeholder="Ingrese su contraseña">
+                       
+                        <input type="submit" value="Log in">
+
+                        <a href="#">He olvidado mi contraseña</a>
+                        <br>
+                        <a href="#">Crear usuario</a>
+                        
                         <table class="tablaFormulario">
-                            
+
                         </table>
                     </form>
-                    
+
                 </div>
             </header>
         </div>
-        
+
     </body>
 </html>
