@@ -23,7 +23,7 @@
                 <div id="content">
                     <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
                     <h1>Login here</h1>
-                    <form id="formulario" action="ServicioFormulario" method="post"
+                    <form id="formulario" action="servicios" method="post"
                           accept-charset="UTF-8">
                         <label for="Nombre de Usuario">Usuario</label>
                         <input type="text" id="logUsuario" name= "logUsuario" placeholder="Ingrese su usuario">
