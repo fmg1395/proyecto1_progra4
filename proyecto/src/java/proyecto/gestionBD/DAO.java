@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import proyecto.modelo.Usuario;
 
 /**
@@ -34,8 +35,13 @@ public class DAO {
             stm.setString(1, usr.getId());
             stm.setString(2, usr.getNombre());
             stm.setString(3, usr.getClave());
-            stm.setInt(4, usr.getTelefono());
+            //stm.setInt(4, usr.getTelefono());
             stm.setString(5,usr.getRol());
+            
+            if(usr.getTelefono()!=null)
+                stm.setInt(4, usr.getTelefono());
+            else
+                stm.setNull(4,Types.INTEGER );
 
             return stm.executeUpdate() == 1;
         }
@@ -78,21 +84,22 @@ public class DAO {
     private static DAO instancia = null;
 
     private static final String CMD_AGREGAR_USUARIO
-            = "INSERT INTO clientes (id,nombre,clave,telefono,rol) "
+            = "INSERT INTO usuarios (id,nombre,clave,telefono,rol) "
             + "VALUES (?,?,?,?,?); ";
     private static final String CMD_RECUPERAR_USUARIO =
-            "SELECT id,nombre,clave,telefono from clientes where id = ?;";
+            "SELECT id,nombre,clave,telefono,rol from usuarios where id = ?;";
 
     public static void main(String[] args) {
-        Usuario c = null;
+        Usuario c = new Usuario("998161237","Edgar Silva","ES@05","CLI");
+        
 
         DAO prueba = DAO.obtenerInstancia();
 
         try {
-            c = prueba.recuperarUsuario("2");
+            prueba.agregarUsuario(c);
             System.out.println();
         } catch (SQLException ex) {
-            System.err.printf("FALLO AGREGAR CLIENTE: %s", ex.getMessage());
+            System.err.printf("FALLO Recuperar CLIENTE: %s", ex.getMessage());
         }
 
     }
