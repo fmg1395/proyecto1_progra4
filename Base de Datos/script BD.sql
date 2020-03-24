@@ -62,6 +62,16 @@ alter table usuarios add constraint rol_smbl check (rol in ('CLI','CAJ'));
 alter table cuentas add constraint mnt_lim check (monto>0);
 
 
+INSERT INTO	usuarios
+	(id,nombre,clave,rol,telefono)
+	VALUES
+	('116630575','Dafhnne', 'Daf@1','CLI',84125359),
+	('116250948','Oscar', 'Osc@2','CLI',84981359),
+	('504250570','Erick', 'Erk@3','CLI',69851254),
+	('116050901','Frank', 'root','CAJ',84562578),
+	('117490582','Enrique', 'root2','CAJ',12569872);
+	
+
 
 
 
