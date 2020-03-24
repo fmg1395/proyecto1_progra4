@@ -7,15 +7,6 @@ package proyecto.modelo;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 public class Usuario implements Serializable {
 
@@ -69,7 +60,9 @@ public class Usuario implements Serializable {
     }
 
     public Integer getTelefono() {
-        return telefono;
+        if(this.telefono != null)
+            return telefono;
+        else return null;
     }
 
     public void setTelefono(Integer telefono) {
