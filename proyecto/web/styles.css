@@ -10,11 +10,11 @@ and open the template in the editor.
 
 body
 {
- margin:0;
- padding:0;
- background: url(img/fondo1.jpg) no-repeat center top;
- background-size: cover;
- height: 100vh;/*view height*/
+    margin:0;
+    padding:0;
+    background: url(img/fondo1.jpg) no-repeat center top;
+    background-size: cover;
+    height: 100vh;/*view height*/
 }
 /*#wrapper {
     font-family: sans-serif;
@@ -34,6 +34,7 @@ body
     padding: 5pt;
     font-size: 15pt;
 }*/
+
 #content
 {
     width:320px;
@@ -46,6 +47,33 @@ body
     transform: translate(-50%,-50%);
     box-sizing: border-box;
     padding: 70px 30px;
+}
+#wrong
+{
+    width: 300px;
+    height:100px;
+    background: white;
+    color:black;
+    top:40%;
+    left:28%;
+    position:absolute;
+    transform:translate(-40%,-40%);
+    padding: 10px 30px;
+    box-sizing: border-box;
+    border: 3px solid black;
+    border-radius: 20px;
+}
+
+
+.errorIm{
+    width: 25px;
+    height: 25px;
+}
+
+#wrong label{
+    margin:0;
+    padding:0;
+
 }
 .avatar{
     width: 100px;
@@ -67,8 +95,8 @@ body
     margin:0;
     padding:0;
     font-weight: bold;
-    display: block;/*Para que esté en una sola linea*/
 }
+
 #content input{
     width: 100%;
     margin-bottom: 20px;
