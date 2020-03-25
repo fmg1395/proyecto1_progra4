@@ -24,8 +24,12 @@
 
                 <%
                     Usuario usr = (Usuario)request.getAttribute("usuario");
-                            
-                    if (usr == null ) {
+                    String pass = "good";
+                    String comprobar = (String)request.getAttribute("valid");
+                    if(comprobar != null && comprobar.equals("wrong"))
+                        pass = "wrong";
+                        
+                    if (usr == null && pass.equals("wrong")) {
                         out.println(" <div id='wrong'>");
                         out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
                         out.println("<br>");

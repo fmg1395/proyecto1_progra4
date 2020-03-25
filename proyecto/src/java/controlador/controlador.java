@@ -46,7 +46,7 @@ public class controlador extends HttpServlet {
         
         } else {
             request.setAttribute("usuario", modelo.getUsuario());
-            request.setAttribute("verificacion", "wrong");
+            request.setAttribute("valid", "wrong");
             request.getRequestDispatcher("/index.jsp").forward(request, response);             
         }
     }
