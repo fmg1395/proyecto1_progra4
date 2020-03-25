@@ -4,6 +4,7 @@
     Author     : frank
 --%>
 
+<%@page import="proyecto.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,5 +14,13 @@
     </head>
     <body>
         <h1>SESION CORRECTA</h1>
+        <%
+        Usuario usr = (Usuario)request.getAttribute("usuario");
+        String nombre = usr.getNombre();
+        
+        %>
+        <h2>Bienvenido <%= nombre %></h2>
+            
+            
     </body>
 </html>

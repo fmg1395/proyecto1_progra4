@@ -4,6 +4,7 @@
     Author     : frank
 --%>
 
+<%@page import="proyecto.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,9 +13,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="styles.css" rel="stylesheet" type="text/css"/>
     </head>
-    <%
-        boolean imprimir=false;
-    %>
     <body>
         <div id="wrapper">
             <header>
@@ -23,21 +21,21 @@
                         <b>Bienvenido al Banco Islas Caiman</b>
                     </p>
                 </div>
-               
-                   <%
-                           
-                       if(imprimir /*Login erroneo*/)
-                            {    out.println(" <div id='wrong'>");                 
-                                out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
-                                  out.println("<br>");
-                                out.println("<label>Usuario o contraseña incorrecta.</label>");
-                                out.println("<br>");
-                                out.println("<label>Intentelo nuevamente.</label>");
-                                out.println("</div>");
-                            }
+
+                <%
+                    Usuario usr = (Usuario)request.getAttribute("usuario");
                             
-                        %>
-                   
+                    if (usr == null ) {
+                        out.println(" <div id='wrong'>");
+                        out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
+                        out.println("<br>");
+                        out.println("<label>Usuario o contraseña incorrecta.</label>");
+                        out.println("<br>");
+                        out.println("<label>Intentelo nuevamente.</label>");
+                        out.println("</div>");
+                    }
+                %>
+
                 <div id="content">
                     <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
                     <h1>Login here</h1>
@@ -48,7 +46,7 @@
 
                         <label for="Contraseña">Contraseña</label>
                         <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
-                       
+
                         <input type="submit" value="Log in">
                         <!--Si es erroneo, debe recargar la página, esta vez con imprimir=true-->
                         <br>

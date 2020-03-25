@@ -56,7 +56,7 @@ body
     background: white;
     color:black;
     top:40%;
-    left:28%;
+    left:24%;
     position:absolute;
     transform:translate(-40%,-40%);
     z-index: 1;
@@ -65,7 +65,7 @@ body
     border: 3px solid black;
     border-radius: 20px;
     animation-name: esconder;
-    animation-duration: 3s;
+    animation-duration: 10s;
     background:transparent;
     color:transparent;
     border:transparent;
