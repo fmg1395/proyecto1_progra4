@@ -4,6 +4,7 @@
     Author     : frank
 --%>
 
+<%@page import="proyecto.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,14 +21,25 @@
                         <b>Bienvenido al Banco Islas Caiman</b>
                     </p>
                 </div>
-                <div id="wrong">
-                    <img class="errorIm" src="img/error.png" alt="imagen error">
-                    <br>
-                    <label>Usuario o contraseña incorrecta.</label>
-                    <br>
-                    <label>Intentelo nuevamente.</label>
-                </div>
-                <div id="triangle"></div>
+
+                <%
+                    Usuario usr = (Usuario)request.getAttribute("usuario");
+                    String pass = "good";
+                    String comprobar = (String)request.getAttribute("valid");
+                    if(comprobar != null && comprobar.equals("wrong"))
+                        pass = "wrong";
+                        
+                    if (usr == null && pass.equals("wrong")) {
+                        out.println(" <div id='wrong'>");
+                        out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
+                        out.println("<br>");
+                        out.println("<label>Usuario o contraseña incorrecta.</label>");
+                        out.println("<br>");
+                        out.println("<label>Intentelo nuevamente.</label>");
+                        out.println("</div>");
+                    }
+                %>
+
                 <div id="content">
                     <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
                     <h1>Login here</h1>
@@ -38,10 +50,9 @@
 
                         <label for="Contraseña">Contraseña</label>
                         <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
-                       
-                        <input type="submit" value="Log in">
 
                         <input type="submit" value="Log in">
+                        <!--Si es erroneo, debe recargar la página, esta vez con imprimir=true-->
                         <br>
                         <a href="#">He olvidado mi contraseña</a>
                         <br>

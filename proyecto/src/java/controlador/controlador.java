@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,19 +21,7 @@ public class controlador extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet controlador</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet controlador at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     @Override
@@ -44,29 +33,21 @@ public class controlador extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet serevicios</title>");
-            out.println("</head>");
-            out.println("<body>");
 
-            String usr = request.getParameter("logUsuario");
-            String pass = request.getParameter("logPass");
-
-            if (modelo.revisarCredenciales(usr, pass)) {
-                out.println("<p>");
-                out.println(String.format("USER: %s\nPASS: %s\n", usr, pass));
-                out.println("</p>");
-            } else {
-
-                out.println("<p>");
-                out.println(String.format("USER: %s\nPASS: %s\n", "USUARIO NO ENCONTRADO", "***"));
-                out.println("</p>");
-            }
-            out.println("</body>");
-            out.println("</html>");
+        String usr = request.getParameter("logUsuario");
+        String pass = request.getParameter("logPass");
+        boolean verificacion = modelo.revisarCredenciales(usr, pass);
+        
+        if (verificacion) {
+            request.setAttribute("usuario", modelo.getUsuario());
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                "/sesion.jsp");
+        dispatcher.forward(request, response);
+        
+        } else {
+            request.setAttribute("usuario", modelo.getUsuario());
+            request.setAttribute("valid", "wrong");
+            request.getRequestDispatcher("/index.jsp").forward(request, response);             
         }
     }
 
