@@ -43,6 +43,7 @@ body
     color:black;
     top:50%;
     left:50%;
+    z-index: 1;
     position:absolute;
     transform: translate(-50%,-50%);
     box-sizing: border-box;
@@ -58,17 +59,50 @@ body
     left:28%;
     position:absolute;
     transform:translate(-40%,-40%);
+    z-index: 1;
     padding: 10px 30px;
     box-sizing: border-box;
     border: 3px solid black;
     border-radius: 20px;
+    animation-name: esconder;
+    animation-duration: 3s;
+    background:transparent;
+    color:transparent;
+    border:transparent;
     /*visibility: hidden;*/
+}
+@keyframes esconder{
+    from{background:white;
+         color:black;
+         border: 3px solid black;
+
+    }
+    to{
+        background:transparent;
+        color:transparent;
+        border:transparent;
+       
+    }
 }
 
 
 .errorIm{
     width: 25px;
     height: 25px;
+    animation-name:fuera;
+    animation-duration:3s;
+    visibility: hidden;
+}
+@keyframes fuera{
+    from{
+        opacity:100;
+        visibility:visible;
+    }
+    to
+    {    opacity:0;
+
+         visibility:hidden;
+    }
 }
 
 #wrong label{
