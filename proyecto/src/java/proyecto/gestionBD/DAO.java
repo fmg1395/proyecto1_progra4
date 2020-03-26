@@ -72,7 +72,7 @@ public class DAO {
                 PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_MONEDA))
         {
             stm.clearParameters();
-            stm.setString(0, id);
+            stm.setString(1, id);
             
             try(ResultSet rs = stm.executeQuery())
             {
@@ -85,6 +85,9 @@ public class DAO {
                     if(cambio!=0)
                     {
                         m.setTipoCambio(cambio);
+                    }else
+                    {
+                        m.setTipoCambio(0);
                     }
                 }
             }
@@ -139,7 +142,7 @@ public class DAO {
             = "INSERT INTO cuentas (cliente,moneda,monto) "
             + "VALUES (?,?,0)";
     private static final String CMD_RECUPERAR_MONEDA 
-            = "";
+            = "SELECT id, tipo_cambio from moneda where id = ?";
 
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237","Edgar Silva","ES@05","CLI");
@@ -148,9 +151,15 @@ public class DAO {
         DAO prueba = DAO.obtenerInstancia();
 
         try {
-            prueba.agregarUsuario(c);
+            //prueba.agregarUsuario(c);
             Usuario u = DAO.obtenerInstancia().recuperarUsuario("116050901");
             Moneda m = prueba.recuperarMoneda("CRC");
+            Cuenta cuenta = new Cuenta();
+            cuenta.setUsuarios(u);
+            cuenta.setMoneda(m);
+            
+            prueba.crearCuenta(cuenta);
+            
             System.out.println();
         } catch (SQLException ex) {
             System.err.printf("FALLO Recuperar CLIENTE: %s", ex.getMessage());
