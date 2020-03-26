@@ -16,7 +16,7 @@ import java.util.List;
 public class Cuenta implements Serializable {
 
     private Integer id;
-    private Integer monto;
+    private float monto;
     private List<Cuenta> cuentasList;
     private List<Cuenta> cuentasList1;
     private Moneda moneda;
@@ -26,8 +26,11 @@ public class Cuenta implements Serializable {
     public Cuenta() {
     }
 
-    public Cuenta(Integer id) {
+    public Cuenta(Integer id, Usuario usuario, Moneda moneda, float monto) {
         this.id = id;
+        this.usuarios = usuario;
+        this.moneda = moneda;
+        this.monto = monto;
     }
 
     public Integer getId() {
@@ -38,11 +41,11 @@ public class Cuenta implements Serializable {
         this.id = id;
     }
 
-    public Integer getMonto() {
+    public float getMonto() {
         return monto;
     }
 
-    public void setMonto(Integer monto) {
+    public void setMonto(float monto) {
         this.monto = monto;
     }
 
