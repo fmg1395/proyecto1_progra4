@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import proyecto.modelo.Cuenta;
+import proyecto.modelo.Moneda;
 import proyecto.modelo.Usuario;
 
 /**
@@ -47,6 +49,49 @@ public class DAO {
         }
     }
     
+    //Se crea una nueva cuenta pasando
+    //un objeto cuenta el cual previamente
+    //necesitaria tener un Usuario y
+    //Una moneda
+    public boolean crearCuenta(Cuenta c) throws SQLException
+    {
+        try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_CREAR_CUENTA)) {
+            stm.clearParameters();
+            stm.setString(1, c.getUsuarios().getId());
+            stm.setString(2, c.getMoneda().getId());
+       
+            return stm.executeUpdate() == 1;
+        }
+    }
+    
+    public Moneda recuperarMoneda(String id) throws SQLException
+    {
+        Moneda m = null;
+        try(Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_MONEDA))
+        {
+            stm.clearParameters();
+            stm.setString(0, id);
+            
+            try(ResultSet rs = stm.executeQuery())
+            {
+                if(rs.next())
+                {
+                    m = new Moneda(rs.getString("id"));
+                    
+                    float cambio = rs.getFloat("tipo_cambio");
+                    
+                    if(cambio!=0)
+                    {
+                        m.setTipoCambio(cambio);
+                    }
+                }
+            }
+        }
+        return m;
+    }
+    
     //Metodo devuelve a un cliente por medio
     //de su id
     public Usuario recuperarUsuario(String id) throws SQLException
@@ -80,6 +125,8 @@ public class DAO {
         }
         return usr;
     }
+    
+    
 
     private static DAO instancia = null;
 
@@ -88,6 +135,11 @@ public class DAO {
             + "VALUES (?,?,?,?,?); ";
     private static final String CMD_RECUPERAR_USUARIO =
             "SELECT id,nombre,clave,telefono,rol from usuarios where id = ?;";
+    private static final String CMD_CREAR_CUENTA
+            = "INSERT INTO cuentas (cliente,moneda,monto) "
+            + "VALUES (?,?,0)";
+    private static final String CMD_RECUPERAR_MONEDA 
+            = "";
 
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237","Edgar Silva","ES@05","CLI");
@@ -97,6 +149,8 @@ public class DAO {
 
         try {
             prueba.agregarUsuario(c);
+            Usuario u = DAO.obtenerInstancia().recuperarUsuario("116050901");
+            Moneda m = prueba.recuperarMoneda("CRC");
             System.out.println();
         } catch (SQLException ex) {
             System.err.printf("FALLO Recuperar CLIENTE: %s", ex.getMessage());

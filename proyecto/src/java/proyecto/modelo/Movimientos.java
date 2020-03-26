@@ -20,6 +20,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -40,22 +42,28 @@ public class Movimientos implements Serializable {
     @Column(name = "cuenta_org")
     private Integer cuentaOrg;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "monto")
     private int monto;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "id_depos")
     private String idDepos;
+    @Size(max = 45)
     @Column(name = "nombre_depos")
     private String nombreDepos;
+    @Size(max = 30)
     @Column(name = "detalle")
     private String detalle;
     @JoinColumn(name = "cuenta_des", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Cuentas cuentas;
+    private Cuenta cuentas;
 
     public Movimientos() {
     }
@@ -127,11 +135,11 @@ public class Movimientos implements Serializable {
         this.detalle = detalle;
     }
 
-    public Cuentas getCuentas() {
+    public Cuenta getCuentas() {
         return cuentas;
     }
 
-    public void setCuentas(Cuentas cuentas) {
+    public void setCuentas(Cuenta cuentas) {
         this.cuentas = cuentas;
     }
 

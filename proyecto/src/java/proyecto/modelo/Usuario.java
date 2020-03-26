@@ -8,6 +8,10 @@ package proyecto.modelo;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ *
+ * @author frank
+ */
 public class Usuario implements Serializable {
 
     private String id;
@@ -15,9 +19,13 @@ public class Usuario implements Serializable {
     private String clave;
     private String rol;
     private Integer telefono;
-    private List<Cuentas> cuentasList;
+    private List<Cuenta> cuentasList;
 
     public Usuario() {
+    }
+
+    public Usuario(String id) {
+        this.id = id;
     }
 
     public Usuario(String id, String nombre, String clave, String rol) {
@@ -60,20 +68,18 @@ public class Usuario implements Serializable {
     }
 
     public Integer getTelefono() {
-        if(this.telefono != null)
-            return telefono;
-        else return null;
+        return telefono;
     }
 
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
 
-    public List<Cuentas> getCuentasList() {
+    public List<Cuenta> getCuentasList() {
         return cuentasList;
     }
 
-    public void setCuentasList(List<Cuentas> cuentasList) {
+    public void setCuentasList(List<Cuenta> cuentasList) {
         this.cuentasList = cuentasList;
     }
 

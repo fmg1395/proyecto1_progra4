@@ -27,46 +27,22 @@ import javax.persistence.Table;
  *
  * @author frank
  */
-@Entity
-@Table(name = "cuentas")
-@NamedQueries({
-    @NamedQuery(name = "Cuentas.findAll", query = "SELECT c FROM Cuentas c")})
-public class Cuentas implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
+public class Cuenta implements Serializable {
+
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "moneda")
-    private String moneda;
-    @Column(name = "monto")
     private Integer monto;
-    @JoinTable(name = "vinculadas", joinColumns = {
-        @JoinColumn(name = "id_c1", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_c2", referencedColumnName = "id")})
-    @ManyToMany
-    private List<Cuentas> cuentasList;
-    @ManyToMany(mappedBy = "cuentasList")
-    private List<Cuentas> cuentasList1;
-    @JoinColumn(name = "cliente", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    private List<Cuenta> cuentasList;
+    private List<Cuenta> cuentasList1;
+    private Moneda moneda;
     private Usuario usuarios;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentas")
     private List<Movimientos> movimientosList;
 
-    public Cuentas() {
+    public Cuenta() {
     }
 
-    public Cuentas(Integer id) {
+    public Cuenta(Integer id) {
         this.id = id;
-    }
-
-    public Cuentas(Integer id, String moneda) {
-        this.id = id;
-        this.moneda = moneda;
     }
 
     public Integer getId() {
@@ -77,14 +53,6 @@ public class Cuentas implements Serializable {
         this.id = id;
     }
 
-    public String getMoneda() {
-        return moneda;
-    }
-
-    public void setMoneda(String moneda) {
-        this.moneda = moneda;
-    }
-
     public Integer getMonto() {
         return monto;
     }
@@ -93,20 +61,28 @@ public class Cuentas implements Serializable {
         this.monto = monto;
     }
 
-    public List<Cuentas> getCuentasList() {
+    public List<Cuenta> getCuentasList() {
         return cuentasList;
     }
 
-    public void setCuentasList(List<Cuentas> cuentasList) {
+    public void setCuentasList(List<Cuenta> cuentasList) {
         this.cuentasList = cuentasList;
     }
 
-    public List<Cuentas> getCuentasList1() {
+    public List<Cuenta> getCuentasList1() {
         return cuentasList1;
     }
 
-    public void setCuentasList1(List<Cuentas> cuentasList1) {
+    public void setCuentasList1(List<Cuenta> cuentasList1) {
         this.cuentasList1 = cuentasList1;
+    }
+
+    public Moneda getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(Moneda moneda) {
+        this.moneda = moneda;
     }
 
     public Usuario getUsuarios() {
@@ -135,10 +111,10 @@ public class Cuentas implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cuentas)) {
+        if (!(object instanceof Cuenta)) {
             return false;
         }
-        Cuentas other = (Cuentas) object;
+        Cuenta other = (Cuenta) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
