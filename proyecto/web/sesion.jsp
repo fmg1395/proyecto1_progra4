@@ -17,31 +17,34 @@
         <header><!--Titulo o logotipo y despues el menu-->
             <nav class="navBar"><!--Menu de navegacion-->
                 <ul class="menu"><!--Lista-->
-                    <li><a href="#">Apertura de Cuenta</a></li>
-                    <li><a href="#">Depósito</a></li>
-                    <li><a href="#">Retiro</a></li>
-                    <li><a href="#">Transferencia en cajas</a></li>
-                    <li><a href="#">Acreditación de intereses</a></li>
-                    <li><a href="#">Consultas</a>
-                        <ul class="submenu">
-                            <li><a href="#">Consulta de cuenta</a></li>
-                            <li><a href="#">Consulta de movimientos</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="#">Vinculación de cuentas</a></li>
-                    <li><a href="#">Transferencia remota</a></li>
+                    <%
+                          Usuario usr = (Usuario) request.getAttribute("usuario");
+                         if(usr.getRol().equals("CAJ"))
+                         {
+                             out.println("<li><a href='#'>Apertura de Cuenta</a></li>");
+                             out.println("<li><a href='#'>Retiro</a></li>");
+                             out.println("<li><a href='#'>Depósito</a></li>");
+                             out.println("<li><a href='#'>Transferencia en cajas</a></li>");
+                             out.println("<li><a href='#'>Acreditación de intereses</a></li>");
+                          }
+                         else
+                         {
+                             out.println("<li><a href='#'>Consultas</a>");
+                             out.println("<ul class='submenu'>");
+                             out.println("<li><a href='#'>Consulta de cuenta</a></li>");
+                             out.println("<li><a href='#'>Consulta de movimientos</a></li>");
+                             out.println("</ul>");
+                             out.println("</li>");
+                             out.println("<li><a href='#'>Vinculación de cuentas</a></li>");
+                             out.println("<li><a href='#'>Transferencia remota</a></li>");
+                             out.println("");
+                         }
+                     %>
+                     <li class="salir"><a href="index.jsp">Cerrar sesión</a></li>
                 </ul>
             </nav>   
         </header>
         <h1>SESION CORRECTA</h1>
-        <%
-            Usuario usr = (Usuario) request.getAttribute("usuario");
-            String nombre = usr.getNombre();
-
-        %>
-        <h2>Bienvenido <%= nombre%></h2>
-
 
     </body>
 </html>

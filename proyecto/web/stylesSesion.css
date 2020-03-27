@@ -17,18 +17,18 @@ and open the template in the editor.
 }
 body{
     background: url(img/fondo2.jpg) no-repeat center top;
-     background-size: cover;
+    background-size: cover;
     height: 100vh;/*view height*/
 }
 .navBar{
-  width:auto;
- margin: auto;   
- background: black;
+    width:auto;
+    margin: auto;   
+    background: black;
 
 }
 .navBar ul{
     list-style: none;
-    
+
 }
 
 .menu>li{
