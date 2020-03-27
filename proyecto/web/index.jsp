@@ -35,7 +35,7 @@
                         out.println("<br>");
                         out.println("<label>Usuario o contraseña incorrecta.</label>");
                         out.println("<br>");
-                        out.println("<label>Intentelo nuevamente.</label>");
+                        out.println("<label>Inténtelo nuevamente.</label>");
                         out.println("</div>");
                     }
                 %>
