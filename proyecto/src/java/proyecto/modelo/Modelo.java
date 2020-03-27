@@ -9,6 +9,7 @@ import proyecto.gestionBD.DAO;
  * @author frank
  */
 public class Modelo {
+public static int cont=0;
 
     public Modelo() {
         usuario = null;
@@ -34,7 +35,7 @@ public class Modelo {
         }
     }
 
-    public int cantidadCuentas() {
+    public static int cantidadCuentas() {
         DAO cnx = DAO.obtenerInstancia();
 
         try {

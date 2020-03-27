@@ -14,8 +14,7 @@
     </head>
     <body>
         <%
-         final String uuid = UUID.randomUUID().toString().replace("-", "");
-        out.println("<h1>uuid</h1> = " + uuid);
+        
         %>
         <h1>Hello World!</h1>
     </body>
