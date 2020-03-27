@@ -123,6 +123,22 @@ public class DAO {
         return m;
     }
 
+    public int cantidadCuentas() throws SQLException
+    {
+        try(Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_CANTIDAD_CUENTAS))
+        {
+            stm.clearParameters();
+            try(ResultSet rs = stm.executeQuery())
+            {
+                if(rs.next())
+                {
+                    return rs.getInt("count(*)");
+                }
+            }
+        }
+        return -1;
+    }
     //Metodo devuelve a un cliente por medio
     //de su id
     public Usuario recuperarUsuario(String id) throws SQLException {
@@ -166,6 +182,8 @@ public class DAO {
             = "SELECT id, tipo_cambio from moneda where id = ?;";
     private static final String CMD_RECUPERAR_CUENTA
             = "SELECT id, cliente, moneda, monto From cuentas where cliente = ?;";
+    private static final String CMD_CANTIDAD_CUENTAS 
+            = "SELECT COUNT(*) FROM CUENTAS;";
     
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");
@@ -174,7 +192,7 @@ public class DAO {
 
         try {
             //prueba.agregarUsuario(c);
-            Usuario u = DAO.obtenerInstancia().recuperarUsuario("116050901");
+           // Usuario u = DAO.obtenerInstancia().recuperarUsuario("116050901");
 //            Moneda m = prueba.recuperarMoneda("EUR");
 //            Cuenta cuenta = new Cuenta();
 //            cuenta.setUsuarios(u);
@@ -183,7 +201,9 @@ public class DAO {
             
 //            prueba.crearCuenta(cuenta);
            
-           List cl = prueba.recuperarCuentas("116050901");
+          // List cl = prueba.recuperarCuentas("116050901");
+          
+          int n = prueba.cantidadCuentas();
 
             System.out.println();
         } catch (SQLException ex) {

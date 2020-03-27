@@ -26,7 +26,13 @@ public class Cuenta implements Serializable {
     public Cuenta() {
     }
 
-    public Cuenta(Integer id, Usuario usuario, Moneda moneda, float monto) {
+    public Cuenta(Usuario usuario, Moneda moneda, float monto) {
+        this.usuarios = usuario;
+        this.moneda = moneda;
+        this.monto = monto;
+    }
+    
+    public Cuenta(Integer id,Usuario usuario, Moneda moneda, float monto) {
         this.id = id;
         this.usuarios = usuario;
         this.moneda = moneda;

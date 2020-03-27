@@ -20,49 +20,24 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Size;
 
 /**
  *
  * @author frank
  */
-@Entity
-@Table(name = "movimientos")
-@NamedQueries({
-    @NamedQuery(name = "Movimientos.findAll", query = "SELECT m FROM Movimientos m")})
+
 public class Movimientos implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
-    @Column(name = "cuenta_org")
     private Integer cuentaOrg;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "monto")
     private int monto;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "id_depos")
     private String idDepos;
-    @Size(max = 45)
-    @Column(name = "nombre_depos")
     private String nombreDepos;
-    @Size(max = 30)
-    @Column(name = "detalle")
     private String detalle;
-    @JoinColumn(name = "cuenta_des", referencedColumnName = "id")
-    @ManyToOne(optional = false)
     private Cuenta cuentas;
 
     public Movimientos() {
