@@ -18,6 +18,12 @@ CREATE TABLE IF NOT EXISTS banco_caiman.usuarios (
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS banco_caiman.moneda (
+  id varchar(3) NOT NULL,
+  tipo_cambio int,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
 -- rol puede ser CLI de cliente o CAJ de cajero
 
 CREATE TABLE IF NOT EXISTS banco_caiman.cuentas (
@@ -26,6 +32,7 @@ CREATE TABLE IF NOT EXISTS banco_caiman.cuentas (
   moneda VARCHAR(3) NOT NULL,
   monto int,
   FOREIGN KEY (cliente) REFERENCES usuarios(id),
+  FOREIGN KEY (moneda) REFERENCES moneda(id),
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -57,9 +64,9 @@ ENGINE = InnoDB;
 -- ID de las cuentas 1 y 2 que 
 -- Estan vinculadas 
 
-alter table cuentas add constraint cnt_smbl check (moneda in ('CRC','EUR','USD'));
+alter table moneda add constraint cnt_smbl check (id in ('CRC','EUR','USD'));
 alter table usuarios add constraint rol_smbl check (rol in ('CLI','CAJ'));
-alter table cuentas add constraint mnt_lim check (monto>0);
+alter table cuentas add constraint mnt_lim check (monto>=0);
 
 
 INSERT INTO	usuarios
@@ -70,6 +77,21 @@ INSERT INTO	usuarios
 	('504250570','Erick', 'Erk@3','CLI',69851254),
 	('116050901','Frank', 'root','CAJ',84562578),
 	('117490582','Enrique', 'root2','CAJ',12569872);
+    
+INSERT INTO moneda
+	(id,tipo_cambio)
+    VALUES
+	('EUR',647.72),
+    ('CRC',0),
+    ('USD', 586);
+    
+INSERT INTO cuentas
+	(cliente,moneda,monto)
+    VALUES
+    ('116050901','CRC',1000),
+    ('117490582','USD',500000),
+    ('504250570','EUR',200);
+    
 	
 
 
