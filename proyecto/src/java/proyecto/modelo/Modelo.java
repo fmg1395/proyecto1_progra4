@@ -1,6 +1,7 @@
 package proyecto.modelo;
 
 import java.sql.SQLException;
+import java.util.List;
 import proyecto.gestionBD.DAO;
 
 /**
@@ -44,6 +45,19 @@ public class Modelo {
             return -1;
         }
     }
+
+    public List recuperarCuentas(String id) {
+        try {
+            DAO cnx = DAO.obtenerInstancia();
+            List cuentas = cnx.recuperarCuentas(id);
+            return cuentas;
+        } catch (SQLException ex) {
+            System.err.printf("Exception Model: recuperar cuentas, %s", ex.getMessage());
+        }
+        return null;
+    }
+    
+    
 
     public boolean revisarCredenciales(String id, String clave) {
         recuperarUsuario(id);
