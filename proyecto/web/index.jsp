@@ -4,12 +4,16 @@
     Author     : frank
 --%>
 
+<%@page import="proyecto.modelo.Modelo"%>
 <%@page import="proyecto.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Banco Islas Caiman</title>
+        <%
+           Modelo.cont=Modelo.cantidadCuentas();
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="styles.css" rel="stylesheet" type="text/css"/>
     </head>
@@ -19,6 +23,9 @@
                 <div id="Encabezado">
                     <p>
                         <b>Bienvenido al Banco Islas Caiman</b>
+                        <%
+                            out.println("<b> "+Modelo.cont+"</b>");
+                        %>
                     </p>
                 </div>
 
