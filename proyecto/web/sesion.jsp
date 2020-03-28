@@ -17,11 +17,13 @@
         <header><!--Titulo o logotipo y despues el menu-->
             <nav class="navBar"><!--Menu de navegacion-->
                 <ul class="menu"><!--Lista-->
+                    <li class="salir"><a href="aperturaCuenta.jsp">Apertura de Cuenta</a></li>
+
                     <%
                           Usuario usr = (Usuario) request.getAttribute("usuario");
                          if(usr.getRol().equals("CAJ"))
                          {
-                             out.println("<li><a href='#'>Apertura de Cuenta</a></li>");
+                             out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
                              out.println("<li><a href='#'>Retiro</a></li>");
                              out.println("<li><a href='#'>Depósito</a></li>");
                              out.println("<li><a href='#'>Transferencia en cajas</a></li>");
