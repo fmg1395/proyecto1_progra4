@@ -20,9 +20,12 @@
                     <li class="salir"><a href="aperturaCuenta.jsp">Apertura de Cuenta</a></li>
 
                     <%
-                          Usuario usr = (Usuario) request.getSession().getAttribute("usuario");
-                         if(usr.getRol().equals("CAJ"))
+                          String rol = (String)request.getSession().getAttribute("rol");
+                          
+                          Usuario usr = null;
+                         if(rol.equals("CAJ"))
                          {
+                             usr = (Usuario) request.getSession().getAttribute("cajero");
                              out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
                              out.println("<li><a href='#'>Retiro</a></li>");
                              out.println("<li><a href='#'>Depósito</a></li>");
@@ -31,6 +34,7 @@
                           }
                          else
                          {
+                             usr = (Usuario) request.getSession().getAttribute("usuario");
                              out.println("<li><a href='#'>Consultas</a>");
                              out.println("<ul class='submenu'>");
                              out.println("<li><a href='#'>Consulta de cuenta</a></li>");

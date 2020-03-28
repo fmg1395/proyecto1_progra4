@@ -30,7 +30,13 @@
                 </div>
 
                 <%
-                    Usuario usr = (Usuario)request.getSession().getAttribute("usuario");
+                    String rol = (String) request.getSession().getAttribute("rol");
+                    Usuario usr = null;
+                    if(rol!=null && rol.equals("CLI"))
+                        usr = (Usuario)request.getSession().getAttribute("usuario");
+                    if(rol!=null)
+                        usr = (Usuario)request.getSession().getAttribute("cajero");
+                    
                     String pass = "good";
                     String comprobar = (String)request.getAttribute("valid");
                     if(comprobar != null && comprobar.equals("wrong"))
