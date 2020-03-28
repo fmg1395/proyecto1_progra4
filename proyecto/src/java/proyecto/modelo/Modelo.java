@@ -24,12 +24,16 @@ public class Modelo {
         try {
             Usuario usr = cnx.recuperarUsuario(id);
 
-            if (usr.getRol().equals("CAJ")) 
+            if (usr != null && usr.getRol().equals("CAJ")) {
                 this.setCajero(usr);
-            else 
-                this.setCliente(usr);
+                this.setUltimoRol(usr.getRol());
+            }
             
-            this.setUltimoRol(usr.getRol());
+            if (usr != null && usr.getRol().equals("CLI")) {
+                this.setCliente(usr);
+                this.setUltimoRol(usr.getRol());
+            }
+            
 
         } catch (SQLException ex) {
             System.err.printf("Exception Model: recuperar usuario, %s", ex.getMessage());
@@ -91,12 +95,14 @@ public class Modelo {
 
     public boolean revisarCredenciales(String id, String clave) {
         recuperarUsuario(id);
-        if (this.getCliente() != null) 
+        if (this.getCliente() != null) {
             return this.getCliente().getClave().equals(clave);
-        
-        if (this.getCajero() != null) 
+        }
+
+        if (this.getCajero() != null) {
             return this.getCajero().getClave().equals(clave);
-        
+        }
+
         return false;
     }
 
