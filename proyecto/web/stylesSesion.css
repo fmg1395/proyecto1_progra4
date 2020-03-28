@@ -71,8 +71,9 @@ body{
 }
 
 #content{
-    width:320px;
-    height: 420px;
+    width: 1200px;
+    height: 700px;
+    opacity:0.9;
     background: white;
     color:black;
     top:50%;

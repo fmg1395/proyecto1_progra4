@@ -4,6 +4,7 @@
     Author     : Kike
 --%>
 
+<%@page import="proyecto.modelo.Modelo"%>
 <%@page import="proyecto.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,7 +45,20 @@
             </nav>
         </header>
         <div id="content">
-                         
+            <%
+            out.println("<label> Cuenta: "+Modelo.cont+"</label> <br>");
+            out.println("<label>Tipo de moneda: </label> <br>");
+            out.println("<input type='radio' id='monCRC' name= 'drone' value='CRC' checked>");
+            out.println("<label for='monCRC'>CRC</label>");
+            out.println("<br>");
+            out.println("<input type='radio' id='monUSD' name= 'drone' value='USD'>");
+            out.println("<label for='monUSD'>USD</label>");
+            out.println("<br>");
+            out.println("<input type='radio' id='monEUR' name= 'drone' value='EUR'>");
+            out.println("<label for='monEUR'>EUR</label>");
+            out.println("<br>");
+            out.println("");
+            %>       
         </div>
         <h1>Hello World!</h1>
     </body>
