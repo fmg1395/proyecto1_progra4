@@ -39,7 +39,7 @@ public class controlador extends HttpServlet {
         boolean verificacion = modelo.revisarCredenciales(usr, pass);
         
         if (verificacion) {
-            request.setAttribute("usuario", modelo.getUsuario());
+            request.getSession().setAttribute("usuario", modelo.getUsuario());
             RequestDispatcher dispatcher = request.getRequestDispatcher(
                 "/sesion.jsp");
         dispatcher.forward(request, response);

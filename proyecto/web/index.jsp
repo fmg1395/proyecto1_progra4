@@ -30,7 +30,7 @@
                 </div>
 
                 <%
-                    Usuario usr = (Usuario)request.getAttribute("usuario");
+                    Usuario usr = (Usuario)request.getSession().getAttribute("usuario");
                     String pass = "good";
                     String comprobar = (String)request.getAttribute("valid");
                     if(comprobar != null && comprobar.equals("wrong"))

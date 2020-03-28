@@ -18,7 +18,7 @@
             <nav class="navBar"><!--Menu de navegacion-->
                 <ul class="menu"><!--Lista-->
                     <%
-                          Usuario usr = (Usuario) request.getAttribute("usuario");
+                          Usuario usr = (Usuario) request.getSession().getAttribute("usuario");
                          if(usr.getRol().equals("CAJ"))
                          {
                              out.println("<li><a href='#'>Apertura de Cuenta</a></li>");

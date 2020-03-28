@@ -20,7 +20,7 @@
                     <li class="salir"><a href="aperturaCuenta.jsp">Apertura de Cuenta</a></li>
 
                     <%
-                          Usuario usr = (Usuario) request.getAttribute("usuario");
+                          Usuario usr = (Usuario) request.getSession().getAttribute("usuario");
                          if(usr.getRol().equals("CAJ"))
                          {
                              out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
