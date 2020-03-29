@@ -45,10 +45,13 @@
                      <li class="salir"><a href="index.jsp">Cerrar sesión</a></li>
                 </ul>
             </nav>
-        </header>
+        </header>                        
+
         <div id="content">
             <%
-            out.println("<label> Cuenta: "+Modelo.cont+"</label> <br>");
+            out.println("<label> Cuenta:<input type='text' id='Cuenta' disabled='disabled' name= 'cantCuentas' placeholder='"+Modelo.cont+"'></label> <br>");
+            out.println("<br>");
+            out.println("<br>");
             out.println("<label>Tipo de moneda: </label> <br>");
             out.println("<input type='radio' id='monCRC' name= 'drone' value='CRC' checked>");
             out.println("<label for='monCRC'>CRC</label>");
@@ -59,8 +62,21 @@
             out.println("<input type='radio' id='monEUR' name= 'drone' value='EUR'>");
             out.println("<label for='monEUR'>EUR</label>");
             out.println("<br>");
-            out.println("");
-            %>       
+            out.println("<br>");
+            out.println("<br>");
+            out.println("<label> Saldo inicial:<input type='text' id='sInicial' disabled='disabled' name= 'saldo' placeholder='0'></label> <br>");
+            out.println("<br>");
+            out.println("<br>");
+            out.println("<label> Límite de transferencias remotas:<input type='number' id='sInicial' name= 'saldo' placeholder='Digite numero límite'></label> <br>");
+            out.println("<br>");
+            out.println("<br>");
+            out.println("<label>¿El cliente está registrado? </label> <br>");
+            out.println("<input type='radio' id='ansY' name= 'drone2' value='yes' checked>");
+            out.println("<label for='ansY'>Sí</label>");
+            out.println("<br>");
+            out.println("<input type='radio' id='ansN' name= 'drone2' value='no'>");
+            out.println("<label for='ansN'>No</label>");
+%>       
         </div>
         <h1>Hello World!</h1>
     </body>
