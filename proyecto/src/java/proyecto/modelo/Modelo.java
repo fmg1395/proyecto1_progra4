@@ -9,18 +9,13 @@ import proyecto.gestionBD.DAO;
  * @author frank
  */
 public class Modelo {
-public static int cont=0;
+
+    public static int cont = 0;
 
     public Modelo() {
-        usuario = null;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+        cliente = null;
+        cajero = null;
+        this.ultimoRol = "Null";
     }
 
     public void recuperarUsuario(String id) {
@@ -28,11 +23,47 @@ public static int cont=0;
 
         try {
             Usuario usr = cnx.recuperarUsuario(id);
-            this.setUsuario(usr);
+
+            if (usr != null && usr.getRol().equals("CAJ")) {
+                this.setCajero(usr);
+                this.setUltimoRol(usr.getRol());
+            }
+            
+            if (usr != null && usr.getRol().equals("CLI")) {
+                this.setCliente(usr);
+                this.setUltimoRol(usr.getRol());
+            }
+            
+
         } catch (SQLException ex) {
             System.err.printf("Exception Model: recuperar usuario, %s", ex.getMessage());
-            this.usuario = null;
+            this.setCliente(null);
+            this.setCajero(null);
         }
+    }
+
+    public Usuario getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Usuario cliente) {
+        this.cliente = cliente;
+    }
+
+    public Usuario getCajero() {
+        return cajero;
+    }
+
+    public void setCajero(Usuario cajero) {
+        this.cajero = cajero;
+    }
+
+    public String getUltimoRol() {
+        return ultimoRol;
+    }
+
+    public void setUltimoRol(String ultimoRol) {
+        this.ultimoRol = ultimoRol;
     }
 
     public static int cantidadCuentas() {
@@ -57,16 +88,28 @@ public static int cont=0;
         }
         return null;
     }
-    
-    
+
+    public void limpiarCliente() {
+        this.setCliente(null);
+    }
 
     public boolean revisarCredenciales(String id, String clave) {
         recuperarUsuario(id);
-        if (this.usuario == null) {
-            return false;
+        if (this.getCliente() != null) {
+            return this.getCliente().getClave().equals(clave);
         }
-        return this.usuario.getClave().equals(clave);
+
+        if (this.getCajero() != null) {
+            return this.getCajero().getClave().equals(clave);
+        }
+
+        return false;
     }
 
-    private Usuario usuario;
+    //ultimoRol va a tener el ultimo roll
+    //que ingresó credenciales
+    private String ultimoRol;
+
+    private Usuario cliente;
+    private Usuario cajero;
 }

@@ -1,7 +1,6 @@
 package controlador;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,18 +35,27 @@ public class controlador extends HttpServlet {
 
         String usr = request.getParameter("logUsuario");
         String pass = request.getParameter("logPass");
+
         boolean verificacion = modelo.revisarCredenciales(usr, pass);
-        
+
         if (verificacion) {
-            request.getSession().setAttribute("usuario", modelo.getUsuario());
-            RequestDispatcher dispatcher = request.getRequestDispatcher(
-                "/sesion.jsp");
-        dispatcher.forward(request, response);
-        
+
+            switch (modelo.getUltimoRol()) {
+                case "CLI":
+                    request.getSession().setAttribute("usuario", modelo.getCliente());
+                    request.getSession().setAttribute("rol",modelo.getUltimoRol());
+                    break;
+                case "CAJ":
+                    request.getSession().setAttribute("cajero", modelo.getCliente());
+                    request.getSession().setAttribute("rol",modelo.getUltimoRol());
+            }
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/sesion.jsp");
+            dispatcher.forward(request, response);
+
         } else {
-            request.setAttribute("usuario", modelo.getUsuario());
+            request.setAttribute("usuario", null);
             request.setAttribute("valid", "wrong");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);             
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 
