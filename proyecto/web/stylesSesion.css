@@ -71,6 +71,8 @@ body{
 }
 
 #content{
+    padding:0;
+    margin:0;
     width: 1200px;
     height: 700px;
     opacity:0.9;
@@ -83,4 +85,9 @@ body{
     transform: translate(-50%,-50%);
     box-sizing: border-box;
     padding: 70px 30px;
+}
+
+#content label{
+    padding:0;
+    margin:0;
 }
