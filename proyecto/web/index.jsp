@@ -64,7 +64,7 @@
                         <label for="Contraseña">Contraseña</label>
                         <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
 
-                        <input type="submit" value="Log in">
+                        <input type="submit" name= "btnLogIn" value="Log in">
                         <!--Si es erroneo, debe recargar la página, esta vez con imprimir=true-->
                         <br>
                         <a href="#">He olvidado mi contraseña</a>

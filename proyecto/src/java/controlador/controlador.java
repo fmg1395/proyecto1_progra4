@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,27 +36,38 @@ public class controlador extends HttpServlet {
 
         String usr = request.getParameter("logUsuario");
         String pass = request.getParameter("logPass");
-
+        String btnLogIn = (String)request.getParameter("btnLogIn");
+        String btnCuenta = (String)request.getParameter("btnCuenta");
         boolean verificacion = modelo.revisarCredenciales(usr, pass);
 
-        if (verificacion) {
+        if (btnLogIn != null) {
 
-            switch (modelo.getUltimoRol()) {
-                case "CLI":
-                    request.getSession().setAttribute("usuario", modelo.getCliente());
-                    request.getSession().setAttribute("rol",modelo.getUltimoRol());
-                    break;
-                case "CAJ":
-                    request.getSession().setAttribute("cajero", modelo.getCajero());
-                    request.getSession().setAttribute("rol",modelo.getUltimoRol());
+            if (verificacion) {
+
+                switch (modelo.getUltimoRol()) {
+                    case "CLI":
+                        request.getSession().setAttribute("usuario", modelo.getCliente());
+                        request.getSession().setAttribute("rol", modelo.getUltimoRol());
+                        break;
+                    case "CAJ":
+                        request.getSession().setAttribute("cajero", modelo.getCajero());
+                        request.getSession().setAttribute("rol", modelo.getUltimoRol());
+                }
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/sesion.jsp");
+                dispatcher.forward(request, response);
+
+            } else {
+                request.setAttribute("usuario", null);
+                request.setAttribute("valid", "wrong");
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/sesion.jsp");
+        } else if (btnCuenta != null) {
+            String txtCuenta = (String) request.getParameter("txtCuenta");
+            List lista = modelo.recuperarCuentas(txtCuenta);
+            request.setAttribute("cuentas", lista);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
             dispatcher.forward(request, response);
 
-        } else {
-            request.setAttribute("usuario", null);
-            request.setAttribute("valid", "wrong");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 
