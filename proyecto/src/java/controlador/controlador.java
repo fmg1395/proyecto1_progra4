@@ -46,7 +46,7 @@ public class controlador extends HttpServlet {
                     request.getSession().setAttribute("rol",modelo.getUltimoRol());
                     break;
                 case "CAJ":
-                    request.getSession().setAttribute("cajero", modelo.getCliente());
+                    request.getSession().setAttribute("cajero", modelo.getCajero());
                     request.getSession().setAttribute("rol",modelo.getUltimoRol());
             }
             RequestDispatcher dispatcher = request.getRequestDispatcher("/sesion.jsp");

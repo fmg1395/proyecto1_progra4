@@ -20,9 +20,9 @@
                 <ul class="menu"><!--Lista-->
                     <%
                           String rol = (String)request.getSession().getAttribute("rol");
-                          Usuario usr = null;
-
-                          if(rol.equals("CAJ"))
+                                       
+                          Usuario usr = (Usuario) request.getSession().getAttribute("cajero");
+                         if(usr.getRol().equals("CAJ"))
                          {
                              out.println("<li><a href='#'>Apertura de Cuenta</a></li>");
                              out.println("<li><a href='#'>Retiro</a></li>");
