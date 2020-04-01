@@ -46,10 +46,10 @@
                 </ul>
             </nav>
         </header>                        
-
+<form id="formulario" action="servicios" method="post" accept-charset="UTF-8">  
         <div id="content">
             <%
-            out.println("<label> Cuenta:<input type='text' id='Cuenta' disabled='disabled' name= 'cantCuentas' placeholder='"+Modelo.cont+"'></label> <br>");
+            out.println("<label> Cuenta:<input type='text' id='Cuenta' disabled='disabled' name= 'cantCuentas' placeholder='"+Modelo.cont+1+"'></label> <br>");
             out.println("<br>");
             out.println("<br>");
             out.println("<label>Tipo de moneda: </label> <br>");
@@ -71,13 +71,23 @@
             out.println("<br>");
             out.println("<br>");
             out.println("<label>¿El cliente está registrado? </label> <br>");
+            out.println("<div>");
             out.println("<input type='radio' id='ansY' name= 'drone2' value='yes' checked>");
             out.println("<label for='ansY'>Sí</label>");
-            out.println("<br>");
+            out.println("<div class='reveal-if-active'>");
+            out.println("<label for='ansY'>Mostrar listado de clientes</label>");
+            out.println("</div>");
+            out.println("</div>");
+            out.println("<div>");
             out.println("<input type='radio' id='ansN' name= 'drone2' value='no'>");
             out.println("<label for='ansN'>No</label>");
-%>       
+            out.println("<div class='reveal-if-active'>");
+            out.println("<label for='ansN'>Mostrar datos a rellenar</label>");
+            out.println("</div>");
+            out.println("</div>");
+            %>       
         </div>
-        <h1>Hello World!</h1>
+</form>
+
     </body>
 </html>

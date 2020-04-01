@@ -7,7 +7,10 @@ and open the template in the editor.
     Created on : 15/03/2020, 02:21:12 AM
     Author     : frank
 */
+*{
+        font-family: Arial;
 
+}
 body
 {
     margin:0;
@@ -19,15 +22,23 @@ body
 /*#wrapper {
     font-family: sans-serif;
     font-size: 20pt;
-}
+}*/
 
 #Encabezado
 {
-    background: red;
-    padding: 10pt;
-    margin: 20px;
+    background: black;
+    color:#fff;
+    opacity:0.8;
+    padding: 10px;
+    margin: 0px;
+    font-family: Arial;
+    font-size: 20px;
 }
-#Login
+#Encabezado p{
+    margin-bottom:10px;
+    margin-top: 10px;
+}
+/*#Login
 {
     float: right;
     background: paleturquoise;

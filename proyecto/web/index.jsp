@@ -19,7 +19,6 @@
     </head>
     <body>
         <div id="wrapper">
-            <header>
                 <div id="Encabezado">
                     <p>
                         <b>Bienvenido al Banco Islas Caiman</b>
@@ -64,7 +63,7 @@
                         <label for="Contraseña">Contraseña</label>
                         <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
 
-                        <input type="submit" value="Log in">
+                        <input type="submit" value="Ingresar">
                         <!--Si es erroneo, debe recargar la página, esta vez con imprimir=true-->
                         <br>
                         <a href="#">He olvidado mi contraseña</a>
@@ -77,7 +76,6 @@
                     </form>
 
                 </div>
-            </header>
         </div>
 
     </body>

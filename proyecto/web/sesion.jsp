@@ -17,7 +17,6 @@
         <header><!--Titulo o logotipo y despues el menu-->
             <nav class="navBar"><!--Menu de navegacion-->
                 <ul class="menu"><!--Lista-->
-                    <li class="salir"><a href="aperturaCuenta.jsp">Apertura de Cuenta</a></li>
 
                     <%
                           String rol = (String)request.getSession().getAttribute("rol");
