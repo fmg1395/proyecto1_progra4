@@ -27,7 +27,7 @@
                          {
                              out.println("<li><a href='#'>Apertura de Cuenta</a></li>");
                              out.println("<li><a href='#'>Retiro</a></li>");
-                             out.println("<li><a href='#'>Depósito</a></li>");
+                             out.println("<li><a href='deposito.jsp'>Depósito</a></li>");
                              out.println("<li><a href='#'>Transferencia en cajas</a></li>");
                              out.println("<li><a href='#'>Acreditación de intereses</a></li>");
                           }

@@ -49,7 +49,7 @@
                 </ul>
             </nav>   
         </header>
-        <h1>SESION CORRECTA</h1>
+        <h1>Bienvenido <%=usr.getNombre()%></h1>
 
     </body>
 </html>

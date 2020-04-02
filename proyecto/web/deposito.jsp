@@ -47,14 +47,56 @@
                 </ul>
             </nav>
         </header>
-        <div id="content">
-            <form id="buscarCuentas" action="servicios" method="post"
-                          accept-charset="UTF-8">
-            <input type="text" name="txtCuenta" placeholder="ingrese cuenta del cliente">
-            <input type = "submit" name="btnCuenta" value=" buscar ">
-            </form>
-        </div>
-        <h1>Depositos</h1>
-        <h2> Cuentas de: <%= nombre%></h2>
+        <form id="buscarCuentas" action="servicios" method="post" accept-charset="UTF-8">
+            <div id="content">
+                <label>
+                    Depositos
+                    <br>
+                    Buscar Cuenta:
+                    <input type="text" name="txtCuenta" size="30" placeholder="ingrese cuenta del cliente">
+                    <input type = "submit" name="btnCuenta"  value=" buscar ">
+                    <br>
+                    <br>
+                    <div id="listaCuentas">
+                        <table id="tablaCuentas" class="table">
+                            <caption>
+                                Cuentas Bancarias
+                                <div class="divTras">
+                                    <span style="font-size: small" ><%=nombre%></span>
+                                </div>
+                            </caption>
+                            <tr>
+                                <th style="text-align:left; ">Descripcion</th>
+                                <th>Numero de Cuenta</th>
+                                <th>Saldo</th>
+                            </tr>
+                            <%
+                                if (lista!=null)
+                                {
+                                int numCuentas = lista.size();
+
+                                    for (int i = 0; i < numCuentas; i++) {
+                                        String descripcion = ((Cuenta) lista.get(i)).getMoneda().getId();
+                                        String nCuenta = String.valueOf(((Cuenta) lista.get(i)).getId());
+                                        String saldo = String.valueOf(((Cuenta) lista.get(i)).getMonto());
+                                        out.print("<tr>");
+                                        out.print("<td>" + descripcion + "</td>");
+                                        out.print("<td>" + nCuenta + "</td>");
+                                        out.print("<td>" + saldo + "</td>");
+                                        out.print("<td>" + "<input type='text' name='txtMonto' placeholder='ingrese monto'>" + "</td>");
+                                        out.print("<td>" + "<input type='submit' name='btnDepositar' value='Depositar'" + "</td>");
+                                        out.print("</tr>");
+                                    }
+                                }
+                            %>
+
+
+                        </table>
+                    </div>
+              </label> 
+
+
+            </div>
+        </form>
     </body>
 </html>
