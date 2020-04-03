@@ -83,22 +83,15 @@
                             out.print("<td>" + descripcion + "</td>");
                             out.print("<td>" + nCuenta + "</td>");
                             out.print("<td>" + saldo + "</td>");
-                          //out.print("<td>" + "<input type='text' name='txtMonto' placeholder='ingrese monto'>" + "</td>");
-                          //out.print("<td>" + "<input type='submit' name='btnDepositar' value='Depositar'" + "</td>");
+                            out.print("<td>" + "<input type='text' name='txtMonto' placeholder='ingrese monto'>" + "</td>");
+                            out.print("<td>" + "<input type='submit' name='btnDepositar' value='Depositar'" + "</td>");
                             out.print("</tr>");
                         }
                         out.print("</table>");
                     }
-                
+                //Falta elegir cuenta para hacer el update
                              
                 %>
-                  
-                            
-                      
-                    
-             
-            
-
             </div>  
         </form>
     </body>

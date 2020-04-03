@@ -99,6 +99,18 @@ public class DAO {
         }
     }
     
+    public boolean realizarDeposito(Cuenta c) throws SQLException
+    {
+        try(Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_DEPOSITO))
+        {
+            stm.clearParameters();
+            stm.setInt(1, c.getId());
+            stm.setFloat(2, c.getMonto());
+            return stm.executeUpdate()==1;
+        }
+    }
+    
     public Moneda recuperarMoneda(String id) throws SQLException {
         Moneda m = null;
         try (Connection cnx = obtenerConexion();
@@ -139,6 +151,7 @@ public class DAO {
         }
         return -1;
     }
+    
     //Metodo devuelve a un cliente por medio
     //de su id
     public Usuario recuperarUsuario(String id) throws SQLException {
@@ -184,6 +197,8 @@ public class DAO {
             = "SELECT id, cliente, moneda, monto From cuentas where cliente = ?;";
     private static final String CMD_CANTIDAD_CUENTAS 
             = "SELECT COUNT(*) FROM CUENTAS;";
+    private static final String CMD_DEPOSITO
+            = "UPDATE banco_caiman.cuentas SET monto = ? WHERE id = ?;";
     
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");
