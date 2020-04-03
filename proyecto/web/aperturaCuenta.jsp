@@ -4,6 +4,8 @@
     Author     : Kike
 --%>
 
+<%@page import="proyecto.modelo.Cuenta"%>
+<%@page import="java.util.List"%>
 <%@page import="proyecto.modelo.Modelo"%>
 <%@page import="proyecto.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -20,7 +22,14 @@
                 <ul class="menu"><!--Lista-->
                     <%
                         String rol = (String) request.getSession().getAttribute("rol");
-
+                        
+                        List lista = (List) request.getAttribute("cuentasA");
+                        String nombre = "";
+                        String ced="";
+                        if (lista != null) {
+                            nombre = ((Cuenta) lista.get(0)).getUsuarios().getNombre();
+                            ced=((Cuenta)lista.get(0)).getUsuarios().getId();
+                        }
                         Usuario usr = (Usuario) request.getSession().getAttribute("cajero");
 
                         if (rol.equals("CAJ")) {
@@ -49,7 +58,8 @@
                 <%
                     int aux = Modelo.cont + 1;
                     out.println("<label> Cuenta:<input type='text' id='Cuenta' disabled='disabled' name= 'cantCuentas' placeholder='" + aux + "'></label> <br>");
-                %>                <br>
+                %>                
+                <br>
                 <br>
                 <label>Tipo de moneda: </label> <br>
                 <input type='radio' id='monCRC' name= 'drone' value='CRC' checked>
@@ -74,15 +84,34 @@
                     <input type='radio' id='ansY' name= 'drone2' value='yes' checked>
                     <label for='ansY'>Sí</label>
                     <div class='reveal-if-active'>
-                        <label for="Cedula">Cedula del cliente a vincular:</label>
-                        <input type="number" id="cedExistente" name="cedExistente" placeholder="Ingrese la cedula">
+                        <label for="Cedula">Cedula del cliente:</label>
+                        <%if (nombre != "") {
+                        %>
+                        <input type="number" id="cedExistente" name="cedExistente" maxlength = "9" Value=<%=ced%>>
+                        <label> Cliente seleccionado:<%=nombre%></label><p></p>
+                        <%
+                        } else {
+
+                        %>
+                        <input type="number" id="cedExistente" name="cedExistente" maxlength = "9" placeholder="Ingrese la cedula">
+                        <%}%>
+                        <input type = "submit" name="btnCuentaA" value=" buscar ">
+
                     </div>
                 </div>
                 <div>
                     <input type='radio' id='ansN' name= 'drone2' value='no'>
                     <label for='ansN'>No</label>
                     <div class='reveal-if-active'>
-                        <label for='ansN'>Mostrar datos a rellenar</label>
+                        <label for="CedulaN">Cedula del cliente a vincular:</label>
+                        <input type="number" id="cedNueva" name="cedNueva" max="99999999" placeholder="Ingrese la cedula">
+                        <p style=" margin-top: 20px"></p> 
+                        <label for="NombreN">Nombre completo del cliente a vincular:</label>
+                        <input type="text" id="nomN" name="nomN" placeholder="Ingrese el Nombre">   
+                        <p style=" margin-top: 20px"></p> 
+                        <label for="TelefonoN">Numero telefónico del cliente a vincular:</label>
+                        <input type="number" id="celT" name="celT" max= "99999999" placeholder="Ingrese el numero">
+                        <p style=" margin-top: 20px"></p> 
                     </div>
                 </div>
 

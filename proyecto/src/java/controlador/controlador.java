@@ -38,6 +38,7 @@ public class controlador extends HttpServlet {
         String pass = request.getParameter("logPass");
         String btnLogIn = (String)request.getParameter("btnLogIn");
         String btnCuenta = (String)request.getParameter("btnCuenta");
+        String btnCuentaA=(String)request.getParameter("btnCuentaA");
         boolean verificacion = modelo.revisarCredenciales(usr, pass);
 
         if (btnLogIn != null) {
@@ -68,6 +69,14 @@ public class controlador extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
             dispatcher.forward(request, response);
 
+        }
+        else if(btnCuentaA!=null)
+        {
+             String txtCuenta = (String) request.getParameter("cedExistente");
+            List lista = modelo.recuperarCuentas(txtCuenta);
+            request.setAttribute("cuentasA", lista);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/aperturaCuenta.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

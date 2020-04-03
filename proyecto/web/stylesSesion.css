@@ -24,6 +24,7 @@ body{
     width:auto;
     margin: auto;   
     background: black;
+    font-family: arial;
 
 }
 .navBar ul{
@@ -40,7 +41,6 @@ body{
     display:block;/*Elementos bloque*/
     padding: 15px 20px;
     color: #fff;
-    font-family: 'Open Sans';
     text-decoration: none;
 }
 
@@ -71,8 +71,6 @@ body{
 }
 
 #content{
-    font-size: 12px;
-    font-family: 'Open Sans';
     width: 1200px;
     height: 500px;
     opacity:0.9;
@@ -85,9 +83,6 @@ body{
     transform: translate(-50%,-50%);
     box-sizing: border-box;
     padding: 20px 30px;
-    columns: 600px 2;
-
-
 }
 #content input[type="text"]
 {
@@ -96,16 +91,14 @@ body{
     background: whitesmoke;
     font-weight: bold;
 }
-#cedExistente{
-    width:200px;
-}
+
 #content input::-webkit-outer-spin-button,
 #content input::-webkit-inner-spin-button
 {
     margin-left: 10px;
     text-align: center;
     background: white;
-   -webkit-appearance: none; 
+    -webkit-appearance: none; 
 }
 #content input[type="number"]
 {
@@ -116,45 +109,47 @@ body{
 }
 #content label{
     padding:0;
-    font-size: 20px;
-    
     margin:0;
+    font-size: 14px;
+    font-weight: 200;
+    font-family: arial;
 }
 .reveal-if-active {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  font-size: 16px;
-  -webkit-transform: scale(0.8);
-          transform: scale(0.8);
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    font-size: 16px;
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
 }
 .reveal-if-active label {
-  margin: 0 0 3px 0;
+    margin: 0 0 3px 0;
+    margin-top: 20px;
 }
 .reveal-if-active input[type=text] {
-  width: 100%;
+    width:200px;
 }
-input[type="radio"]:checked ~ .reveal-if-active, input[type="checkbox"]:checked ~ .reveal-if-active {
-  opacity: 1;
-  max-height: 100px;
-  padding: 10px 20px;
-  -webkit-transform: scale(1);
-          transform: scale(1);
-  overflow: visible;
+input[type="radio"]:checked ~ .reveal-if-active{
+    opacity: 1;
+    max-height: 100px;
+    padding: 10px 20px;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    overflow: visible;
 }
 
 form {
-  max-width: 500px;
-  margin: 20px auto;
+    max-width: 500px;
+    margin: 20px auto;
 }
 form > div {
-  margin: 0 0 20px 0;
+    margin: 0 0 20px 0;
 }
 form > div label {
-  font-weight: bold;
+    font-weight: bold;
 }
 form > div > div {
-  padding: 5px;
+    padding: 5px;
 }
