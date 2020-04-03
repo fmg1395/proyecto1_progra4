@@ -49,7 +49,5 @@
                 </ul>
             </nav>   
         </header>
-        <h1>SESION CORRECTA</h1>
-
     </body>
 </html>

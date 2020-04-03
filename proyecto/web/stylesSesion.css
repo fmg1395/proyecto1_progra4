@@ -96,6 +96,9 @@ body{
     background: whitesmoke;
     font-weight: bold;
 }
+#cedExistente{
+    width:200px;
+}
 #content input::-webkit-outer-spin-button,
 #content input::-webkit-inner-spin-button
 {
@@ -128,7 +131,6 @@ body{
   transition: 0.5s;
 }
 .reveal-if-active label {
-  display: block;
   margin: 0 0 3px 0;
 }
 .reveal-if-active input[type=text] {

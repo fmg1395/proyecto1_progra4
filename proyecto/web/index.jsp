@@ -54,7 +54,7 @@
 
                 <div id="content">
                     <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
-                    <h1>Login here</h1>
+                    <h1>Ingrese aquí</h1>
                     <form id="formulario" action="servicios" method="post"
                           accept-charset="UTF-8">
                         <label for="Nombre de Usuario">Usuario</label>
@@ -63,7 +63,7 @@
                         <label for="Contraseña">Contraseña</label>
                         <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
 
-                        <input type="submit" name= "btnLogIn" value="Log in">
+                        <input type="submit" name= "btnLogIn" value="Ingresar">
                         <!--Si es erroneo, debe recargar la página, esta vez con imprimir=true-->
                         <br>
                         <a href="#">He olvidado mi contraseña</a>
