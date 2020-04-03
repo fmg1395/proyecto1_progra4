@@ -57,46 +57,49 @@
                     <input type = "submit" name="btnCuenta"  value=" buscar ">
                     <br>
                     <br>
-                    <div id="listaCuentas">
-                        <table id="tablaCuentas" class="table">
-                            <caption>
-                                Cuentas Bancarias
-                                <div class="divTras">
-                                    <span style="font-size: small" ><%=nombre%></span>
-                                </div>
-                            </caption>
-                            <tr>
-                                <th style="text-align:left; ">Descripcion</th>
-                                <th>Numero de Cuenta</th>
-                                <th>Saldo</th>
-                            </tr>
-                            <%
-                                if (lista!=null)
-                                {
-                                int numCuentas = lista.size();
+                </label> 
+                <%
+                    if(lista!=null)
+                    {
+                        int numCuentas=lista.size();
+                        out.print("<label>");
+                        out.print("<table id='tablaCuentas' class='table'>");
+                        out.print("<caption> Cuentas Bancarias");
+                        out.print("<div class='divTras'>");
+                        out.print("<span style='font-size: small'>"+nombre+"</span>");
+                        out.print("</div>");
+                        out.print("</caption>");
+                        out.print("</label><tr>");
+                        out.print("<th style='text-align:left;'>Descripcion</th>");
+                        out.print("<th>Numero de Cuenta</th>");
+                        out.print("<th>Saldo</th>");
+                        out.print("</tr>");
+                        for(int i = 0; i < numCuentas; i++) 
+                        {
+                            String descripcion = ((Cuenta) lista.get(i)).getMoneda().getId();
+                            String nCuenta = String.valueOf(((Cuenta) lista.get(i)).getId());
+                            String saldo = String.valueOf(((Cuenta) lista.get(i)).getMonto());
+                            out.print("<tr>");
+                            out.print("<td>" + descripcion + "</td>");
+                            out.print("<td>" + nCuenta + "</td>");
+                            out.print("<td>" + saldo + "</td>");
+                          //out.print("<td>" + "<input type='text' name='txtMonto' placeholder='ingrese monto'>" + "</td>");
+                          //out.print("<td>" + "<input type='submit' name='btnDepositar' value='Depositar'" + "</td>");
+                            out.print("</tr>");
+                        }
+                        out.print("</table>");
+                    }
+                
+                             
+                %>
+                  
+                            
+                      
+                    
+             
+            
 
-                                    for (int i = 0; i < numCuentas; i++) {
-                                        String descripcion = ((Cuenta) lista.get(i)).getMoneda().getId();
-                                        String nCuenta = String.valueOf(((Cuenta) lista.get(i)).getId());
-                                        String saldo = String.valueOf(((Cuenta) lista.get(i)).getMonto());
-                                        out.print("<tr>");
-                                        out.print("<td>" + descripcion + "</td>");
-                                        out.print("<td>" + nCuenta + "</td>");
-                                        out.print("<td>" + saldo + "</td>");
-                                        out.print("<td>" + "<input type='text' name='txtMonto' placeholder='ingrese monto'>" + "</td>");
-                                        out.print("<td>" + "<input type='submit' name='btnDepositar' value='Depositar'" + "</td>");
-                                        out.print("</tr>");
-                                    }
-                                }
-                            %>
-
-
-                        </table>
-                    </div>
-              </label> 
-
-
-            </div>
+            </div>  
         </form>
     </body>
 </html>
