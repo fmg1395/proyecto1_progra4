@@ -105,8 +105,9 @@ public class DAO {
                 PreparedStatement stm = cnx.prepareStatement(CMD_DEPOSITO))
         {
             stm.clearParameters();
-            stm.setInt(1, c.getId());
-            stm.setFloat(2, c.getMonto());
+            stm.setFloat(1, c.getMonto());
+            stm.setInt(2, c.getId());
+            
             return stm.executeUpdate()==1;
         }
     }
@@ -198,7 +199,7 @@ public class DAO {
     private static final String CMD_CANTIDAD_CUENTAS 
             = "SELECT COUNT(*) FROM CUENTAS;";
     private static final String CMD_DEPOSITO
-            = "UPDATE banco_caiman.cuentas SET monto = ? WHERE id = ?;";
+            = "UPDATE cuentas SET monto = ? WHERE id = ?;";
     
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");

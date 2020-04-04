@@ -71,7 +71,7 @@
                         out.print("</caption>");
                         out.print("</label><tr>");
                         out.print("<th style='text-align:left;'>Descripcion</th>");
-                        out.print("<th>Numero de Cuenta</th>");
+                        out.print("<th>Número de Cuenta</th>");
                         out.print("<th>Saldo</th>");
                         out.print("</tr>");
                         for(int i = 0; i < numCuentas; i++) 
@@ -83,11 +83,14 @@
                             out.print("<td>" + descripcion + "</td>");
                             out.print("<td>" + nCuenta + "</td>");
                             out.print("<td>" + saldo + "</td>");
-                            out.print("<td>" + "<input type='text' name='txtMonto' placeholder='ingrese monto'>" + "</td>");
-                            out.print("<td>" + "<input type='submit' name='btnDepositar' value='Depositar'" + "</td>");
                             out.print("</tr>");
                         }
                         out.print("</table>");
+                        
+                        out.print("<br> Realizar Deposito: <br>"
+                                + "<input type = 'text' size='25' name='txtCuentaDeposito'  placeholder='Ingrese Número de Cuenta'>");
+                        out.print("<input type = 'text' name='txtMonto'  placeholder='Monto a depositar'>");
+                        out.print("<input type = 'submit' name='btnDepositar'  value='Depositar'>");
                     }
                 //Falta elegir cuenta para hacer el update
                              

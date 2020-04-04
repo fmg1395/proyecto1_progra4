@@ -96,8 +96,9 @@ body{
 
 #content input[type="submit"]
 {
-   width: 50px;
-   height: 23px;
+   width: 70px;
+   height: 22px;
+   margin-left: 5px;
 }
 
 #content input::-webkit-outer-spin-button,

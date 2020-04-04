@@ -13,9 +13,10 @@ public class Modelo {
     public static int cont = 0;
 
     public Modelo() {
-        cliente = null;
-        cajero = null;
+        this.cliente = null;
+        this.cajero = null;
         this.ultimoRol = "Null";
+        this.cuentas=null;
     }
 
     public void recuperarUsuario(String id) {
@@ -83,6 +84,14 @@ public class Modelo {
         this.ultimoRol = ultimoRol;
     }
 
+    public List<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(List<Cuenta> cuentas) {
+        this.cuentas = cuentas;
+    }
+
     public static int cantidadCuentas() {
         DAO cnx = DAO.obtenerInstancia();
 
@@ -99,6 +108,7 @@ public class Modelo {
         try {
             DAO cnx = DAO.obtenerInstancia();
             List cuentas = cnx.recuperarCuentas(id);
+            this.setCuentas(cuentas);
             return cuentas;
         } catch (SQLException ex) {
             System.err.printf("Exception Model: recuperar cuentas, %s", ex.getMessage());
@@ -129,4 +139,5 @@ public class Modelo {
 
     private Usuario cliente;
     private Usuario cajero;
+    private List<Cuenta> cuentas;
 }
