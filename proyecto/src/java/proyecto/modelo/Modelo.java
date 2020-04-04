@@ -13,9 +13,10 @@ public class Modelo {
     public static int cont = 0;
 
     public Modelo() {
-        cliente = null;
-        cajero = null;
+        this.cliente = null;
+        this.cajero = null;
         this.ultimoRol = "Null";
+        this.cuentas=null;
     }
 
     public void recuperarUsuario(String id) {
@@ -28,17 +29,34 @@ public class Modelo {
                 this.setCajero(usr);
                 this.setUltimoRol(usr.getRol());
             }
-            
+
             if (usr != null && usr.getRol().equals("CLI")) {
                 this.setCliente(usr);
                 this.setUltimoRol(usr.getRol());
             }
-            
 
         } catch (SQLException ex) {
             System.err.printf("Exception Model: recuperar usuario, %s", ex.getMessage());
             this.setCliente(null);
             this.setCajero(null);
+        }
+    }
+
+    public boolean realizarDeposito(Cuenta c,float monto) {
+        try 
+        {
+            DAO cnx = DAO.obtenerInstancia();
+            if(monto>0)
+            {
+                c.setMonto(c.getMonto()+monto);
+                cnx.realizarDeposito(c);
+                return true;
+            }
+            return false;
+        } catch (SQLException ex) 
+        {
+            System.err.printf("Exception Model: recuperar cantidad de cuentas, %s", ex.getMessage());
+            return false;
         }
     }
 
@@ -66,6 +84,14 @@ public class Modelo {
         this.ultimoRol = ultimoRol;
     }
 
+    public List<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(List<Cuenta> cuentas) {
+        this.cuentas = cuentas;
+    }
+
     public static int cantidadCuentas() {
         DAO cnx = DAO.obtenerInstancia();
 
@@ -82,6 +108,7 @@ public class Modelo {
         try {
             DAO cnx = DAO.obtenerInstancia();
             List cuentas = cnx.recuperarCuentas(id);
+            this.setCuentas(cuentas);
             return cuentas;
         } catch (SQLException ex) {
             System.err.printf("Exception Model: recuperar cuentas, %s", ex.getMessage());
@@ -112,4 +139,5 @@ public class Modelo {
 
     private Usuario cliente;
     private Usuario cajero;
+    private List<Cuenta> cuentas;
 }

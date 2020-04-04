@@ -24,7 +24,6 @@ body{
     width:auto;
     margin: auto;   
     background: black;
-
 }
 .navBar ul{
     list-style: none;
@@ -86,8 +85,6 @@ body{
     box-sizing: border-box;
     padding: 20px 30px;
     columns: 600px 2;
-
-
 }
 #content input[type="text"]
 {
@@ -96,9 +93,20 @@ body{
     background: whitesmoke;
     font-weight: bold;
 }
+
 #cedExistente{
     width:200px;
 }
+
+
+#content input[type="submit"]
+{
+   width: 70px;
+   height: 22px;
+   margin-left: 5px;
+}
+
+
 #content input::-webkit-outer-spin-button,
 #content input::-webkit-inner-spin-button
 {
@@ -157,4 +165,40 @@ form > div label {
 }
 form > div > div {
   padding: 5px;
+}
+
+.table
+{
+     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+     border-collapse: collapse;
+     border: 1px solid #999999
+     
+}
+
+.table tr:nth-child(even)
+{
+    background-color: #f2f2f2; 
+}
+.table tr:hover 
+{
+    background-color: #ddd;
+}
+
+.table
+th
+{
+    padding-right: 30px;
+    padding-left: 7px;
+}
+.table
+td
+{
+    padding-right: 30px;
+    padding-left: 7px;
+}
+
+.divTras
+span
+{
+    opacity:0.5;   
 }
