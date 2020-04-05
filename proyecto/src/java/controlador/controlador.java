@@ -40,33 +40,11 @@ public class controlador extends HttpServlet {
         String btnDepositar = (String) request.getParameter("btnDepositar");
 
         if (btnLogIn != null) {
-            logIn(request,response);
+            logIn(request, response);
         } else if (btnCuenta != null) {
-
-            String txtCuenta = (String) request.getParameter("txtCuenta");
-            List lista = modelo.recuperarCuentas(txtCuenta);
-            if (lista.size() > 0) {
-                request.setAttribute("cuentas", lista);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
-                dispatcher.forward(request, response);
-            } else {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
-                dispatcher.forward(request, response);
-            }
-
+            buscarCuenta(request, response);
         } else if (btnDepositar != null) {
-            Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
-            int cuenta = Integer.parseInt((String) request.getParameter("txtCuentaDeposito"));
-
-            List lista = modelo.getCuentas();
-            for (int i = 0; i < lista.size(); i++) {
-                if (cuenta == ((Cuenta) lista.get(i)).getId()) {
-                    modelo.realizarDeposito((Cuenta) lista.get(i), monto);
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
-                    dispatcher.forward(request, response);
-                }
-
-            }
+            depositar(request, response);
         }
     }
 
@@ -94,6 +72,35 @@ public class controlador extends HttpServlet {
             request.setAttribute("usuario", null);
             request.setAttribute("valid", "wrong");
             request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
+    }
+
+    protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String txtCuenta = (String) request.getParameter("txtCuenta");
+        List lista = modelo.recuperarCuentas(txtCuenta);
+        if (lista.size() > 0) {
+            request.setAttribute("cuentas", lista);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
+            dispatcher.forward(request, response);
+        }
+    }
+
+    protected void depositar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
+        int cuenta = Integer.parseInt((String) request.getParameter("txtCuentaDeposito"));
+
+        List lista = modelo.getCuentas();
+        for (int i = 0; i < lista.size(); i++) {
+            if (cuenta == ((Cuenta) lista.get(i)).getId()) {
+                modelo.realizarDeposito((Cuenta) lista.get(i), monto);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
+                dispatcher.forward(request, response);
+            }
         }
     }
 
