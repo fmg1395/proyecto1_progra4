@@ -40,34 +40,12 @@ public class controlador extends HttpServlet {
         String btnDepositar = (String) request.getParameter("btnDepositar");
 
         if (btnLogIn != null) {
-            String usr = request.getParameter("logUsuario");
-            String pass = request.getParameter("logPass");
-            boolean verificacion = modelo.revisarCredenciales(usr, pass);
-
-            if (verificacion) {
-
-                switch (modelo.getUltimoRol()) {
-                    case "CLI":
-                        request.getSession().setAttribute("usuario", modelo.getCliente());
-                        request.getSession().setAttribute("rol", modelo.getUltimoRol());
-                        break;
-                    case "CAJ":
-                        request.getSession().setAttribute("cajero", modelo.getCajero());
-                        request.getSession().setAttribute("rol", modelo.getUltimoRol());
-                }
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/sesion.jsp");
-                dispatcher.forward(request, response);
-
-            } else {
-                request.setAttribute("usuario", null);
-                request.setAttribute("valid", "wrong");
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
-            }
+            logIn(request,response);
         } else if (btnCuenta != null) {
 
             String txtCuenta = (String) request.getParameter("txtCuenta");
             List lista = modelo.recuperarCuentas(txtCuenta);
-            if (lista.size()>0) {
+            if (lista.size() > 0) {
                 request.setAttribute("cuentas", lista);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
                 dispatcher.forward(request, response);
@@ -92,11 +70,33 @@ public class controlador extends HttpServlet {
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    protected void logIn(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String usr = request.getParameter("logUsuario");
+        String pass = request.getParameter("logPass");
+        boolean verificacion = modelo.revisarCredenciales(usr, pass);
+
+        if (verificacion) {
+
+            switch (modelo.getUltimoRol()) {
+                case "CLI":
+                    request.getSession().setAttribute("usuario", modelo.getCliente());
+                    request.getSession().setAttribute("rol", modelo.getUltimoRol());
+                    break;
+                case "CAJ":
+                    request.getSession().setAttribute("cajero", modelo.getCajero());
+                    request.getSession().setAttribute("rol", modelo.getUltimoRol());
+            }
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/sesion.jsp");
+            dispatcher.forward(request, response);
+
+        } else {
+            request.setAttribute("usuario", null);
+            request.setAttribute("valid", "wrong");
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";
