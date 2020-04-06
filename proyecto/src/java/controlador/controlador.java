@@ -58,7 +58,11 @@ public class controlador extends HttpServlet {
         }
         else if(btnCrearUsuario!=null)
         {
-            crearUsuario(request,response);
+            try {
+                crearUsuario(request,response);
+            } catch (SQLException ex) {
+                Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else if(btnVincular!=null)
         {
@@ -141,6 +145,23 @@ public class controlador extends HttpServlet {
         RequestDispatcher dispatcher=request.getRequestDispatcher("/procesoCorrecto.jsp");
         dispatcher.forward(request, response);
     }
+     private void crearUsuario(HttpServletRequest request, HttpServletResponse response)   throws ServletException, IOException, SQLException {
+        String txtCuenta=(String)request.getParameter("cedNueva");
+        String nCuenta=Integer.toString(Modelo.cont);//Id incrementable
+        String tipoMoneda=(String)request.getParameter("drone");
+        String limiteTransferencias=(String) request.getParameter("transferencia");
+        String nombre=(String) request.getParameter("nomN");
+        String telefono=(String)request.getParameter("celT");
+        String pass=(String) request.getParameter("passN");
+        Usuario aux=new Usuario(txtCuenta,nombre,pass,"CLI",Integer.parseInt(telefono));
+        int id=Integer.parseInt(nCuenta)+1;
+        int saldo=0;
+        Cuenta c1=new Cuenta(id,aux,new Moneda(tipoMoneda),saldo);
+        modelo.insertarCuenta(c1);
+        Modelo.cont++;
+        RequestDispatcher dispatcher=request.getRequestDispatcher("/procesoCorrecto.jsp");
+        dispatcher.forward(request, response);
+    }
     protected void depositar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
@@ -150,7 +171,7 @@ public class controlador extends HttpServlet {
         for (int i = 0; i < lista.size(); i++) {
             if (cuenta == ((Cuenta) lista.get(i)).getId()) {
                 modelo.realizarDeposito((Cuenta) lista.get(i), monto);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
                 dispatcher.forward(request, response);
             }
         }
@@ -163,19 +184,6 @@ public class controlador extends HttpServlet {
 
     private Modelo modelo;
 
-    private void crearUsuario(HttpServletRequest request, HttpServletResponse response)   throws ServletException, IOException {
-        String txtCuenta = (String) request.getParameter("cedExistente");
-        List lista = modelo.recuperarCuentas(txtCuenta);
-        if(lista.size()>0)
-        { request.setAttribute("cuentasA", lista);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/aperturaCuenta.jsp");
-        dispatcher.forward(request, response);
-        }
-        else
-        {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/aperturaCuenta.jsp");
-        dispatcher.forward(request, response);
-        }
-    }
+   
 
 }
