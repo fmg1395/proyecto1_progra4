@@ -30,18 +30,15 @@
 
                 <%
                     String rol = (String) request.getSession().getAttribute("rol");
+                    Boolean error = (Boolean)request.getAttribute("validacion");
                     Usuario usr = null;
+                    
                     if(rol!=null && rol.equals("CLI"))
                         usr = (Usuario)request.getSession().getAttribute("usuario");
                     if(rol!=null)
                         usr = (Usuario)request.getSession().getAttribute("cajero");
-                    
-                    String pass = "good";
-                    String comprobar = (String)request.getAttribute("valid");
-                    if(comprobar != null && comprobar.equals("wrong"))
-                        pass = "wrong";
-                        
-                    if (usr == null && pass.equals("wrong")) {
+                         
+                    if (error!=null && error==false) {
                         out.println(" <div id='wrong'>");
                         out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
                         out.println("<br>");

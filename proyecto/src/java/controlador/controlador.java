@@ -15,47 +15,50 @@ import proyecto.modelo.Modelo;
  * @author frank
  */
 public class controlador extends HttpServlet {
-
+    
     public controlador() {
         this.modelo = new Modelo();
     }
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String btnLogIn = (String) request.getParameter("btnLogIn");
         String btnCuenta = (String) request.getParameter("btnCuenta");
         String btnDepositar = (String) request.getParameter("btnDepositar");
-
+        String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
+        
         if (btnLogIn != null) {
             logIn(request, response);
         } else if (btnCuenta != null) {
-            buscarCuenta(request, response);
+            buscarCuenta(request, response, btnCuenta);
         } else if (btnDepositar != null) {
             depositar(request, response);
+        } else if (btnCuentaRetiro != null) {
+            buscarCuenta(request, response, btnCuentaRetiro);
         }
     }
-
+    
     protected void logIn(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String usr = request.getParameter("logUsuario");
         String pass = request.getParameter("logPass");
         boolean verificacion = modelo.revisarCredenciales(usr, pass);
-
+        
         if (verificacion) {
-
+            
             switch (modelo.getUltimoRol()) {
                 case "CLI":
                     request.getSession().setAttribute("usuario", modelo.getCliente());
@@ -67,33 +70,36 @@ public class controlador extends HttpServlet {
             }
             RequestDispatcher dispatcher = request.getRequestDispatcher("/sesion.jsp");
             dispatcher.forward(request, response);
-
+            
         } else {
-            request.setAttribute("usuario", null);
-            request.setAttribute("valid", "wrong");
+            request.setAttribute("validacion", false);
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
-
-    protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response)
+    
+    protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response, String boton)
             throws ServletException, IOException {
+        
         String txtCuenta = (String) request.getParameter("txtCuenta");
         List lista = modelo.recuperarCuentas(txtCuenta);
         if (lista.size() > 0) {
             request.setAttribute("cuentas", lista);
+        }
+        if (boton.equals("btnCuenta")) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
             dispatcher.forward(request, response);
-        } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
+        }else
+        {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/retiro.jsp");
             dispatcher.forward(request, response);
         }
     }
-
+    
     protected void depositar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
         int cuenta = Integer.parseInt((String) request.getParameter("txtCuentaDeposito"));
-
+        
         List lista = modelo.getCuentas();
         for (int i = 0; i < lista.size(); i++) {
             if (cuenta == ((Cuenta) lista.get(i)).getId()) {
@@ -103,7 +109,7 @@ public class controlador extends HttpServlet {
             }
         }
     }
-
+    
     @Override
     public String getServletInfo() {
         return "Short description";
