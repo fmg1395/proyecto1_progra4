@@ -57,10 +57,10 @@
                     <h1>Ingrese aquí</h1>
                     <form id="formulario" action="servicios" method="post"
                           accept-charset="UTF-8">
-                        <label for="Nombre de Usuario">Usuario</label>
+                        <label for="logUsuario">Usuario</label>
                         <input type="text" id="logUsuario" name= "logUsuario" placeholder="Ingrese su usuario">
 
-                        <label for="Contraseña">Contraseña</label>
+                        <label for="logPass">Contraseña</label>
                         <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
 
                         <input type="submit" name= "btnLogIn" value="Ingresar">
