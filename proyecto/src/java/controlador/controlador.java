@@ -42,11 +42,11 @@ public class controlador extends HttpServlet {
             throws ServletException, IOException {
 
         String btnCuentaA = (String) request.getParameter("btnCuentaA");
-        String btnVincular=(String) request.getParameter("btnVincular");
+        String btnVincular = (String) request.getParameter("btnVincular");
         String btnLogIn = (String) request.getParameter("btnLogIn");
         String btnCuenta = (String) request.getParameter("btnCuenta");
         String btnDepositar = (String) request.getParameter("btnDepositar");
-        String btnCrearUsuario=(String)request.getParameter("crearUsuario");
+        String btnCrearUsuario = (String) request.getParameter("crearUsuario");
         if (btnLogIn != null) {
             logIn(request, response);
         } else if (btnCuenta != null) {
@@ -54,20 +54,16 @@ public class controlador extends HttpServlet {
         } else if (btnDepositar != null) {
             depositar(request, response);
         } else if (btnCuentaA != null) {
-           buscarCuentaA(request,response);
-        }
-        else if(btnCrearUsuario!=null)
-        {
+            buscarCuentaA(request, response);
+        } else if (btnCrearUsuario != null) {
             try {
-                crearUsuario(request,response);
+                crearUsuario(request, response);
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if(btnVincular!=null)
-        {
+        } else if (btnVincular != null) {
             try {
-                vincularCuenta(request,response);
+                vincularCuenta(request, response);
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -119,49 +115,58 @@ public class controlador extends HttpServlet {
             throws ServletException, IOException {
         String txtCuenta = (String) request.getParameter("cedExistente");
         List lista = modelo.recuperarCuentas(txtCuenta);
-        if(lista.size()>0)
-        { request.setAttribute("cuentasA", lista);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/aperturaCuenta.jsp");
-        dispatcher.forward(request, response);
-        }
-        else
-        {
+        if (lista.size() > 0) {
+            request.setAttribute("cuentasA", lista);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/aperturaCuenta.jsp");
-        dispatcher.forward(request, response);
+            dispatcher.forward(request, response);
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/aperturaCuenta.jsp");
+            dispatcher.forward(request, response);
         }
     }
+
     protected void vincularCuenta(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException{
-        String txtCuenta=(String)request.getParameter("cedExistente");
-        String nCuenta=Integer.toString(Modelo.cont);//Id incrementable
-        String tipoMoneda=(String)request.getParameter("drone");
-        String limiteTransferencias=(String) request.getParameter("transferencia");
-        Usuario aux=DAO.obtenerInstancia().recuperarUsuario(txtCuenta);
-        int id=Integer.parseInt(nCuenta)+1;
-        int saldo=0;
-        Cuenta c1=new Cuenta(id,aux,new Moneda(tipoMoneda),saldo);
+            throws ServletException, IOException, SQLException {
+        String txtCuenta = (String) request.getParameter("cedExistente");
+        String nCuenta = Integer.toString(Modelo.cont);//Id incrementable
+        String tipoMoneda = (String) request.getParameter("drone");
+        String limiteTransferencias = (String) request.getParameter("transferencia");
+        Usuario aux = DAO.obtenerInstancia().recuperarUsuario(txtCuenta);
+        int id = Integer.parseInt(nCuenta) + 1;
+        int saldo = 0;
+        Cuenta c1 = new Cuenta(id, aux, new Moneda(tipoMoneda), saldo);
         modelo.insertarCuenta(c1);
         Modelo.cont++;
-        RequestDispatcher dispatcher=request.getRequestDispatcher("/procesoCorrecto.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
         dispatcher.forward(request, response);
     }
-     private void crearUsuario(HttpServletRequest request, HttpServletResponse response)   throws ServletException, IOException, SQLException {
-        String txtCuenta=(String)request.getParameter("cedNueva");
-        String nCuenta=Integer.toString(Modelo.cont);//Id incrementable
-        String tipoMoneda=(String)request.getParameter("drone");
-        String limiteTransferencias=(String) request.getParameter("transferencia");
-        String nombre=(String) request.getParameter("nomN");
-        String telefono=(String)request.getParameter("celT");
-        String pass=(String) request.getParameter("passN");
-        Usuario aux=new Usuario(txtCuenta,nombre,pass,"CLI",Integer.parseInt(telefono));
-        int id=Integer.parseInt(nCuenta)+1;
-        int saldo=0;
-        Cuenta c1=new Cuenta(id,aux,new Moneda(tipoMoneda),saldo);
+
+    private void crearUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+
+        String txtCuenta = (String) request.getParameter("cedNueva");
+        String nCuenta = Integer.toString(Modelo.cont);//Id incrementable
+        String tipoMoneda = (String) request.getParameter("drone");
+        String limiteTransferencias = (String) request.getParameter("transferencia");
+        String nombre = (String) request.getParameter("nomN");
+        String telefono = (String) request.getParameter("celT");
+        String pass = (String) request.getParameter("passN");
+        boolean verificacion = modelo.idDuplicada(txtCuenta);
+        if(!verificacion)
+        {   Usuario aux = new Usuario(txtCuenta, nombre, pass, "CLI", Integer.parseInt(telefono));
+        int id = Integer.parseInt(nCuenta) + 1;
+        int saldo = 0;
+        Cuenta c1 = new Cuenta(id, aux, new Moneda(tipoMoneda), saldo);
+        modelo.insertarUsuario(aux);
         modelo.insertarCuenta(c1);
         Modelo.cont++;
-        RequestDispatcher dispatcher=request.getRequestDispatcher("/procesoCorrecto.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
         dispatcher.forward(request, response);
     }
+        else{
+            
+        }
+    }
+
     protected void depositar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
@@ -183,7 +188,5 @@ public class controlador extends HttpServlet {
     }// </editor-fold>
 
     private Modelo modelo;
-
-   
 
 }

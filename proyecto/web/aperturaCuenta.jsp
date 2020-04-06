@@ -104,7 +104,7 @@
                     <label for='ansN'>No</label>
                     <div class='reveal-if-active'>
                         <label for="CedulaN">Cedula del cliente a vincular:</label>
-                        <input type="number" id="cedNueva" name="cedNueva" max="99999999" placeholder="Ingrese la cedula">
+                        <input type="number" id="cedNueva" name="cedNueva" max="999999999" placeholder="Ingrese la cedula">
                         <p></p> 
                         <label for="NombreN">Nombre completo del cliente a vincular:</label>
                         <input type="text" id="nomN" name="nomN" placeholder="Ingrese el Nombre">   
@@ -113,7 +113,7 @@
                         <input type="number" id="celT" name="celT" max= "99999999" placeholder="Ingrese el numero">
                         <p></p> 
                         <label for="passN">Contraseña:</label>
-                        <input type="text" for="passN"  disabled='disabled'
+                        <input type="text" name="passN" for="passN"  readonly="readonly"
                                <%
                                    final String uuid = UUID.randomUUID().toString().replace("-", "");
                                    out.println(" value='" + uuid.substring(0, 8) + "'>");
