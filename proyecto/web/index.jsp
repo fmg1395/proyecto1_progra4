@@ -11,71 +11,71 @@
 <html>
     <head>
         <title>Banco Islas Caiman</title>
-        <%
-           Modelo.cont=Modelo.cantidadCuentas();
-        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="styles.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div id="wrapper">
-                <div id="Encabezado">
-                    <p>
-                        <b>Bienvenido al Banco Islas Caiman</b>
-                        <%
-                            out.println("<b> "+Modelo.cont+"</b>");
-                        %>
-                    </p>
-                </div>
+            <div id="Encabezado">
+                <p>
+                    <b>Bienvenido al Banco Islas Caiman</b>
+                    <%
+                        out.println("<b> " + Modelo.cont + "</b>");
+                    %>
+                </p>
+            </div>
 
-                <%
-                    String rol = (String) request.getSession().getAttribute("rol");
-                    Usuario usr = null;
-                    if(rol!=null && rol.equals("CLI"))
-                        usr = (Usuario)request.getSession().getAttribute("usuario");
-                    if(rol!=null)
-                        usr = (Usuario)request.getSession().getAttribute("cajero");
-                    
-                    String pass = "good";
-                    String comprobar = (String)request.getAttribute("valid");
-                    if(comprobar != null && comprobar.equals("wrong"))
-                        pass = "wrong";
-                        
-                    if (usr == null && pass.equals("wrong")) {
-                        out.println(" <div id='wrong'>");
-                        out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
-                        out.println("<br>");
-                        out.println("<label>Usuario o contraseña incorrecta.</label>");
-                        out.println("<br>");
-                        out.println("<label>Inténtelo nuevamente.</label>");
-                        out.println("</div>");
-                    }
-                %>
+            <%
+                String rol = (String) request.getSession().getAttribute("rol");
+                Usuario usr = null;
+                if (rol != null && rol.equals("CLI")) {
+                    usr = (Usuario) request.getSession().getAttribute("usuario");
+                }
+                if (rol != null) {
+                    usr = (Usuario) request.getSession().getAttribute("cajero");
+                }
 
-                <div id="content">
-                    <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
-                    <h1>Ingrese aquí</h1>
-                    <form id="formulario" action="servicios" method="post"
-                          accept-charset="UTF-8">
-                        <label for="logUsuario">Usuario</label>
-                        <input type="text" id="logUsuario" name= "logUsuario" placeholder="Ingrese su usuario">
+                String pass = "good";
+                String comprobar = (String) request.getAttribute("valid");
+                if (comprobar != null && comprobar.equals("wrong")) {
+                    pass = "wrong";
+                }
 
-                        <label for="logPass">Contraseña</label>
-                        <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
+                if (usr == null && pass.equals("wrong")) {
+                    out.println(" <div id='wrong'>");
+                    out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
+                    out.println("<br>");
+                    out.println("<label>Usuario o contraseña incorrecta.</label>");
+                    out.println("<br>");
+                    out.println("<label>Inténtelo nuevamente.</label>");
+                    out.println("</div>");
+                }
+            %>
 
-                        <input type="submit" name= "btnLogIn" value="Ingresar">
-                        <!--Si es erroneo, debe recargar la página, esta vez con imprimir=true-->
-                        <br>
-                        <a href="#">He olvidado mi contraseña</a>
-                        <br>
-                        <a href="#">Crear usuario</a>
+            <div id="content">
+                <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
+                <h1>Ingrese aquí</h1>
+                <form id="formulario" action="servicios" method="post"
+                      accept-charset="UTF-8">
+                    <label for="logUsuario">Usuario</label>
+                    <input type="text" id="logUsuario" name= "logUsuario" placeholder="Ingrese su usuario">
 
-                        <table class="tablaFormulario">
+                    <label for="logPass">Contraseña</label>
+                    <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
 
-                        </table>
-                    </form>
+                    <input type="submit" name= "btnLogIn" value="Ingresar">
+                    <!--Si es erroneo, debe recargar la página, esta vez con imprimir=true-->
+                    <br>
+                    <a href="#">He olvidado mi contraseña</a>
+                    <br>
+                    <a href="#">Crear usuario</a>
 
-                </div>
+                    <table class="tablaFormulario">
+
+                    </table>
+                </form>
+
+            </div>
         </div>
 
     </body>

@@ -4,6 +4,7 @@
     Author     : Kike
 --%>
 
+<%@page import="java.util.UUID"%>
 <%@page import="proyecto.modelo.Cuenta"%>
 <%@page import="java.util.List"%>
 <%@page import="proyecto.modelo.Modelo"%>
@@ -22,13 +23,12 @@
                 <ul class="menu"><!--Lista-->
                     <%
                         String rol = (String) request.getSession().getAttribute("rol");
-                        
                         List lista = (List) request.getAttribute("cuentasA");
                         String nombre = "";
-                        String ced="";
+                        String ced = "";
                         if (lista != null) {
                             nombre = ((Cuenta) lista.get(0)).getUsuarios().getNombre();
-                            ced=((Cuenta)lista.get(0)).getUsuarios().getId();
+                            ced = ((Cuenta) lista.get(0)).getUsuarios().getId();
                         }
                         Usuario usr = (Usuario) request.getSession().getAttribute("cajero");
 
@@ -57,7 +57,7 @@
             <div id="content">
                 <%
                     int aux = Modelo.cont + 1;
-                    out.println("<label> Cuenta:<input type='text' id='Cuenta' disabled='disabled' name= 'cantCuentas' placeholder='" + aux + "'></label> <br>");
+                    out.println("<label> Cuenta:<input type='text' id='Cuenta' disabled='disabled' name= 'cantCuentas' value='" + aux + "'></label> <br>");
                 %>                
                 <br>
                 <br>
@@ -73,10 +73,10 @@
                 <br>
                 <br>
                 <br>
-                <label> Saldo inicial:<input type='text' id='sInicial' disabled='disabled' name= 'saldo' placeholder='0'></label> <br>
+                <label> Saldo inicial:<input type='text' id='sInicial' disabled="disabled"  name= 'saldo' value="0"></label> <br>
                 <br>
                 <br>
-                <label> Límite de transferencias remotas:<input type='number' id='sInicial' name= 'saldo' placeholder='Digite numero límite'></label> <br>
+                <label> Límite de transferencias remotas:<input type='number' id='transR' name= 'transferencia' placeholder='Digite numero límite'></label> <br>
                 <br>
                 <br>
                 <label>¿El cliente está registrado? </label> <br>
@@ -95,8 +95,8 @@
                         %>
                         <input type="number" id="cedExistente" name="cedExistente" maxlength = "9" placeholder="Ingrese la cedula">
                         <%}%>
-                        <input type = "submit" name="btnCuentaA" value=" buscar ">
-
+                        <input class="buscar" type = "submit" name="btnCuentaA" value=" buscar ">
+                        <input class="vincular" type="submit" name="btnVincular" value="vincular">
                     </div>
                 </div>
                 <div>
@@ -105,16 +105,22 @@
                     <div class='reveal-if-active'>
                         <label for="CedulaN">Cedula del cliente a vincular:</label>
                         <input type="number" id="cedNueva" name="cedNueva" max="99999999" placeholder="Ingrese la cedula">
-                        <p style=" margin-top: 20px"></p> 
+                        <p></p> 
                         <label for="NombreN">Nombre completo del cliente a vincular:</label>
                         <input type="text" id="nomN" name="nomN" placeholder="Ingrese el Nombre">   
-                        <p style=" margin-top: 20px"></p> 
+                        <p></p> 
                         <label for="TelefonoN">Numero telefónico del cliente a vincular:</label>
                         <input type="number" id="celT" name="celT" max= "99999999" placeholder="Ingrese el numero">
-                        <p style=" margin-top: 20px"></p> 
+                        <p></p> 
+                        <label for="passN">Contraseña:</label>
+                        <input type="text" for="passN"  disabled='disabled'
+                               <%
+                                   final String uuid = UUID.randomUUID().toString().replace("-", "");
+                                   out.println(" value='" + uuid.substring(0, 8) + "'>");
+                               %>
+                               <input class="registro" type="submit" name="crearUsuario" value="Registrar">
                     </div>
                 </div>
-
             </div>
         </form>
 

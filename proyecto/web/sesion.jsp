@@ -31,7 +31,7 @@
                              out.println("<li><a href='#'>Transferencia en cajas</a></li>");
                              out.println("<li><a href='#'>Acreditación de intereses</a></li>");
                           }
-                         else
+                         else if(rol.equals("CLI"))
                          {
                              usr = (Usuario) request.getSession().getAttribute("usuario");
                              out.println("<li><a href='#'>Consultas</a>");
