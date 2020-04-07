@@ -7,21 +7,6 @@ package proyecto.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-//import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Size;
 
 /**
  *
@@ -30,7 +15,6 @@ import javax.persistence.TemporalType;
 
 public class Movimientos implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     private Integer id;
     private Integer cuentaOrg;
     private int monto;
@@ -38,7 +22,7 @@ public class Movimientos implements Serializable {
     private String idDepos;
     private String nombreDepos;
     private String detalle;
-    private Cuenta cuentas;
+    private Cuenta cuenta_des;
 
     public Movimientos() {
     }
@@ -110,33 +94,14 @@ public class Movimientos implements Serializable {
         this.detalle = detalle;
     }
 
-    public Cuenta getCuentas() {
-        return cuentas;
+    public Cuenta getCuentaDestino() {
+        return cuenta_des;
     }
 
-    public void setCuentas(Cuenta cuentas) {
-        this.cuentas = cuentas;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Movimientos)) {
-            return false;
-        }
-        Movimientos other = (Movimientos) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+    public void setCuentasDestino(Cuenta cuentas) {
+        this.cuenta_des = cuentas;
+        this.cuenta_des.getMovimientosList().add(this);
+    }  
 
     @Override
     public String toString() {
