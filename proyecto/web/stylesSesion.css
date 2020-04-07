@@ -190,6 +190,25 @@ body{
     -webkit-transition: 0.5s;
     transition: 0.5s;
 }
+.usuarioNuevo span{
+  animation-name: esconder;
+  color:transparent;
+    animation-duration: 6s;  
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+
+}
+@keyframes esconder{
+    from{
+         color:red;
+    }
+    to{
+        color:transparent;  
+    }
+}
 .reveal-if-active label {
     margin: 0 0 3px 0;
 }

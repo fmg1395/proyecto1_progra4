@@ -47,10 +47,11 @@ public class controlador extends HttpServlet {
         String btnCuenta = (String) request.getParameter("btnCuenta");
         String btnDepositar = (String) request.getParameter("btnDepositar");
         String btnCrearUsuario = (String) request.getParameter("crearUsuario");
+        String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
         if (btnLogIn != null) {
             logIn(request, response);
         } else if (btnCuenta != null) {
-            buscarCuenta(request, response);
+            buscarCuenta(request, response, btnCuenta);
         } else if (btnDepositar != null) {
             depositar(request, response);
         } else if (btnCuentaA != null) {
@@ -67,6 +68,8 @@ public class controlador extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else if (btnCuentaRetiro != null) {
+            buscarCuenta(request, response, btnCuentaRetiro);
         }
     }
 
@@ -91,22 +94,24 @@ public class controlador extends HttpServlet {
             dispatcher.forward(request, response);
 
         } else {
-            request.setAttribute("usuario", null);
-            request.setAttribute("valid", "wrong");
+            request.setAttribute("validacion", false);
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 
-    protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response)
+    protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response, String boton)
             throws ServletException, IOException {
+
         String txtCuenta = (String) request.getParameter("txtCuenta");
         List lista = modelo.recuperarCuentas(txtCuenta);
         if (lista.size() > 0) {
             request.setAttribute("cuentas", lista);
+        }
+        if (boton.equals("btnCuenta")) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
             dispatcher.forward(request, response);
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/retiro.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -151,19 +156,19 @@ public class controlador extends HttpServlet {
         String telefono = (String) request.getParameter("celT");
         String pass = (String) request.getParameter("passN");
         boolean verificacion = modelo.idDuplicada(txtCuenta);
-        if(!verificacion)
-        {   Usuario aux = new Usuario(txtCuenta, nombre, pass, "CLI", Integer.parseInt(telefono));
-        int id = Integer.parseInt(nCuenta) + 1;
-        int saldo = 0;
-        Cuenta c1 = new Cuenta(id, aux, new Moneda(tipoMoneda), saldo);
-        modelo.insertarUsuario(aux);
-        modelo.insertarCuenta(c1);
-        Modelo.cont++;
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
-        dispatcher.forward(request, response);
-    }
-        else{
-            
+        if (!verificacion) {
+            Usuario aux = new Usuario(txtCuenta, nombre, pass, "CLI", Integer.parseInt(telefono));
+            int id = Integer.parseInt(nCuenta) + 1;
+            int saldo = 0;
+            Cuenta c1 = new Cuenta(id, aux, new Moneda(tipoMoneda), saldo);
+            modelo.insertarUsuario(aux);
+            modelo.insertarCuenta(c1);
+            Modelo.cont++;
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            request.setAttribute("validacion", false);
+            request.getRequestDispatcher("/aperturaCuenta.jsp").forward(request, response);
         }
     }
 

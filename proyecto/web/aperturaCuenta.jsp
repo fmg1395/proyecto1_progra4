@@ -33,9 +33,9 @@
                         Usuario usr = (Usuario) request.getSession().getAttribute("cajero");
 
                         if (rol.equals("CAJ")) {
-                            out.println("<li><a href='#'>Apertura de Cuenta</a></li>");
-                            out.println("<li><a href='#'>Retiro</a></li>");
-                            out.println("<li><a href='#'>Depósito</a></li>");
+                            out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
+                            out.println("<li><a href='retiro.jsp'>Retiro</a></li>");
+                            out.println("<li><a href='deposito.jsp'>Depósito</a></li>");
                             out.println("<li><a href='#'>Transferencia en cajas</a></li>");
                             out.println("<li><a href='#'>Acreditación de intereses</a></li>");
                         } else {
@@ -99,9 +99,17 @@
                         <input class="vincular" type="submit" name="btnVincular" value="vincular">
                     </div>
                 </div>
-                <div>
-                    <input type='radio' id='ansN' name= 'drone2' value='no'>
-                    <label for='ansN'>No</label>
+                <div class="usuarioNuevo">
+                    <%
+                        Boolean error = (Boolean) request.getAttribute("validacion");
+                        if (error != null && error == false) {
+                            out.println("<input type='radio' id='ansN' name= 'drone2' value='no'>");
+                            out.println("<label for='ansN'>No</label> <span>Ya existe un usuario registrado con ese ID</span>");
+                        } else {
+                            out.println("<input type='radio' id='ansN' name= 'drone2' value='no'>");
+                            out.println("<label for='ansN'>No</label>");
+                        }
+                    %>
                     <div class='reveal-if-active'>
                         <label for="CedulaN">Cedula del cliente a vincular:</label>
                         <input type="number" id="cedNueva" name="cedNueva" max="999999999" placeholder="Ingrese la cedula">
@@ -116,7 +124,8 @@
                         <input type="text" name="passN" for="passN"  readonly="readonly"
                                <%
                                    final String uuid = UUID.randomUUID().toString().replace("-", "");
-                                   out.println(" value='" + uuid.substring(0, 8) + "'>");
+
+                                   out.println("value='" + uuid.substring(0, 8) + "'>");
                                %>
                                <input class="registro" type="submit" name="crearUsuario" value="Registrar">
                     </div>

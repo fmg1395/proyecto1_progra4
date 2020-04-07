@@ -131,7 +131,7 @@ public class Modelo {
     public boolean idDuplicada(String id)
     {
        recuperarUsuario(id);
-        if(this.getCliente()!=null||this.getCliente()!=null)
+        if(this.getCliente()!=null||this.getCajero()!=null)
         {
             return true;
         }

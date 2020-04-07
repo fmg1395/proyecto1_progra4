@@ -1,5 +1,5 @@
 <%-- 
-    Document   : deposito
+    Document   : retiro
     Created on : 29/03/2020, 04:57:22 PM
     Author     : frank
 --%>
@@ -50,11 +50,11 @@
         <form id="buscarCuentas" action="servicios" method="post" accept-charset="UTF-8">
             <div id="content">
                 <label>
-                    Depositos
+                    Retiro
                     <br>
                     Buscar Cuenta:
                     <input type="text" name="txtCuenta" size="30" placeholder="ingrese cuenta del cliente">
-                    <input type = "submit" name="btnCuenta"  value=" buscar ">
+                    <input type = "submit" name="btnCuentaRetiro"  value=" buscar ">
                     <br>
                     <br>
                 </label> 
@@ -87,9 +87,9 @@
                         }
                         out.print("</table>");
                         
-                        out.print("<br> Realizar Deposito: <br>"
+                        out.print("<br> Realizar Retiro <br>"
                                 + "<input type = 'text' size='25' name='txtCuentaDeposito'  placeholder='Ingrese Número de Cuenta'>");
-                        out.print("<input type = 'text' name='txtMonto'  placeholder='Monto a depositar'>");
+                        out.print("<input type = 'text' name='txtMonto'  placeholder='Monto a retirar'>");
                         out.print("<input type = 'submit' name='btnDepositar'  value='Depositar'>");
                     }
                 //Falta elegir cuenta para hacer el update

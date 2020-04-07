@@ -22,35 +22,32 @@
             <div id="Encabezado">
                 <p>
                     <b>Bienvenido al Banco Islas Caiman</b>
+                    <%=Modelo.cont%>
                 </p>
             </div>
 
-            <%
-                String rol = (String) request.getSession().getAttribute("rol");
-                Usuario usr = null;
-                if (rol != null && rol.equals("CLI")) {
-                    usr = (Usuario) request.getSession().getAttribute("usuario");
-                }
-                if (rol != null) {
-                    usr = (Usuario) request.getSession().getAttribute("cajero");
-                }
+                <%
+                    String rol = (String) request.getSession().getAttribute("rol");
+                    Boolean error = (Boolean)request.getAttribute("validacion");
+                    Usuario usr = null;
+                    
+                    if(rol!=null && rol.equals("CLI"))
+                        usr = (Usuario)request.getSession().getAttribute("usuario");
+                    if(rol!=null)
+                        usr = (Usuario)request.getSession().getAttribute("cajero");
+                         
+                    if (error!=null && error==false) {
+                        out.println(" <div id='wrong'>");
+                        out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
+                        out.println("<br>");
+                        out.println("<label>Usuario o contraseña incorrecta.</label>");
+                        out.println("<br>");
+                        out.println("<label>Inténtelo nuevamente.</label>");
+                        out.println("</div>");
+                    }
+                %>
 
-                String pass = "good";
-                String comprobar = (String) request.getAttribute("valid");
-                if (comprobar != null && comprobar.equals("wrong")) {
-                    pass = "wrong";
-                }
-
-                if (usr == null && pass.equals("wrong")) {
-                    out.println(" <div id='wrong'>");
-                    out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
-                    out.println("<br>");
-                    out.println("<label>Usuario o contraseña incorrecta.</label>");
-                    out.println("<br>");
-                    out.println("<label>Inténtelo nuevamente.</label>");
-                    out.println("</div>");
-                }
-            %>
+             
 
             <div id="content">
                 <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
