@@ -91,7 +91,9 @@ public class DAO {
                             moneda,
                             rs.getFloat("monto")
                     );
-
+                    List mov = this.recuperarMovimientos(c.getId());
+                    if(mov != null)
+                        c.setMovimientosList(mov);
                     lista.add(c);
                 }
             }
@@ -99,6 +101,8 @@ public class DAO {
         }
     }
 
+    //Recupera cuenta por su ID
+    //sin necesidad de usuario
     public Cuenta recuperarCuenta(int id) throws SQLException {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_CUENTA)) 
@@ -118,6 +122,9 @@ public class DAO {
                             moneda,
                             rs.getFloat("monto")
                     );
+                    List mov =this.recuperarMovimientos(id);
+                    if(mov != null)
+                        c.setMovimientosList(mov);
                     return c;
                 }
             }
@@ -139,10 +146,9 @@ public class DAO {
                             rs.getInt("id"),
                             rs.getInt("monto"),
                             rs.getDate("fecha"),
-                            rs.getString("id_depos")
+                            rs.getString("id_depos"),
+                            rs.getInt("cuenta_des")
                     );
-                    Cuenta c = recuperarCuenta(rs.getInt("cuenta_des"));
-                    m.setCuentasDestino(c);
                     
                     String detalle = rs.getString("detalle");
                     String nomDep = rs.getString("nombre_depos");
@@ -268,17 +274,8 @@ public class DAO {
         DAO prueba = DAO.obtenerInstancia();
 
         try {
-            //prueba.agregarUsuario(c);
-            // Usuario u = DAO.obtenerInstancia().recuperarUsuario("116050901");
-//            Moneda m = prueba.recuperarMoneda("EUR");
-//            Cuenta cuenta = new Cuenta();
-//            cuenta.setUsuarios(u);
-//            cuenta.setMoneda(m);
-//            cuenta.setMonto(300);
-
-//            prueba.crearCuenta(cuenta);
-            // List cl = prueba.recuperarCuentas("116050901");
-            int n = prueba.cantidadCuentas();
+           
+           List lista = prueba.recuperarCuentas("504250570");
 
             System.out.println();
         } catch (SQLException ex) {

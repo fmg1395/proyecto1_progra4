@@ -22,7 +22,7 @@ public class Movimientos implements Serializable {
     private String idDepos;
     private String nombreDepos;
     private String detalle;
-    private Cuenta cuenta_des;
+    private Integer cuenta_des;
 
     public Movimientos() {
     }
@@ -31,11 +31,12 @@ public class Movimientos implements Serializable {
         this.id = id;
     }
 
-    public Movimientos(Integer id, int monto, Date fecha, String idDepos) {
+    public Movimientos(Integer id, int monto, Date fecha, String idDepos, Integer dest) {
         this.id = id;
         this.monto = monto;
         this.fecha = fecha;
         this.idDepos = idDepos;
+        this.cuenta_des = dest;
     }
 
     public Integer getId() {
@@ -94,13 +95,12 @@ public class Movimientos implements Serializable {
         this.detalle = detalle;
     }
 
-    public Cuenta getCuentaDestino() {
+    public Integer getCuentaDestino() {
         return cuenta_des;
     }
 
-    public void setCuentasDestino(Cuenta cuentas) {
+    public void setCuentasDestino(Integer cuentas) {
         this.cuenta_des = cuentas;
-        this.cuenta_des.getMovimientosList().add(this);
     }  
 
     @Override
