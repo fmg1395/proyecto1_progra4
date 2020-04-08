@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import proyecto.gestionBD.DAO;
 import proyecto.modelo.Cuenta;
 import proyecto.modelo.Modelo;
@@ -34,7 +35,7 @@ public class controlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
     @Override
@@ -48,8 +49,11 @@ public class controlador extends HttpServlet {
         String btnDepositar = (String) request.getParameter("btnDepositar");
         String btnCrearUsuario = (String) request.getParameter("crearUsuario");
         String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
+        String btnLogOut = (String) request.getParameter("btnLogOut");
         if (btnLogIn != null) {
             logIn(request, response);
+        } else if (btnLogOut != null) {
+            logOut(request, response);
         } else if (btnCuenta != null) {
             buscarCuenta(request, response, btnCuenta);
         } else if (btnDepositar != null) {
@@ -97,6 +101,22 @@ public class controlador extends HttpServlet {
             request.setAttribute("validacion", false);
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
+    }
+
+    private void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        switch (modelo.getUltimoRol()) {
+            case "CLI":
+                session.removeAttribute("usuario");
+                session.removeAttribute("rol");
+                break;
+            case "CAJ":
+                session.removeAttribute("cajero");
+                session.removeAttribute("rol");
+        }
+        session.invalidate();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+        dispatcher.forward(request, response);
     }
 
     protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response, String boton)

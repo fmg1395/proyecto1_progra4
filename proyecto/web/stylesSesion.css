@@ -15,6 +15,16 @@ and open the template in the editor.
     -moz-box-sizing:border-box;
     box-sizing: border-box;
 }
+.Encabezado{
+    background: black;
+    color:#fff;
+    opacity:0.8;
+    padding: 10px;
+    margin: 0px;
+    font-family: Arial;
+    font-size: 20px;
+}
+
 body{
     background: url(img/fondo2.jpg) no-repeat center top;
     background-size: cover;
@@ -37,13 +47,28 @@ body{
     display: inline-block;
 }
 
-.menu>li>a{
+.menu>li>a,
+.menu li input{
     display:block;/*Elementos bloque*/
     padding: 15px 20px;
     color: #fff;
     text-decoration: none;
 }
+.menu li input{
+    background: black;
+    border:none;
+    font-family: arial;
+    font-size: 16px;
+}
+.menu li input:hover{
+    color:#CE7D35;
+    transition: all .3s;
+}
+.salir input:hover{
+    color: #CE7D35;
+    transition:all .3s;
 
+}
 .menu li a:hover{
     color: #CE7D35;
     transition:all .3s;
@@ -240,7 +265,7 @@ input[type="radio"]:checked ~ .reveal-if-active{
     font-weight: bold;
 
 }
-form {
+.buscarCuentas {
     max-width: 500px;
     margin: 20px auto;
 }

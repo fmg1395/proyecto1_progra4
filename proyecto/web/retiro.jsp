@@ -16,9 +16,11 @@
         <title>Deposito</title>
     </head>
     <body>
-        <header><!--Titulo o logotipo y despues el menu-->
+        <header>
+            <form action="servicios" method="post">
             <nav class="navBar"><!--Menu de navegacion-->
                 <ul class="menu"><!--Lista-->
+                    <a class="Encabezado">Bienvenido al Banco Islas Caiman</a>
                     <%
                         String rol = (String) request.getSession().getAttribute("rol");
                         List lista = (List) request.getAttribute("cuentas");
@@ -43,7 +45,8 @@
                             out.println("<li><a href='#'>Transferencia remota</a></li>");
                         }
                     %>
-                    <li class="salir"><a href="index.jsp">Cerrar sesión</a></li>
+                        <li><input type="submit" name= "btnLogOut" value="Cerrar sesión"></li>
+                </form>
                 </ul>
             </nav>
         </header>
