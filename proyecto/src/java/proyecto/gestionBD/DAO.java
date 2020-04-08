@@ -267,6 +267,9 @@ public class DAO {
             + " FROM movimientos WHERE cuenta_des = ?;";
     private static final String CMD_RECUPERAR_CUENTA
             = "SELECT id, cliente, moneda, monto FROM cuentas WHERE id = ?;";
+    private static final String CMD_AGREGAR_MOVIMIENTO
+            ="INSERT INTO movimientos (cuenta_org, cuenta_des, monto, fecha, id_depos,"
+            + "nombre_depos, detalle) VALUES (?,?,?,?,?,?,?);";
 
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");
