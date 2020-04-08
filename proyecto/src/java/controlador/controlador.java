@@ -49,12 +49,21 @@ public class controlador extends HttpServlet {
         String btnDepositar = (String) request.getParameter("btnDepositar");
         String btnCrearUsuario = (String) request.getParameter("crearUsuario");
         String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
+        String btnAcreditacion=(String) request.getParameter("btnAcreditacion");
         String btnLogOut = (String) request.getParameter("btnLogOut");
         if (btnLogIn != null) {
             logIn(request, response);
         } else if (btnLogOut != null) {
             logOut(request, response);
-        } else if (btnCuenta != null) {
+        }
+        else if(btnAcreditacion!=null)
+        {
+            try {
+                acreditar(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else if (btnCuenta != null) {
             buscarCuenta(request, response, btnCuenta);
         } else if (btnDepositar != null) {
             depositar(request, response);
@@ -135,7 +144,18 @@ public class controlador extends HttpServlet {
             dispatcher.forward(request, response);
         }
     }
+    protected void acreditar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException
+    {
+        Float porcentajeUSD=Float.parseFloat((String) request.getParameter("aUSD"));
+        Float porcentajeCRC=Float.parseFloat((String) request.getParameter("aCRC"));
+        Float porcentajeEUR=Float.parseFloat((String) request.getParameter("aEUR"));
+        modelo.acreditacion(porcentajeUSD, "USD");
+        modelo.acreditacion(porcentajeCRC, "CRC");
+        modelo.acreditacion(porcentajeEUR, "EUR");
+        RequestDispatcher dispatcher=request.getRequestDispatcher("/procesoCorrecto.jsp");
+        dispatcher.forward(request, response);
 
+    }
     protected void buscarCuentaA(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String txtCuenta = (String) request.getParameter("cedExistente");

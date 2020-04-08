@@ -165,7 +165,18 @@ public class DAO {
         }
         return -1;
     }
-    
+    public boolean acreditacion(float valor, String moneda) throws SQLException
+    {
+         try(Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_BATCH))
+        {
+            stm.clearParameters();
+            stm.setFloat(1, valor/100);
+            stm.setString(2, moneda);
+            
+            return stm.executeUpdate()==1;
+        }
+    }
     //Metodo devuelve a un cliente por medio
     //de su id
     public Usuario recuperarUsuario(String id) throws SQLException {
@@ -200,6 +211,8 @@ public class DAO {
     private static final String CMD_AGREGAR_USUARIO
             = "INSERT INTO usuarios (id,nombre,clave,telefono,rol) "
             + "VALUES (?,?,?,?,?); ";
+    private static final String CMD_BATCH
+            ="UPDATE cuentas SET monto=monto+monto*? WHERE moneda=?;";
     private static final String CMD_RECUPERAR_USUARIO
             = "SELECT id,nombre,clave,telefono,rol from usuarios where id = ?;";
     private static final String CMD_CREAR_CUENTA

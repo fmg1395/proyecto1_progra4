@@ -28,6 +28,11 @@ public class Modelo {
         DAO cnx=DAO.obtenerInstancia();
         cnx.crearUsuario(u);
     }
+    public void acreditacion(float n, String p) throws SQLException
+    {
+        DAO cnx=DAO.obtenerInstancia();
+        cnx.acreditacion(n, p);
+    }
     public void recuperarUsuario(String id) {
         DAO cnx = DAO.obtenerInstancia();
 
