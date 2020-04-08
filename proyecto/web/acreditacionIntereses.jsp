@@ -1,7 +1,7 @@
 <%-- 
-    Document   : sesion
-    Created on : 22/03/2020, 11:05:47 PM
-    Author     : frank
+    Document   : acreditacionIntereses
+    Created on : 8 abr. 2020, 13:48:42
+    Author     : Kike
 --%>
 
 <%@page import="proyecto.modelo.Usuario"%>
@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="stylesSesion.css" rel="stylesheet" type="text/css"/>
-        <title>Inicio</title>
+        <title>Acreditación de intereses</title>
     </head>
     <body>
         <header>                    
@@ -46,6 +46,18 @@
                         </form>
                     </ul>
                 </nav>   
-        </header>
+        </header> 
+                        <form id="formulario" action="servicios" method="post" accept-charset="UTF-8">  
+                        <div id="content">
+                            <h3>Acreditación de Intereses</h3>
+                            <label>Porcentaje de interés USD:</label><input type="text" readonly="readonly" value="1,5%">
+                            <p></p>
+                            <label>Porcentaje de interés CRC:</label><input type="text" readonly="readonly" value="1,8%">
+                            <p></p>
+                            <label>Porcentaje de interés EUR:</label><input type="text" readonly="readonly" value="2,1%">
+                            <p></p>
+                            <input class="vincular" type="submit" name="acreditacion" value="Acreditar">
+                        </div>
+                            </form>
     </body>
 </html>
