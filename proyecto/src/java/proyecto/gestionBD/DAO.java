@@ -68,6 +68,22 @@ public class DAO {
         }
     }
 
+
+    public boolean crearUsuario(Usuario u) throws SQLException{
+        try(
+            Connection cnx=obtenerConexion();
+            PreparedStatement stm=cnx.prepareStatement(CMD_AGREGAR_USUARIO))
+        {
+               stm.clearParameters();
+               stm.setString(1,u.getId());
+               stm.setString(2,u.getNombre());//nombre,clave,telefono,rol
+               stm.setString(3,u.getClave());
+               stm.setInt(4,u.getTelefono());
+               stm.setString(5,u.getRol());
+               return stm.executeUpdate()==1;
+        }
+    }
+
     //Recupera todas las cuentas del cliente
     //por medio de su ID
     public List recuperarCuentas(String id) throws SQLException {

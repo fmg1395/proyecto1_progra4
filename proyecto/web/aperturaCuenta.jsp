@@ -4,6 +4,9 @@
     Author     : Kike
 --%>
 
+<%@page import="java.util.UUID"%>
+<%@page import="proyecto.modelo.Cuenta"%>
+<%@page import="java.util.List"%>
 <%@page import="proyecto.modelo.Modelo"%>
 <%@page import="proyecto.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -20,7 +23,13 @@
                 <ul class="menu"><!--Lista-->
                     <%
                         String rol = (String) request.getSession().getAttribute("rol");
-
+                        List lista = (List) request.getAttribute("cuentasA");
+                        String nombre = "";
+                        String ced = "";
+                        if (lista != null) {
+                            nombre = ((Cuenta) lista.get(0)).getUsuarios().getNombre();
+                            ced = ((Cuenta) lista.get(0)).getUsuarios().getId();
+                        }
                         Usuario usr = (Usuario) request.getSession().getAttribute("cajero");
 
                         if (rol.equals("CAJ")) {
@@ -48,8 +57,9 @@
             <div id="content">
                 <%
                     int aux = Modelo.cont + 1;
-                    out.println("<label> Cuenta:<input type='text' id='Cuenta' disabled='disabled' name= 'cantCuentas' placeholder='" + aux + "'></label> <br>");
-                %>                <br>
+                    out.println("<label> Cuenta:<input type='text' id='Cuenta' disabled='disabled' name= 'cantCuentas' value='" + aux + "'></label> <br>");
+                %>                
+                <br>
                 <br>
                 <label>Tipo de moneda: </label> <br>
                 <input type='radio' id='monCRC' name= 'drone' value='CRC' checked>
@@ -63,10 +73,10 @@
                 <br>
                 <br>
                 <br>
-                <label> Saldo inicial:<input type='text' id='sInicial' disabled='disabled' name= 'saldo' placeholder='0'></label> <br>
+                <label> Saldo inicial:<input type='text' id='sInicial' disabled="disabled"  name= 'saldo' value="0"></label> <br>
                 <br>
                 <br>
-                <label> Límite de transferencias remotas:<input type='number' id='sInicial' name= 'saldo' placeholder='Digite numero límite'></label> <br>
+                <label> Límite de transferencias remotas:<input type='number' id='transR' name= 'transferencia' placeholder='Digite numero límite'></label> <br>
                 <br>
                 <br>
                 <label>¿El cliente está registrado? </label> <br>
@@ -74,18 +84,52 @@
                     <input type='radio' id='ansY' name= 'drone2' value='yes' checked>
                     <label for='ansY'>Sí</label>
                     <div class='reveal-if-active'>
-                        <label for="Cedula">Cedula del cliente a vincular:</label>
-                        <input type="number" id="cedExistente" name="cedExistente" placeholder="Ingrese la cedula">
-                    </div>
-                </div>
-                <div>
-                    <input type='radio' id='ansN' name= 'drone2' value='no'>
-                    <label for='ansN'>No</label>
-                    <div class='reveal-if-active'>
-                        <label for='ansN'>Mostrar datos a rellenar</label>
-                    </div>
-                </div>
+                        <label for="Cedula">Cedula del cliente:</label>
+                        <%if (nombre != "") {
+                        %>
+                        <input type="number" id="cedExistente" name="cedExistente" maxlength = "9" Value=<%=ced%>>
+                        <label> Cliente seleccionado:<%=nombre%></label><p></p>
+                        <%
+                        } else {
 
+                        %>
+                        <input type="number" id="cedExistente" name="cedExistente" maxlength = "9" placeholder="Ingrese la cedula">
+                        <%}%>
+                        <input class="buscar" type = "submit" name="btnCuentaA" value=" buscar ">
+                        <input class="vincular" type="submit" name="btnVincular" value="vincular">
+                    </div>
+                </div>
+                <div class="usuarioNuevo">
+                    <%
+                        Boolean error = (Boolean) request.getAttribute("validacion");
+                        if (error != null && error == false) {
+                            out.println("<input type='radio' id='ansN' name= 'drone2' value='no'>");
+                            out.println("<label for='ansN'>No</label> <span>Ya existe un usuario registrado con ese ID</span>");
+                        } else {
+                            out.println("<input type='radio' id='ansN' name= 'drone2' value='no'>");
+                            out.println("<label for='ansN'>No</label>");
+                        }
+                    %>
+                    <div class='reveal-if-active'>
+                        <label for="CedulaN">Cedula del cliente a vincular:</label>
+                        <input type="number" id="cedNueva" name="cedNueva" max="999999999" placeholder="Ingrese la cedula">
+                        <p></p> 
+                        <label for="NombreN">Nombre completo del cliente a vincular:</label>
+                        <input type="text" id="nomN" name="nomN" placeholder="Ingrese el Nombre">   
+                        <p></p> 
+                        <label for="TelefonoN">Numero telefónico del cliente a vincular:</label>
+                        <input type="number" id="celT" name="celT" max= "99999999" placeholder="Ingrese el numero">
+                        <p></p> 
+                        <label for="passN">Contraseña:</label>
+                        <input type="text" name="passN" for="passN"  readonly="readonly"
+                               <%
+                                   final String uuid = UUID.randomUUID().toString().replace("-", "");
+
+                                   out.println("value='" + uuid.substring(0, 8) + "'>");
+                               %>
+                               <input class="registro" type="submit" name="crearUsuario" value="Registrar">
+                    </div>
+                </div>
             </div>
         </form>
 

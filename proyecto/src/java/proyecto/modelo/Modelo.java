@@ -18,7 +18,16 @@ public class Modelo {
         this.ultimoRol = "Null";
         this.cuentas=null;
     }
-
+    public void insertarCuenta(Cuenta c) throws SQLException
+    {
+        DAO cnx=DAO.obtenerInstancia();
+        cnx.crearCuenta(c);
+    }
+    public void insertarUsuario(Usuario u) throws SQLException
+    {
+        DAO cnx=DAO.obtenerInstancia();
+        cnx.crearUsuario(u);
+    }
     public void recuperarUsuario(String id) {
         DAO cnx = DAO.obtenerInstancia();
 
@@ -119,7 +128,17 @@ public class Modelo {
     public void limpiarCliente() {
         this.setCliente(null);
     }
-
+    public boolean idDuplicada(String id)
+    {
+       recuperarUsuario(id);
+        if(this.getCliente()!=null||this.getCajero()!=null)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     public boolean revisarCredenciales(String id, String clave) {
         recuperarUsuario(id);
         if (this.getCliente() != null) {

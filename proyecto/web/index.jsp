@@ -11,7 +11,7 @@
 <html>
     <head>
         <title>Banco Islas Caiman</title>
-        <%
+         <%
            Modelo.cont=Modelo.cantidadCuentas();
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,14 +19,12 @@
     </head>
     <body>
         <div id="wrapper">
-                <div id="Encabezado">
-                    <p>
-                        <b>Bienvenido al Banco Islas Caiman</b>
-                        <%
-                            out.println("<b> "+Modelo.cont+"</b>");
-                        %>
-                    </p>
-                </div>
+            <div id="Encabezado">
+                <p>
+                    <b>Bienvenido al Banco Islas Caiman</b>
+                    <%=Modelo.cont%>
+                </p>
+            </div>
 
                 <%
                     String rol = (String) request.getSession().getAttribute("rol");
@@ -49,30 +47,32 @@
                     }
                 %>
 
-                <div id="content">
-                    <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
-                    <h1>Ingrese aquí</h1>
-                    <form id="formulario" action="servicios" method="post"
-                          accept-charset="UTF-8">
-                        <label for="Nombre de Usuario">Usuario</label>
-                        <input type="text" id="logUsuario" name= "logUsuario" placeholder="Ingrese su usuario">
+             
 
-                        <label for="Contraseña">Contraseña</label>
-                        <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
+            <div id="content">
+                <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
+                <h1>Ingrese aquí</h1>
+                <form id="formulario" action="servicios" method="post"
+                      accept-charset="UTF-8">
+                    <label for="logUsuario">Usuario</label>
+                    <input type="text" id="logUsuario" name= "logUsuario" placeholder="Ingrese su usuario">
 
-                        <input type="submit" name= "btnLogIn" value="Ingresar">
-                        <!--Si es erroneo, debe recargar la página, esta vez con imprimir=true-->
-                        <br>
-                        <a href="#">He olvidado mi contraseña</a>
-                        <br>
-                        <a href="#">Crear usuario</a>
+                    <label for="logPass">Contraseña</label>
+                    <input type="password" id="logPass" name="logPass" placeholder="Ingrese su contraseña">
 
-                        <table class="tablaFormulario">
+                    <input type="submit" name= "btnLogIn" value="Ingresar">
+                    <!--Si es erroneo, debe recargar la página, esta vez con imprimir=true-->
+                    <br>
+                    <a href="#">He olvidado mi contraseña</a>
+                    <br>
+                    <a href="#">Crear usuario</a>
 
-                        </table>
-                    </form>
+                    <table class="tablaFormulario">
 
-                </div>
+                    </table>
+                </form>
+
+            </div>
         </div>
 
     </body>
