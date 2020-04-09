@@ -48,54 +48,29 @@
             </nav>
         </header>
         <form id="buscarCuentas" action="servicios" method="post" accept-charset="UTF-8">
-            <div id="content">
-                <label>
-                    Depositos
-                    <br>
-                    Buscar Cuenta:
-                    <input type="text" name="txtCuenta" size="30" placeholder="ingrese cuenta del cliente">
-                    <input type = "submit" name="btnCuenta"  value=" buscar ">
-                    <br>
-                    <br>
-                </label> 
-                <%
-                    if(lista!=null)
-                    {
-                        int numCuentas=lista.size();
-                        out.print("<label>");
-                        out.print("<table id='tablaCuentas' class='table'>");
-                        out.print("<caption> Cuentas Bancarias");
-                        out.print("<div class='divTras'>");
-                        out.print("<span style='font-size: small'>"+nombre+"</span>");
-                        out.print("</div>");
-                        out.print("</caption>");
-                        out.print("</label><tr>");
-                        out.print("<th style='text-align:left;'>Descripcion</th>");
-                        out.print("<th>Número de Cuenta</th>");
-                        out.print("<th>Saldo</th>");
-                        out.print("</tr>");
-                        for(int i = 0; i < numCuentas; i++) 
-                        {
-                            String descripcion = ((Cuenta) lista.get(i)).getMoneda().getId();
-                            String nCuenta = String.valueOf(((Cuenta) lista.get(i)).getId());
-                            String saldo = String.valueOf(((Cuenta) lista.get(i)).getMonto());
-                            out.print("<tr>");
-                            out.print("<td>" + descripcion + "</td>");
-                            out.print("<td>" + nCuenta + "</td>");
-                            out.print("<td>" + saldo + "</td>");
-                            out.print("</tr>");
-                        }
-                        out.print("</table>");
-                        
-                        out.print("<br> Realizar Deposito: <br>"
-                                + "<input type = 'text' size='25' name='txtCuentaDeposito'  placeholder='Ingrese Número de Cuenta'>");
-                        out.print("<input type = 'text' name='txtMonto'  placeholder='Monto a depositar'>");
-                        out.print("<input type = 'submit' name='btnDepositar'  value='Depositar'>");
-                    }
-                //Falta elegir cuenta para hacer el update
-                             
-                %>
-            </div>  
+            <div id='content'>
+                <div id = 'Elección'>
+                    <label>Depósitos: <br> Buscar Cuenta: <br><br></label>
+                    <div id='Yes'>
+                        <input type='radio' id='ansY' name='drone2' value='yes'>
+                        <label>Por cédula:</label>
+                        <div class='reveal-if-active'>
+                            <input type='text' name='buscarCedula' placeholder='Ingrese cédula'>
+                            <input type='submit' name='btnBuscarPorCedula' value='Buscar'>
+                        </div>
+                    </div>
+                    <div id='No'>
+                        <input type='radio' id='ansN' name='drone2' value='no'>
+                        <label>Por número de cuenta:</label>
+                        <div class='reveal-if-active'>
+                            <input type='text' name='buscarCuenta' placeholder='Ingrese número de cuenta'>
+                            <input type='submit' name='btnBuscarPorCuenta' value='Buscar'>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Aqui va la tabla falta hacer logica-->
+            </div>
         </form>
     </body>
 </html>
