@@ -11,8 +11,9 @@
 <html>
     <head>
         <title>Banco Islas Caiman</title>
-         <%
-           Modelo.cont=Modelo.cantidadCuentas();
+        <link  rel="icon"   href="img/bank.png" type="image/png" />
+        <%
+                   Modelo.cont=Modelo.cantidadCuentas();
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="styles.css" rel="stylesheet" type="text/css"/>
@@ -26,28 +27,28 @@
                 </p>
             </div>
 
-                <%
-                    String rol = (String) request.getSession().getAttribute("rol");
-                    Boolean error = (Boolean)request.getAttribute("validacion");
-                    Usuario usr = null;
+            <%
+                String rol = (String) request.getSession().getAttribute("rol");
+                Boolean error = (Boolean)request.getAttribute("validacion");
+                Usuario usr = null;
                     
-                    if(rol!=null && rol.equals("CLI"))
-                        usr = (Usuario)request.getSession().getAttribute("usuario");
-                    if(rol!=null)
-                        usr = (Usuario)request.getSession().getAttribute("cajero");
+                if(rol!=null && rol.equals("CLI"))
+                    usr = (Usuario)request.getSession().getAttribute("usuario");
+                if(rol!=null)
+                    usr = (Usuario)request.getSession().getAttribute("cajero");
                          
-                    if (error!=null && error==false) {
-                        out.println(" <div id='wrong'>");
-                        out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
-                        out.println("<br>");
-                        out.println("<label>Usuario o contraseña incorrecta.</label>");
-                        out.println("<br>");
-                        out.println("<label>Inténtelo nuevamente.</label>");
-                        out.println("</div>");
-                    }
-                %>
+                if (error!=null && error==false) {
+                    out.println(" <div id='wrong'>");
+                    out.println("<img class='errorIm' src='img/error.png' alt='imagen error'>");
+                    out.println("<br>");
+                    out.println("<label>Usuario o contraseña incorrecta.</label>");
+                    out.println("<br>");
+                    out.println("<label>Inténtelo nuevamente.</label>");
+                    out.println("</div>");
+                }
+            %>
 
-             
+
 
             <div id="content">
                 <img class="avatar" src="img/logo.jpg" alt="logo Caiman">
