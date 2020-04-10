@@ -91,9 +91,7 @@
                                 + "<input type = 'text' size='25' name='txtCuentaDeposito'  placeholder='Ingrese Número de Cuenta'>");
                         out.print("<input type = 'text' name='txtMonto'  placeholder='Monto a retirar'>");
                         out.print("<input type = 'submit' name='btnDepositar'  value='Depositar'>");
-                    }
-                //Falta elegir cuenta para hacer el update
-                             
+                    }             
                 %>
             </div>  
         </form>

@@ -17,21 +17,19 @@ public class Movimientos implements Serializable {
 
     private Integer id;
     private Integer cuentaOrg;
-    private int monto;
+    private float monto;
     private Date fecha;
     private String idDepos;
     private String nombreDepos;
     private String detalle;
     private Integer cuenta_des;
+    
+    // (cuenta_org, cuenta_des, monto, fecha, id_depos, nombre_depos, detalle)
 
     public Movimientos() {
     }
 
-    public Movimientos(Integer id) {
-        this.id = id;
-    }
-
-    public Movimientos(Integer id, int monto, Date fecha, String idDepos, Integer dest) {
+    public Movimientos(Integer id, float monto, Date fecha, String idDepos, Integer dest) {
         this.id = id;
         this.monto = monto;
         this.fecha = fecha;
@@ -55,11 +53,11 @@ public class Movimientos implements Serializable {
         this.cuentaOrg = cuentaOrg;
     }
 
-    public int getMonto() {
+    public float getMonto() {
         return monto;
     }
 
-    public void setMonto(int monto) {
+    public void setMonto(float monto) {
         this.monto = monto;
     }
 
@@ -69,6 +67,11 @@ public class Movimientos implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+    
+    public java.sql.Date getSQLFecha()
+    {
+        return new java.sql.Date(getFecha().getTime());
     }
 
     public String getIdDepos() {

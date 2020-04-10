@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,14 +45,20 @@ public class controlador extends HttpServlet {
         String btnCuentaA = (String) request.getParameter("btnCuentaA");
         String btnVincular = (String) request.getParameter("btnVincular");
         String btnLogIn = (String) request.getParameter("btnLogIn");
-        String btnCuenta = (String) request.getParameter("btnCuenta");
+
+        String btnCuentaPorCedula = (String) request.getParameter("btnBuscarPorCedula");
+        String btnCuentaPorNumero = (String) request.getParameter("btnBuscarPorCuenta");                  
+           
         String btnDepositar = (String) request.getParameter("btnDepositar");
         String btnCrearUsuario = (String) request.getParameter("crearUsuario");
         String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
+
         if (btnLogIn != null) {
             logIn(request, response);
-        } else if (btnCuenta != null) {
-            buscarCuenta(request, response, btnCuenta);
+        } else if (btnCuentaPorCedula != null) {
+            buscarCuenta(request, response, "cedula");
+        } else if (btnCuentaPorNumero!=null) {
+            buscarCuenta(request, response, "cuenta");
         } else if (btnDepositar != null) {
             depositar(request, response);
         } else if (btnCuentaA != null) {
@@ -101,16 +108,26 @@ public class controlador extends HttpServlet {
 
     protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response, String boton)
             throws ServletException, IOException {
-
-        String txtCuenta = (String) request.getParameter("txtCuenta");
-        List lista = modelo.recuperarCuentas(txtCuenta);
+        String formulario = (String) request.getSession().getAttribute("formulario");
+        String cedula = (String) request.getParameter("txt_buscar");
+        String cuenta = (String) request.getParameter("txt_buscar2");
+        List lista = new ArrayList<>();
+        switch (boton) {
+            case "cedula":
+                lista = modelo.recuperarCuentas(cedula);
+                break;
+            case "cuenta":
+                lista.add(modelo.recuperaCuenta(Integer.parseInt(cuenta)));
+                break;
+        }
         if (lista.size() > 0) {
             request.setAttribute("cuentas", lista);
         }
-        if (boton.equals("btnCuenta")) {
+        if (formulario.equals("deposito")) {
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
             dispatcher.forward(request, response);
-        } else {
+        } else if (formulario.equals("retiro")) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/retiro.jsp");
             dispatcher.forward(request, response);
         }
@@ -174,13 +191,17 @@ public class controlador extends HttpServlet {
 
     protected void depositar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
         int cuenta = Integer.parseInt((String) request.getParameter("txtCuentaDeposito"));
-
+        String nomDepos = (String)request.getParameter("text_name");
+        String idDepos = (String)request.getParameter("text_id");
+        String detalle = (String)request.getParameter("txtDetalle");
+        
         List lista = modelo.getCuentas();
         for (int i = 0; i < lista.size(); i++) {
             if (cuenta == ((Cuenta) lista.get(i)).getId()) {
-                modelo.realizarDeposito((Cuenta) lista.get(i), monto);
+                modelo.realizarDeposito((Cuenta) lista.get(i), monto,nomDepos,idDepos,detalle);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
                 dispatcher.forward(request, response);
             }

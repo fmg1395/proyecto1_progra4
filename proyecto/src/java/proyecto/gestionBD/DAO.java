@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.animation.KeyValue;
 import proyecto.modelo.Cuenta;
 import proyecto.modelo.Moneda;
 import proyecto.modelo.Movimientos;
@@ -68,19 +69,17 @@ public class DAO {
         }
     }
 
-
-    public boolean crearUsuario(Usuario u) throws SQLException{
-        try(
-            Connection cnx=obtenerConexion();
-            PreparedStatement stm=cnx.prepareStatement(CMD_AGREGAR_USUARIO))
-        {
-               stm.clearParameters();
-               stm.setString(1,u.getId());
-               stm.setString(2,u.getNombre());//nombre,clave,telefono,rol
-               stm.setString(3,u.getClave());
-               stm.setInt(4,u.getTelefono());
-               stm.setString(5,u.getRol());
-               return stm.executeUpdate()==1;
+    public boolean crearUsuario(Usuario u) throws SQLException {
+        try (
+                Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_AGREGAR_USUARIO)) {
+            stm.clearParameters();
+            stm.setString(1, u.getId());
+            stm.setString(2, u.getNombre());//nombre,clave,telefono,rol
+            stm.setString(3, u.getClave());
+            stm.setInt(4, u.getTelefono());
+            stm.setString(5, u.getRol());
+            return stm.executeUpdate() == 1;
         }
     }
 
@@ -108,8 +107,9 @@ public class DAO {
                             rs.getFloat("monto")
                     );
                     List mov = this.recuperarMovimientos(c.getId());
-                    if(mov != null)
+                    if (mov != null) {
                         c.setMovimientosList(mov);
+                    }
                     lista.add(c);
                 }
             }
@@ -121,8 +121,7 @@ public class DAO {
     //sin necesidad de usuario
     public Cuenta recuperarCuenta(int id) throws SQLException {
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_CUENTA)) 
-        {
+                PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_CUENTA)) {
             Cuenta c = null;
             stm.clearParameters();
             stm.setInt(1, id);
@@ -138,9 +137,10 @@ public class DAO {
                             moneda,
                             rs.getFloat("monto")
                     );
-                    List mov =this.recuperarMovimientos(id);
-                    if(mov != null)
+                    List mov = this.recuperarMovimientos(id);
+                    if (mov != null) {
                         c.setMovimientosList(mov);
+                    }
                     return c;
                 }
             }
@@ -165,17 +165,20 @@ public class DAO {
                             rs.getString("id_depos"),
                             rs.getInt("cuenta_des")
                     );
-                    
+
                     String detalle = rs.getString("detalle");
                     String nomDep = rs.getString("nombre_depos");
                     Integer id_origen = rs.getInt("cuenta_org");
-                    if(detalle !=null)
+                    if (detalle != null) {
                         m.setDetalle(detalle);
-                    if(nomDep!=null)
+                    }
+                    if (nomDep != null) {
                         m.setNombreDepos(nomDep);
-                    if(id_origen != null)
+                    }
+                    if (id_origen != null) {
                         m.setCuentaOrg(id_origen);
-                    
+                    }
+
                     lista.add(m);
                 }
                 return lista;
@@ -183,14 +186,46 @@ public class DAO {
         }
     }
 
-    public boolean realizarDeposito(Cuenta c) throws SQLException {
+    public boolean ingresarMovimiento(Movimientos m,Cuenta c) throws SQLException {
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(CMD_DEPOSITO)) {
+                PreparedStatement stm = cnx.prepareStatement(CMD_AGREGAR_MOVIMIENTO)) {
+            stm.clearParameters();
+
+            stm.setInt(2, m.getCuentaDestino());
+            stm.setFloat(3, m.getMonto());
+            stm.setDate(4, m.getSQLFecha());
+            stm.setString(5, m.getIdDepos());
+
+            if (m.getCuentaOrg() != null) {
+                stm.setInt(1, m.getCuentaOrg());
+            } else {
+                stm.setNull(1, Types.INTEGER);
+            }
+            if (!m.getNombreDepos().isEmpty()) {
+                stm.setString(6, m.getNombreDepos());
+            } else {
+                stm.setNull(6, Types.VARCHAR);
+            }
+            if (!m.getDetalle().isEmpty()) {
+                stm.setString(7, m.getDetalle());
+            } else {
+                stm.setNull(7, Types.VARCHAR);
+            }
+            
+            if(actualizarMonto(c))
+                return stm.executeUpdate() == 1;
+            return false;
+        }
+    }
+
+    //Actualiza el monto de una cuenta
+    public boolean actualizarMonto(Cuenta c) throws SQLException {
+        try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_ACTUALIZAR_MONTO)) {
             stm.clearParameters();
             stm.setFloat(1, c.getMonto());
             stm.setInt(2, c.getId());
-
-            return stm.executeUpdate() == 1;
+             return stm.executeUpdate() == 1;  
         }
     }
 
@@ -284,8 +319,10 @@ public class DAO {
     private static final String CMD_RECUPERAR_CUENTA
             = "SELECT id, cliente, moneda, monto FROM cuentas WHERE id = ?;";
     private static final String CMD_AGREGAR_MOVIMIENTO
-            ="INSERT INTO movimientos (cuenta_org, cuenta_des, monto, fecha, id_depos,"
+            = "INSERT INTO movimientos (cuenta_org, cuenta_des, monto, fecha, id_depos,"
             + "nombre_depos, detalle) VALUES (?,?,?,?,?,?,?);";
+    private static final String CMD_ACTUALIZAR_MONTO
+            = "UPDATE cuentas SET monto = ? where id = ?;";
 
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");
@@ -293,8 +330,8 @@ public class DAO {
         DAO prueba = DAO.obtenerInstancia();
 
         try {
-           
-           List lista = prueba.recuperarCuentas("504250570");
+
+            List lista = prueba.recuperarCuentas("504250570");
 
             System.out.println();
         } catch (SQLException ex) {
