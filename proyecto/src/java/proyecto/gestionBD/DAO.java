@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.animation.KeyValue;
 import proyecto.modelo.Cuenta;
 import proyecto.modelo.Moneda;
 import proyecto.modelo.Movimientos;
+import proyecto.modelo.TipoCuenta;
 import proyecto.modelo.Usuario;
 
 /**
@@ -99,9 +99,10 @@ public class DAO {
                 while (rs.next()) {
                     Usuario usr = this.recuperarUsuario(rs.getString("cliente"));
                     Moneda moneda = this.recuperarMoneda(rs.getString("moneda"));
-
+                    TipoCuenta tipo = this.recuperarTipoCuenta(rs.getInt("tipo_cuenta"));    
                     c = new Cuenta(
                             rs.getInt("id"),
+                            tipo,
                             usr,
                             moneda,
                             rs.getFloat("monto")
@@ -114,6 +115,30 @@ public class DAO {
                 }
             }
             return lista;
+        }
+    }
+    
+    public TipoCuenta recuperarTipoCuenta(int id) throws SQLException
+    {
+        try(Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_TIPOCUENTA))
+        {
+            TipoCuenta t = null;
+            stm.clearParameters();
+            stm.setInt(1, id);
+            
+            try(ResultSet rs = stm.executeQuery())
+            {
+                if(rs.next())
+                {
+                    t = new TipoCuenta(
+                            rs.getInt("id"),
+                            rs.getString("descripcion")
+                    );
+                    return t;
+                }
+                return null;
+            }
         }
     }
 
@@ -130,9 +155,10 @@ public class DAO {
                 if (rs.next()) {
                     Usuario usr = this.recuperarUsuario(rs.getString("cliente"));
                     Moneda moneda = this.recuperarMoneda(rs.getString("moneda"));
-
+                    TipoCuenta tipo = this.recuperarTipoCuenta(rs.getInt("tipo_cuenta"));
                     c = new Cuenta(
                             rs.getInt("id"),
+                            tipo,
                             usr,
                             moneda,
                             rs.getFloat("monto")
@@ -148,6 +174,8 @@ public class DAO {
         }
     }
 
+    //Arreglar query para optener todos los movimientos
+    //tanto retiros como depositos y transacciones
     public List<Movimientos> recuperarMovimientos(int id) throws SQLException {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_MOVIMIENTO)) {
@@ -308,7 +336,7 @@ public class DAO {
     private static final String CMD_RECUPERAR_MONEDA
             = "SELECT id, tipo_cambio FROM moneda WHERE id = ?;";
     private static final String CMD_RECUPERAR_CUENTAS
-            = "SELECT id, cliente, moneda, monto FROM cuentas where cliente = ?;";
+            = "SELECT id, cliente, moneda, monto,tipo_cuenta FROM cuentas where cliente = ?;";
     private static final String CMD_CANTIDAD_CUENTAS
             = "SELECT COUNT(*) FROM CUENTAS;";
     private static final String CMD_DEPOSITO
@@ -317,12 +345,14 @@ public class DAO {
             = "SELECT id, cuenta_org, cuenta_des, monto, fecha, id_depos, nombre_depos, detalle"
             + " FROM movimientos WHERE cuenta_des = ?;";
     private static final String CMD_RECUPERAR_CUENTA
-            = "SELECT id, cliente, moneda, monto FROM cuentas WHERE id = ?;";
+            = "SELECT id, cliente, moneda, monto,tipo_cuenta FROM cuentas WHERE id = ?;";
     private static final String CMD_AGREGAR_MOVIMIENTO
             = "INSERT INTO movimientos (cuenta_org, cuenta_des, monto, fecha, id_depos,"
             + "nombre_depos, detalle) VALUES (?,?,?,?,?,?,?);";
     private static final String CMD_ACTUALIZAR_MONTO
             = "UPDATE cuentas SET monto = ? where id = ?;";
+    private static final String CMD_RECUPERAR_TIPOCUENTA 
+            = "SELECT id, descripcion FROM tipo_cuentas where id = ?;";
 
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");

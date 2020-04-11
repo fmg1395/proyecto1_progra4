@@ -20,23 +20,36 @@ public class Cuenta implements Serializable {
     private List<Cuenta> cuentasList;
     private List<Cuenta> cuentasList1;
     private Moneda moneda;
-    private Usuario usuarios;
+    private Usuario usuario;
+    private TipoCuenta tipoCuenta;
     private List<Movimientos> movimientosList;
 
     public Cuenta() {
     }
 
-    public Cuenta(Usuario usuario, Moneda moneda, float monto) {
-        this.usuarios = usuario;
+    public Cuenta(Usuario usuario,TipoCuenta tipoCuenta, Moneda moneda, float monto) {
+        this.usuario = usuario;
         this.moneda = moneda;
         this.monto = monto;
+        this.tipoCuenta=tipoCuenta;
     }
     
-    public Cuenta(Integer id,Usuario usuario, Moneda moneda, float monto) {
+    public Cuenta(Integer id,TipoCuenta tipoCuenta,Usuario usuario, Moneda moneda, float monto) {
         this.id = id;
-        this.usuarios = usuario;
+        this.usuario = usuario;
         this.moneda = moneda;
         this.monto = monto;
+        this.tipoCuenta = tipoCuenta;
+    }
+
+  
+    public TipoCuenta getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+   
+    public void setTipoCuenta(TipoCuenta tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
     }
 
     public Integer getId() {
@@ -80,11 +93,11 @@ public class Cuenta implements Serializable {
     }
 
     public Usuario getUsuarios() {
-        return usuarios;
+        return usuario;
     }
 
     public void setUsuarios(Usuario usuarios) {
-        this.usuarios = usuarios;
+        this.usuario = usuarios;
     }
 
     public List<Movimientos> getMovimientosList() {

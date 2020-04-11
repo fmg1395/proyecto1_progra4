@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS banco_caiman.movimientos;
 DROP TABLE IF EXISTS banco_caiman.cuentas;
 DROP TABLE IF EXISTS banco_caiman.usuarios;
 
+-- rol puede ser CLI de cliente o CAJ de cajero
 CREATE TABLE IF NOT EXISTS banco_caiman.usuarios (
   id VARCHAR(12) NOT NULL,
   nombre VARCHAR(45) NOT NULL,
@@ -24,13 +25,28 @@ CREATE TABLE IF NOT EXISTS banco_caiman.moneda (
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
--- rol puede ser CLI de cliente o CAJ de cajero
+CREATE TABLE IF NOT EXISTS banco_caiman.tipo_cuentas
+(id int(1) NOT NULL,
+descripcion varchar(45),
+PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS banco_caiman.intereses
+(tipo_cuenta int(1),
+moneda varchar(3),
+tasa_interes DOUBLE,
+FOREIGN KEY (tipo_cuenta) REFERENCES tipo_cuentas(id),
+FOREIGN KEY (moneda) REFERENCES moneda(id),
+PRIMARY KEY (tipo_cuenta,moneda))
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS banco_caiman.cuentas (
   id int auto_increment NOT NULL,
+  tipo_cuenta int(1) NOT NULL,
   cliente varchar(45) not null,
   moneda VARCHAR(3) NOT NULL,
   monto int,
+  FOREIGN KEY (tipo_cuenta) REFERENCES tipo_cuentas(id),
   FOREIGN KEY (cliente) REFERENCES usuarios(id),
   FOREIGN KEY (moneda) REFERENCES moneda(id),
   PRIMARY KEY (id))
@@ -78,6 +94,12 @@ INSERT INTO	usuarios
 	('116050901','Frank', 'root','CAJ',84562578),
 	('117490582','Enrique', 'root2','CAJ',12569872);
     
+INSERT INTO tipo_cuentas
+	(id,descripcion)
+    VALUES
+    (0,"corriente"),
+    (1,"ahorros");
+    
 INSERT INTO moneda
 	(id,tipo_cambio)
     VALUES
@@ -85,14 +107,24 @@ INSERT INTO moneda
     ('CRC',0),
     ('USD', 586);
     
-INSERT INTO cuentas
-	(cliente,moneda,monto)
+INSERT INTO intereses 
+	(tipo_cuenta,moneda,tasa_interes)
     VALUES
-    ('116050901','CRC',1000),
-    ('117490582','USD',500000),
-    ('504250570','EUR',200),
-	('504250570','CRC',5480000),
-	('504250570','USD',75);
+    (0,"CRC",0.02),
+    (1,"CRC",0.02),
+    (0,"USD",0.02),
+    (1,"USD",0.02),
+    (0,"EUR",0.02),
+    (1,"EUR",0.02);
+    
+INSERT INTO cuentas
+	(cliente,moneda,monto,tipo_cuenta)
+    VALUES
+    ('116050901','CRC',1000,1),
+    ('117490582','USD',500000,0),
+    ('504250570','EUR',200,1),
+	('504250570','CRC',5480000,1),
+	('504250570','USD',75,0);
     
 	
 

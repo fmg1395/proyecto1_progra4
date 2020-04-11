@@ -15,6 +15,7 @@ import proyecto.gestionBD.DAO;
 import proyecto.modelo.Cuenta;
 import proyecto.modelo.Modelo;
 import proyecto.modelo.Moneda;
+import proyecto.modelo.TipoCuenta;
 import proyecto.modelo.Usuario;
 
 /**
@@ -154,8 +155,10 @@ public class controlador extends HttpServlet {
         String tipoMoneda = (String) request.getParameter("drone");
         String limiteTransferencias = (String) request.getParameter("transferencia");
         Usuario aux = DAO.obtenerInstancia().recuperarUsuario(txtCuenta);
+        TipoCuenta tipo = DAO.obtenerInstancia().recuperarTipoCuenta(0);
         int id = Integer.parseInt(nCuenta) + 1;
         int saldo = 0;
+        //Falta agregar el tipo de cuenta;
         Cuenta c1 = new Cuenta(id, aux, new Moneda(tipoMoneda), saldo);
         modelo.insertarCuenta(c1);
         Modelo.cont++;
