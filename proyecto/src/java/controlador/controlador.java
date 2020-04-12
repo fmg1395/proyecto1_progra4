@@ -159,7 +159,7 @@ public class controlador extends HttpServlet {
         int id = Integer.parseInt(nCuenta) + 1;
         int saldo = 0;
         //Falta agregar el tipo de cuenta;
-        Cuenta c1 = new Cuenta(id, aux, new Moneda(tipoMoneda), saldo);
+        Cuenta c1 = new Cuenta(id,tipo, aux, new Moneda(tipoMoneda), saldo);
         modelo.insertarCuenta(c1);
         Modelo.cont++;
         RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
@@ -180,7 +180,8 @@ public class controlador extends HttpServlet {
             Usuario aux = new Usuario(txtCuenta, nombre, pass, "CLI", Integer.parseInt(telefono));
             int id = Integer.parseInt(nCuenta) + 1;
             int saldo = 0;
-            Cuenta c1 = new Cuenta(id, aux, new Moneda(tipoMoneda), saldo);
+            TipoCuenta tipo = DAO.obtenerInstancia().recuperarTipoCuenta(0);
+            Cuenta c1 = new Cuenta(id, tipo,aux, new Moneda(tipoMoneda), saldo);
             modelo.insertarUsuario(aux);
             modelo.insertarCuenta(c1);
             Modelo.cont++;

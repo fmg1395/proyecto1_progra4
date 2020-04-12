@@ -99,7 +99,7 @@ public class DAO {
                 while (rs.next()) {
                     Usuario usr = this.recuperarUsuario(rs.getString("cliente"));
                     Moneda moneda = this.recuperarMoneda(rs.getString("moneda"));
-                    TipoCuenta tipo = this.recuperarTipoCuenta(rs.getInt("tipo_cuenta"));    
+                    TipoCuenta tipo = this.recuperarTipoCuenta(rs.getInt("tipo_cuenta"));
                     c = new Cuenta(
                             rs.getInt("id"),
                             tipo,
@@ -117,20 +117,16 @@ public class DAO {
             return lista;
         }
     }
-    
-    public TipoCuenta recuperarTipoCuenta(int id) throws SQLException
-    {
-        try(Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_TIPOCUENTA))
-        {
+
+    public TipoCuenta recuperarTipoCuenta(int id) throws SQLException {
+        try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_TIPOCUENTA)) {
             TipoCuenta t = null;
             stm.clearParameters();
             stm.setInt(1, id);
-            
-            try(ResultSet rs = stm.executeQuery())
-            {
-                if(rs.next())
-                {
+
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
                     t = new TipoCuenta(
                             rs.getInt("id"),
                             rs.getString("descripcion")
@@ -214,7 +210,7 @@ public class DAO {
         }
     }
 
-    public boolean ingresarMovimiento(Movimientos m,Cuenta c) throws SQLException {
+    public boolean ingresarMovimiento(Movimientos m, Cuenta c) throws SQLException {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_AGREGAR_MOVIMIENTO)) {
             stm.clearParameters();
@@ -239,9 +235,10 @@ public class DAO {
             } else {
                 stm.setNull(7, Types.VARCHAR);
             }
-            
-            if(actualizarMonto(c))
+
+            if (actualizarMonto(c)) {
                 return stm.executeUpdate() == 1;
+            }
             return false;
         }
     }
@@ -253,7 +250,7 @@ public class DAO {
             stm.clearParameters();
             stm.setFloat(1, c.getMonto());
             stm.setInt(2, c.getId());
-             return stm.executeUpdate() == 1;  
+            return stm.executeUpdate() == 1;
         }
     }
 
@@ -323,6 +320,26 @@ public class DAO {
         return usr;
     }
 
+    
+     //De acuerdo a la cuenta devuelve
+    // el porcentaje que corresponde a la tasa de interes
+   //que la cuenta tiene asociada
+    public double buscarTasaInteres(Cuenta c) throws SQLException {
+        try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_TASA_INTERES)) {
+            stm.clearParameters();
+            stm.setInt(1, c.getTipoCuenta().getId());
+            stm.setString(2, c.getMoneda().getId());
+            
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble("tasa_interes");
+                }
+            }
+        }
+        return -1;
+    }
+
     private static DAO instancia = null;
 
     private static final String CMD_AGREGAR_USUARIO
@@ -351,8 +368,10 @@ public class DAO {
             + "nombre_depos, detalle) VALUES (?,?,?,?,?,?,?);";
     private static final String CMD_ACTUALIZAR_MONTO
             = "UPDATE cuentas SET monto = ? where id = ?;";
-    private static final String CMD_RECUPERAR_TIPOCUENTA 
+    private static final String CMD_RECUPERAR_TIPOCUENTA
             = "SELECT id, descripcion FROM tipo_cuentas where id = ?;";
+    private static final String CMD_TASA_INTERES
+            = "SELECT tasa_interes FROM intereses where tipo_cuenta = ? and moneda = ?;";
 
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");
@@ -362,7 +381,7 @@ public class DAO {
         try {
 
             List lista = prueba.recuperarCuentas("504250570");
-
+            
             System.out.println();
         } catch (SQLException ex) {
             System.err.printf("FALLO Recuperar CLIENTE: %s", ex.getMessage());

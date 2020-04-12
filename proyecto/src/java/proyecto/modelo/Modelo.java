@@ -4,8 +4,6 @@ import java.util.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import proyecto.gestionBD.DAO;
 
 /**
@@ -31,6 +29,14 @@ public class Modelo {
     public void insertarUsuario(Usuario u) throws SQLException {
         DAO cnx = DAO.obtenerInstancia();
         cnx.crearUsuario(u);
+    }
+    
+    //Devuelve tasa de interes de la cuenta
+    //Depende del tipo de cuenta y de la moneda
+    public double recuperarTasaInteres(Cuenta c) throws SQLException
+    {
+        DAO cnx = DAO.obtenerInstancia();
+        return cnx.buscarTasaInteres(c);
     }
 
     public void recuperarUsuario(String id) {
