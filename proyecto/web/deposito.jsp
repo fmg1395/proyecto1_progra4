@@ -15,6 +15,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="stylesSesion.css" rel="stylesheet" type="text/css"/>
         <title>Deposito</title>
+        <link  rel="icon"   href="img/bank.png" type="image/png" />
+
     </head>
     <body>
         <header><!--Titulo o logotipo y despues el menu-->
@@ -125,11 +127,11 @@
                         out.print("<th>Número de Cuenta</th>");
                         out.print("<th>Saldo</th>");
                         out.print("</tr>");
-                        
+
                         String descripcion = ((Cuenta) lista.get(0)).getMoneda().getId();
                         String nCuenta = String.valueOf(((Cuenta) lista.get(0)).getId());
                         String saldo = String.valueOf(((Cuenta) lista.get(0)).getMonto());
-                        
+
                         out.print("<tr>");
                         out.print("<td>" + descripcion + "</td>");
                         out.print("<td>" + nCuenta + "</td>");

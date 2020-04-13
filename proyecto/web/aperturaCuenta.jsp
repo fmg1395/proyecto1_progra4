@@ -16,6 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="stylesSesion.css" rel="stylesheet" type="text/css"/>
         <title>Apertura de Cuenta</title>
+        <link  rel="icon"   href="img/bank.png" type="image/png" />
     </head>
     <body>
         <header>
@@ -38,7 +39,7 @@
                                 out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
                                 out.println("<li><a href='retiro.jsp'>Retiro</a></li>");
                                 out.println("<li><a href='deposito.jsp'>Depósito</a></li>");
-                                out.println("<li><a href='#'>Transferencia en cajas</a></li>");
+                                out.println("<li><a href='transferencias.jsp'>Transferencia en cajas</a></li>");
                                 out.println("<li><a href='acreditacionIntereses.jsp'>Acreditación de intereses</a></li>");
                             } else {
                                 out.println("<li><a href='#'>Consultas</a>");
@@ -55,26 +56,6 @@
                         </form>
                     </ul>
                 </nav>
-                        if (rol.equals("CAJ")) {
-                            out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
-                            out.println("<li><a href='retiro.jsp'>Retiro</a></li>");
-                            out.println("<li><a href='deposito.jsp'>Depósito</a></li>");
-                            out.println("<li><a href='transferencias.jsp'>Transferencia en cajas</a></li>");
-                            out.println("<li><a href='#'>Acreditación de intereses</a></li>");
-                        } else {
-                            out.println("<li><a href='#'>Consultas</a>");
-                            out.println("<ul class='submenu'>");
-                            out.println("<li><a href='#'>Consulta de cuenta</a></li>");
-                            out.println("<li><a href='#'>Consulta de movimientos</a></li>");
-                            out.println("</ul>");
-                            out.println("</li>");
-                            out.println("<li><a href='#'>Vinculación de cuentas</a></li>");
-                            out.println("<li><a href='#'>Transferencia remota</a></li>");
-                        }
-                    %>
-                    <li class="salir"><a href="index.jsp">Cerrar sesión</a></li>
-                </ul>
-            </nav>
         </header>                        
         <form id="formulario" action="servicios" method="post" accept-charset="UTF-8">  
             <div id="content">
@@ -96,7 +77,14 @@
                 <br>
                 <br>
                 <br>
-                <label> Saldo inicial:<input type='text' id='sInicial' disabled="disabled"  name= 'saldo' value="0"></label> <br>
+                <label> Saldo inicial:<input type='text' id='sInicial' disabled="disabled"  name= 'saldo' value="0"></label>
+                <br>
+                <br>
+                <label>Tipo de Cuenta: </label>
+                <input type='radio' id='cuentaA' name= 'tCuenta' value='1' checked>
+                <label for='cuentaA'>Cuenta de Ahorros</label>
+                <input type='radio' id='cuentaC' name= 'tCuenta' value='0' checked>
+                <label for='cuentaA'>Cuenta Corriente</label>
                 <br>
                 <br>
                 <label> Límite de transferencias remotas:<input type='number' id='transR' name= 'transferencia' placeholder='Digite numero límite'></label> <br>

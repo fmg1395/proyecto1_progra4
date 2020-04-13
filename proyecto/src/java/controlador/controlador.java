@@ -47,32 +47,26 @@ public class controlador extends HttpServlet {
         String btnCuentaA = (String) request.getParameter("btnCuentaA");
         String btnVincular = (String) request.getParameter("btnVincular");
         String btnLogIn = (String) request.getParameter("btnLogIn");
-
         String btnCuentaPorCedula = (String) request.getParameter("btnBuscarPorCedula");
-        String btnCuentaPorNumero = (String) request.getParameter("btnBuscarPorCuenta");                  
-        String btnCuenta="";  
+        String btnCuentaPorNumero = (String) request.getParameter("btnBuscarPorCuenta");
         String btnDepositar = (String) request.getParameter("btnDepositar");
         String btnCrearUsuario = (String) request.getParameter("crearUsuario");
         String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
-        String btnAcreditacion=(String) request.getParameter("btnAcreditacion");
+        String btnAcreditacion = (String) request.getParameter("btnAcreditacion");
         String btnLogOut = (String) request.getParameter("btnLogOut");
         if (btnLogIn != null) {
             logIn(request, response);
         } else if (btnLogOut != null) {
             logOut(request, response);
-        }
-        else if(btnAcreditacion!=null)
-        {
+        } else if (btnAcreditacion != null) {
             try {
                 acreditar(request, response);
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else if (btnCuenta != null) {
-            buscarCuenta(request, response, btnCuenta);
         } else if (btnCuentaPorCedula != null) {
             buscarCuenta(request, response, "cedula");
-        } else if (btnCuentaPorNumero!=null) {
+        } else if (btnCuentaPorNumero != null) {
             buscarCuenta(request, response, "cuenta");
         } else if (btnDepositar != null) {
             depositar(request, response);
@@ -163,18 +157,19 @@ public class controlador extends HttpServlet {
             dispatcher.forward(request, response);
         }
     }
-    protected void acreditar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException
-    {
-        Float porcentajeUSD=Float.parseFloat((String) request.getParameter("aUSD"));
-        Float porcentajeCRC=Float.parseFloat((String) request.getParameter("aCRC"));
-        Float porcentajeEUR=Float.parseFloat((String) request.getParameter("aEUR"));
+
+    protected void acreditar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        Float porcentajeUSD = Float.parseFloat((String) request.getParameter("aUSD"));
+        Float porcentajeCRC = Float.parseFloat((String) request.getParameter("aCRC"));
+        Float porcentajeEUR = Float.parseFloat((String) request.getParameter("aEUR"));
         modelo.acreditacion(porcentajeUSD, "USD");
         modelo.acreditacion(porcentajeCRC, "CRC");
         modelo.acreditacion(porcentajeEUR, "EUR");
-        RequestDispatcher dispatcher=request.getRequestDispatcher("/procesoCorrecto.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
         dispatcher.forward(request, response);
 
     }
+
     protected void buscarCuentaA(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String txtCuenta = (String) request.getParameter("cedExistente");
@@ -200,7 +195,7 @@ public class controlador extends HttpServlet {
         int id = Integer.parseInt(nCuenta) + 1;
         int saldo = 0;
         //Falta agregar el tipo de cuenta;
-        Cuenta c1 = new Cuenta(id,tipo, aux, new Moneda(tipoMoneda), saldo);
+        Cuenta c1 = new Cuenta(id, tipo, aux, new Moneda(tipoMoneda), saldo);
         modelo.insertarCuenta(c1);
         Modelo.cont++;
         RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
@@ -222,7 +217,7 @@ public class controlador extends HttpServlet {
             int id = Integer.parseInt(nCuenta) + 1;
             int saldo = 0;
             TipoCuenta tipo = DAO.obtenerInstancia().recuperarTipoCuenta(0);
-            Cuenta c1 = new Cuenta(id, tipo,aux, new Moneda(tipoMoneda), saldo);
+            Cuenta c1 = new Cuenta(id, tipo, aux, new Moneda(tipoMoneda), saldo);
             modelo.insertarUsuario(aux);
             modelo.insertarCuenta(c1);
             Modelo.cont++;
@@ -236,17 +231,17 @@ public class controlador extends HttpServlet {
 
     protected void depositar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
         int cuenta = Integer.parseInt((String) request.getParameter("txtCuentaDeposito"));
-        String nomDepos = (String)request.getParameter("text_name");
-        String idDepos = (String)request.getParameter("text_id");
-        String detalle = (String)request.getParameter("txtDetalle");
-        
+        String nomDepos = (String) request.getParameter("text_name");
+        String idDepos = (String) request.getParameter("text_id");
+        String detalle = (String) request.getParameter("txtDetalle");
+
         List lista = modelo.getCuentas();
         for (int i = 0; i < lista.size(); i++) {
             if (cuenta == ((Cuenta) lista.get(i)).getId()) {
-                modelo.realizarDeposito((Cuenta) lista.get(i), monto,nomDepos,idDepos,detalle);
+                modelo.realizarDeposito((Cuenta) lista.get(i), monto, nomDepos, idDepos, detalle);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
                 dispatcher.forward(request, response);
             }

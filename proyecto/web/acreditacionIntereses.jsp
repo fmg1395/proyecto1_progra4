@@ -12,6 +12,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="stylesSesion.css" rel="stylesheet" type="text/css"/>
         <title>Acreditación de intereses</title>
+        <link  rel="icon"   href="img/bank.png" type="image/png" />
+
     </head>
     <body>
         <header>                    
