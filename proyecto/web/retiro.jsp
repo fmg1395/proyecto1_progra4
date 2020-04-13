@@ -32,7 +32,7 @@
                             out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
                             out.println("<li><a href='retiro.jsp'>Retiro</a></li>");
                             out.println("<li><a href='deposito.jsp'>Depósito</a></li>");
-                            out.println("<li><a href='#'>Transferencia en cajas</a></li>");
+                            out.println("<li><a href='transferencias.jsp'>Transferencia en cajas</a></li>");
                             out.println("<li><a href='acreditacionIntereses.jsp'>Acreditación de intereses</a></li>");
                         } else {
                             out.println("<li><a href='#'>Consultas</a>");
@@ -94,9 +94,7 @@
                                 + "<input type = 'text' size='25' name='txtCuentaDeposito'  placeholder='Ingrese Número de Cuenta'>");
                         out.print("<input type = 'text' name='txtMonto'  placeholder='Monto a retirar'>");
                         out.print("<input type = 'submit' name='btnDepositar'  value='Depositar'>");
-                    }
-                //Falta elegir cuenta para hacer el update
-                             
+                    }             
                 %>
             </div>  
         </form>

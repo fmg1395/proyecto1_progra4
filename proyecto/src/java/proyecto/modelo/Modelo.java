@@ -1,6 +1,8 @@
 package proyecto.modelo;
 
+import java.util.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import proyecto.gestionBD.DAO;
 
@@ -16,16 +18,16 @@ public class Modelo {
         this.cliente = null;
         this.cajero = null;
         this.ultimoRol = "Null";
-        this.cuentas=null;
+        this.cuentas = new ArrayList<>();
     }
-    public void insertarCuenta(Cuenta c) throws SQLException
-    {
-        DAO cnx=DAO.obtenerInstancia();
+
+    public void insertarCuenta(Cuenta c) throws SQLException {
+        DAO cnx = DAO.obtenerInstancia();
         cnx.crearCuenta(c);
     }
-    public void insertarUsuario(Usuario u) throws SQLException
-    {
-        DAO cnx=DAO.obtenerInstancia();
+
+    public void insertarUsuario(Usuario u) throws SQLException {
+        DAO cnx = DAO.obtenerInstancia();
         cnx.crearUsuario(u);
     }
     public void acreditacion(float n, String p) throws SQLException
@@ -33,6 +35,15 @@ public class Modelo {
         DAO cnx=DAO.obtenerInstancia();
         cnx.acreditacion(n, p);
     }
+    
+    //Devuelve tasa de interes de la cuenta
+    //Depende del tipo de cuenta y de la moneda
+    public double recuperarTasaInteres(Cuenta c) throws SQLException
+    {
+        DAO cnx = DAO.obtenerInstancia();
+        return cnx.buscarTasaInteres(c);
+    }
+
     public void recuperarUsuario(String id) {
         DAO cnx = DAO.obtenerInstancia();
 
@@ -56,22 +67,29 @@ public class Modelo {
         }
     }
 
-    public boolean realizarDeposito(Cuenta c,float monto) {
-        try 
-        {
-            DAO cnx = DAO.obtenerInstancia();
-            if(monto>0)
-            {
+    public boolean realizarDeposito(Cuenta c, float monto, String nomDepos, String idDepos, String detalle) {
+
+        Movimientos m;
+        DAO cnx = DAO.obtenerInstancia();
+
+        try {
+            if (monto > 0) {
+                m = new Movimientos(0, monto, new Date(), idDepos, c.getId());
+                if (!detalle.isEmpty()) {
+                    m.setDetalle(detalle);
+                }
+                if(!nomDepos.isEmpty())
+                    m.setNombreDepos(nomDepos);
+                
                 c.setMonto(c.getMonto()+monto);
-                cnx.realizarDeposito(c);
-                return true;
+                return cnx.ingresarMovimiento(m,c);
             }
-            return false;
-        } catch (SQLException ex) 
-        {
-            System.err.printf("Exception Model: recuperar cantidad de cuentas, %s", ex.getMessage());
+
+        } catch (SQLException ex) {
+            System.err.printf("Exception Model: recuperar usuario, %s", ex.getMessage());
             return false;
         }
+        return false;
     }
 
     public Usuario getCliente() {
@@ -118,6 +136,9 @@ public class Modelo {
         }
     }
 
+    //Recupera todas las cuentas del cliente
+    //se utiliza la cedula para buscar las
+    //cuentas
     public List recuperarCuentas(String id) {
         try {
             DAO cnx = DAO.obtenerInstancia();
@@ -130,20 +151,33 @@ public class Modelo {
         return null;
     }
 
+    //Recupera solo una cuenta por
+    //medio de su ID
+    public Cuenta recuperaCuenta(int id) {
+        DAO cnx = DAO.obtenerInstancia();
+        try {
+            Cuenta c = cnx.recuperarCuenta(id);
+            this.getCuentas().add(c);
+            return c;
+        } catch (SQLException ex) {
+            System.err.printf("Exception Model: recuperar cuenta, %s", ex.getMessage());
+        }
+        return null;
+    }
+
     public void limpiarCliente() {
         this.setCliente(null);
     }
-    public boolean idDuplicada(String id)
-    {
-       recuperarUsuario(id);
-        if(this.getCliente()!=null||this.getCajero()!=null)
-        {
+
+    public boolean idDuplicada(String id) {
+        recuperarUsuario(id);
+        if (this.getCliente() != null || this.getCajero() != null) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
     public boolean revisarCredenciales(String id, String clave) {
         recuperarUsuario(id);
         if (this.getCliente() != null) {

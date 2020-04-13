@@ -55,6 +55,26 @@
                         </form>
                     </ul>
                 </nav>
+                        if (rol.equals("CAJ")) {
+                            out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
+                            out.println("<li><a href='retiro.jsp'>Retiro</a></li>");
+                            out.println("<li><a href='deposito.jsp'>Depósito</a></li>");
+                            out.println("<li><a href='transferencias.jsp'>Transferencia en cajas</a></li>");
+                            out.println("<li><a href='#'>Acreditación de intereses</a></li>");
+                        } else {
+                            out.println("<li><a href='#'>Consultas</a>");
+                            out.println("<ul class='submenu'>");
+                            out.println("<li><a href='#'>Consulta de cuenta</a></li>");
+                            out.println("<li><a href='#'>Consulta de movimientos</a></li>");
+                            out.println("</ul>");
+                            out.println("</li>");
+                            out.println("<li><a href='#'>Vinculación de cuentas</a></li>");
+                            out.println("<li><a href='#'>Transferencia remota</a></li>");
+                        }
+                    %>
+                    <li class="salir"><a href="index.jsp">Cerrar sesión</a></li>
+                </ul>
+            </nav>
         </header>                        
         <form id="formulario" action="servicios" method="post" accept-charset="UTF-8">  
             <div id="content">
