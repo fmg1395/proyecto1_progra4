@@ -1,16 +1,16 @@
-DROP SCHEMA IF EXISTS banco_caiman ;
+DROP SCHEMA IF EXISTS eif209_2001_p01b ;
 
-CREATE SCHEMA IF NOT EXISTS banco_caiman
+CREATE SCHEMA IF NOT EXISTS eif209_2001_p01b
 	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci ;
-USE banco_caiman ;
+USE eif209_2001_p01b ;
 
-DROP TABLE IF EXISTS banco_caiman.vinculadas;
-DROP TABLE IF EXISTS banco_caiman.movimientos;
-DROP TABLE IF EXISTS banco_caiman.cuentas;
-DROP TABLE IF EXISTS banco_caiman.usuarios;
+DROP TABLE IF EXISTS eif209_2001_p01b.vinculadas;
+DROP TABLE IF EXISTS eif209_2001_p01b.movimientos;
+DROP TABLE IF EXISTS eif209_2001_p01b.cuentas;
+DROP TABLE IF EXISTS eif209_2001_p01b.usuarios;
 
 -- rol puede ser CLI de cliente o CAJ de cajero
-CREATE TABLE IF NOT EXISTS banco_caiman.usuarios (
+CREATE TABLE IF NOT EXISTS eif209_2001_p01b.usuarios (
   id VARCHAR(12) NOT NULL,
   nombre VARCHAR(45) NOT NULL,
   clave VARCHAR(8) NOT NULL,
@@ -19,19 +19,19 @@ CREATE TABLE IF NOT EXISTS banco_caiman.usuarios (
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS banco_caiman.moneda (
+CREATE TABLE IF NOT EXISTS eif209_2001_p01b.moneda (
   id varchar(3) NOT NULL,
   tipo_cambio int,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS banco_caiman.tipo_cuentas
+CREATE TABLE IF NOT EXISTS eif209_2001_p01b.tipo_cuentas
 (id int(1) NOT NULL,
 descripcion varchar(45),
 PRIMARY KEY (id))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS banco_caiman.intereses
+CREATE TABLE IF NOT EXISTS eif209_2001_p01b.intereses
 (tipo_cuenta int(1),
 moneda varchar(3),
 tasa_interes DOUBLE,
@@ -40,7 +40,7 @@ FOREIGN KEY (moneda) REFERENCES moneda(id),
 PRIMARY KEY (tipo_cuenta,moneda))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS banco_caiman.cuentas (
+CREATE TABLE IF NOT EXISTS eif209_2001_p01b.cuentas (
   id int auto_increment NOT NULL,
   tipo_cuenta int(1) NOT NULL,
   cliente varchar(45) not null,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS banco_caiman.cuentas (
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS banco_caiman.movimientos (
+CREATE TABLE IF NOT EXISTS eif209_2001_p01b.movimientos (
   id int auto_increment NOT NULL,
   cuenta_org int,
   cuenta_des int NOT NULL,
@@ -69,7 +69,7 @@ ENGINE = InnoDB;
 -- nombre_depos: nombre del depositante
 -- en caso de que no sea una tranferencia en el mismo banco
 
-CREATE TABLE IF NOT EXISTS banco_caiman.vinculadas (
+CREATE TABLE IF NOT EXISTS eif209_2001_p01b.vinculadas (
   id_c1 int NOT NULL,
   id_c2 int NOT NULL,
   foreign key (id_c1) references cuentas(id),
