@@ -20,6 +20,8 @@
     </head>
     <body>
         <header><!--Titulo o logotipo y despues el menu-->
+                    <form id="buscarCuentas" name='form_deposito' action="servicios" method="post" accept-charset="UTF-8">
+
             <nav class="navBar"><!--Menu de navegacion-->
                 <ul class="menu"><!--Lista-->
                     <%
@@ -62,7 +64,6 @@
                 </ul>
             </nav>
         </header>
-        <form id="buscarCuentas" name='form_deposito' action="servicios" method="post" accept-charset="UTF-8">
             <%
                 request.getSession().setAttribute("formulario", "deposito");
             %>

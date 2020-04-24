@@ -117,6 +117,13 @@
                         <%}%>
                         <input class="buscar" type = "submit" name="btnCuentaA" value=" buscar ">
                         <input class="vincular" type="submit" name="btnVincular" value="vincular">
+                        <%
+                        Boolean existe=(Boolean)request.getAttribute("inexistente");
+                        if(existe!=null&&!existe)
+                        {
+                        out.println("<label>Id inexistente</label><p></p>");
+                        }
+                        %>
                     </div>
                 </div>
                 <div class="usuarioNuevo">

@@ -53,12 +53,13 @@
                                 out.println("<li><a href='#'>Vinculación de cuentas</a></li>");
                                 out.println("<li><a href='#'>Transferencia remota</a></li>");
                             }
-}
+
                         %>
                         <li><input type="submit" name= "btnLogOut" value="Cerrar sesión"></li>
                         </form>
                     </ul>
                 </nav>   
         </header>
+                        <%}%>
     </body>
 </html>
