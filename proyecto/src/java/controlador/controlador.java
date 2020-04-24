@@ -189,6 +189,7 @@ public class controlador extends HttpServlet {
         String txtCuenta = (String) request.getParameter("cedExistente");
         String nCuenta = Integer.toString(Modelo.cont);//Id incrementable
         String tipoMoneda = (String) request.getParameter("drone");
+        String tipoCuenta=(String) request.getParameter("tCuenta");
         String limiteTransferencias = (String) request.getParameter("transferencia");
         Usuario aux = DAO.obtenerInstancia().recuperarUsuario(txtCuenta);
         TipoCuenta tipo = DAO.obtenerInstancia().recuperarTipoCuenta(0);
