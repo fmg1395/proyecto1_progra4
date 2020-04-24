@@ -24,6 +24,17 @@
                             String rol = (String) request.getSession().getAttribute("rol");
 
                             Usuario usr = null;
+                    if (rol == null) {
+                %>
+            <div id="realized">
+                <h2>ACCESO DENEGADO</h2>
+                <div id="url">
+                <input type="submit" name= "btnLogOut" value="Volver al inicio"> 
+                </div>
+                </div>
+                <%
+                } else {
+                
                             if (rol.equals("CAJ")) {
                                 usr = (Usuario) request.getSession().getAttribute("cajero");
                                 out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
@@ -42,6 +53,7 @@
                                 out.println("<li><a href='#'>Vinculación de cuentas</a></li>");
                                 out.println("<li><a href='#'>Transferencia remota</a></li>");
                             }
+}
                         %>
                         <li><input type="submit" name= "btnLogOut" value="Cerrar sesión"></li>
                         </form>

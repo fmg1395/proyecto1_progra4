@@ -31,6 +31,16 @@
                         if (lista != null) {
                             nombre = ((Cuenta) lista.get(0)).getUsuarios().getNombre();
                         }
+                                  if (rol == null) {
+                %>
+            <div id="realized">
+                <h2>ACCESO DENEGADO</h2>
+                <div id="url">
+                <input type="submit" name= "btnLogOut" value="Volver al inicio"> 
+                </div>
+                </div>
+                <%
+                } else {
                         if (rol.equals("CAJ")) {
                             out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
                             out.println("<li><a href='retiro.jsp'>Retiro</a></li>");
@@ -127,11 +137,11 @@
                         out.print("<th>Número de Cuenta</th>");
                         out.print("<th>Saldo</th>");
                         out.print("</tr>");
-
+       
                         String descripcion = ((Cuenta) lista.get(0)).getMoneda().getId();
                         String nCuenta = String.valueOf(((Cuenta) lista.get(0)).getId());
                         String saldo = String.valueOf(((Cuenta) lista.get(0)).getMonto());
-
+                        
                         out.print("<tr>");
                         out.print("<td>" + descripcion + "</td>");
                         out.print("<td>" + nCuenta + "</td>");
@@ -153,5 +163,6 @@
                 %>
             </div>
         </form>
+            <%}%>
     </body>
 </html>

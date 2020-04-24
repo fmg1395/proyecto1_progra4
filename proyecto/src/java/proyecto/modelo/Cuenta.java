@@ -23,15 +23,17 @@ public class Cuenta implements Serializable {
     private Usuario usuario;
     private TipoCuenta tipoCuenta;
     private List<Movimientos> movimientosList;
+    private Integer limiteTransferencias;
 
     public Cuenta() {
     }
 
-    public Cuenta(Usuario usuario,TipoCuenta tipoCuenta, Moneda moneda, float monto) {
+    public Cuenta(Usuario usuario,TipoCuenta tipoCuenta, Moneda moneda, float monto,int limite) {
         this.usuario = usuario;
         this.moneda = moneda;
         this.monto = monto;
         this.tipoCuenta=tipoCuenta;
+        limiteTransferencias=limite;
     }
     
     public Cuenta(Integer id,TipoCuenta tipoCuenta,Usuario usuario, Moneda moneda, float monto) {
@@ -58,6 +60,14 @@ public class Cuenta implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getLimiteTransferencias() {
+        return limiteTransferencias;
+    }
+
+    public void setLimiteTransferencias(Integer limiteTransferencias) {
+        this.limiteTransferencias = limiteTransferencias;
     }
 
     public float getMonto() {

@@ -30,12 +30,22 @@
                         if (cuentas1 != null) {
                             nombre = ((Cuenta) cuentas1.get(0)).getUsuarios().getNombre();
                         }
+                        if (rol == null) {
+                    %>
+                    <div id="realized">
+                        <h2>ACCESO DENEGADO</h2>
+                        <div id="url">
+                            <input type="submit" name= "btnLogOut" value="Volver al inicio"> 
+                        </div>
+                    </div>
+                    <%
+                    } else {
                         if (rol.equals("CAJ")) {
                             out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
                             out.println("<li><a href='retiro.jsp'>Retiro</a></li>");
                             out.println("<li><a href='deposito.jsp'>Depósito</a></li>");
                             out.println("<li><a href='transferencias.jsp'>Transferencia en cajas</a></li>");
-                            out.println("<li><a href='#'>Acreditación de intereses</a></li>");
+                            out.println("<li><a href='acreditacionIntereses.jsp'>Acreditación de intereses</a></li>");
                         } else {
                             out.println("<li><a href='#'>Consultas</a>");
                             out.println("<ul class='submenu'>");
@@ -166,10 +176,10 @@
                             out.print("<input type = 'submit' name='btnDepositar'  value='Depositar'>");
                         }
 
-
                     %>
                 </div>
             </div>
         </form>
+        <%}%>
     </body>
 </html>

@@ -132,6 +132,8 @@ body{
     text-align: center;
     display:inline-block;   
  text-decoration: none;
+    font-family: arial;
+
     font-size: 16px;
     line-height: 20px;
     color:grey;
@@ -139,7 +141,21 @@ body{
 #url a:hover{
     color:black;
 }
+#url input{
+     padding:1em;
+    text-align: center;
+    display:inline-block;   
+ text-decoration: none;
+    font-size: 16px;
+    line-height: 20px;
+    color:grey;
+    background-color:transparent;
+    border:none;
 
+}
+#url input:hover{
+    color:black;
+}
 #url{
   width: 100%;
   text-align: center;

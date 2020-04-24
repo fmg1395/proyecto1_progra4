@@ -34,7 +34,16 @@
                                 ced = ((Cuenta) lista.get(0)).getUsuarios().getId();
                             }
                             Usuario usr = (Usuario) request.getSession().getAttribute("cajero");
-
+                                      if (rol == null) {
+                %>
+            <div id="realized">
+                <h2>ACCESO DENEGADO</h2>
+                <div id="url">
+                <input type="submit" name= "btnLogOut" value="Volver al inicio"> 
+                </div>
+                </div>
+                <%
+                } else {
                             if (rol.equals("CAJ")) {
                                 out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
                                 out.println("<li><a href='retiro.jsp'>Retiro</a></li>");
@@ -143,6 +152,6 @@
                 </div>
             </div>
         </form>
-
+        <%}%>                       
     </body>
 </html>

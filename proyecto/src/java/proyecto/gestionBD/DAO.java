@@ -65,6 +65,8 @@ public class DAO {
             stm.setString(1, c.getUsuarios().getId());
             stm.setString(2, c.getMoneda().getId());
             stm.setFloat(3, c.getMonto());
+            stm.setInt(4, c.getTipoCuenta().getId());
+            stm.setInt(5, c.getLimiteTransferencias());
             return stm.executeUpdate() == 1;
         }
     }
@@ -361,8 +363,8 @@ public class DAO {
     private static final String CMD_RECUPERAR_USUARIO
             = "SELECT id,nombre,clave,telefono,rol FROM usuarios WHERE id = ?;";
     private static final String CMD_CREAR_CUENTA
-            = "INSERT INTO cuentas (cliente,moneda,monto) "
-            + "VALUES (?,?,?);";
+            = "INSERT INTO cuentas (cliente,moneda,monto,tipo_cuenta,limite_transferencias) "
+            + "VALUES (?,?,?,?,?);";
     private static final String CMD_RECUPERAR_MONEDA
             = "SELECT id, tipo_cambio FROM moneda WHERE id = ?;";
     private static final String CMD_RECUPERAR_CUENTAS

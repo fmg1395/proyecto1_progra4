@@ -29,6 +29,16 @@
                             if (lista != null) {
                                 nombre = ((Cuenta) lista.get(0)).getUsuarios().getNombre();
                             }
+                                      if (rol == null) {
+                %>
+            <div id="realized">
+                <h2>ACCESO DENEGADO</h2>
+                <div id="url">
+                <input type="submit" name= "btnLogOut" value="Volver al inicio"> 
+                </div>
+                </div>
+                <%
+                } else {
                             if (rol.equals("CAJ")) {
                                 out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
                                 out.println("<li><a href='retiro.jsp'>Retiro</a></li>");
@@ -94,8 +104,10 @@
                         out.print("<input type = 'text' name='txtMonto'  placeholder='Monto a retirar'>");
                         out.print("<input type = 'submit' name='btnDepositar'  value='Depositar'>");
                     }
+
                 %>
             </div>  
         </form>
+            <%}%>
     </body>
 </html>

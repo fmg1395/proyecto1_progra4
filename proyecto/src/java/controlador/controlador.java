@@ -54,6 +54,7 @@ public class controlador extends HttpServlet {
         String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
         String btnAcreditacion = (String) request.getParameter("btnAcreditacion");
         String btnLogOut = (String) request.getParameter("btnLogOut");
+
         if (btnLogIn != null) {
             logIn(request, response);
         } else if (btnLogOut != null) {
@@ -64,11 +65,10 @@ public class controlador extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (btnCuentaPorCedula != null) {
+        } else if (btnCuentaPorCedula != null||btnCuentaPorNumero != null) {
             buscarCuenta(request, response, "cedula");
-        } else if (btnCuentaPorNumero != null) {
-            buscarCuenta(request, response, "cuenta");
-        } else if (btnDepositar != null) {
+        } 
+         else if (btnDepositar != null) {
             depositar(request, response);
         } else if (btnCuentaA != null) {
             buscarCuentaA(request, response);
@@ -192,11 +192,9 @@ public class controlador extends HttpServlet {
         String tipoCuenta=(String) request.getParameter("tCuenta");
         String limiteTransferencias = (String) request.getParameter("transferencia");
         Usuario aux = DAO.obtenerInstancia().recuperarUsuario(txtCuenta);
-        TipoCuenta tipo = DAO.obtenerInstancia().recuperarTipoCuenta(0);
-        int id = Integer.parseInt(nCuenta) + 1;
+        TipoCuenta tipo = DAO.obtenerInstancia().recuperarTipoCuenta(Integer.parseInt(tipoCuenta));
         int saldo = 0;
-        //Falta agregar el tipo de cuenta;
-        Cuenta c1 = new Cuenta(id, tipo, aux, new Moneda(tipoMoneda), saldo);
+        Cuenta c1 = new Cuenta(aux,tipo,DAO.obtenerInstancia().recuperarMoneda(tipoMoneda),saldo,Integer.parseInt(limiteTransferencias));
         modelo.insertarCuenta(c1);
         Modelo.cont++;
         RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
@@ -218,7 +216,8 @@ public class controlador extends HttpServlet {
             int id = Integer.parseInt(nCuenta) + 1;
             int saldo = 0;
             TipoCuenta tipo = DAO.obtenerInstancia().recuperarTipoCuenta(0);
-            Cuenta c1 = new Cuenta(id, tipo, aux, new Moneda(tipoMoneda), saldo);
+        Cuenta c1 = new Cuenta(aux,tipo, DAO.obtenerInstancia().recuperarMoneda(tipoMoneda), saldo,Integer.parseInt(limiteTransferencias));
+
             modelo.insertarUsuario(aux);
             modelo.insertarCuenta(c1);
             Modelo.cont++;
@@ -232,17 +231,19 @@ public class controlador extends HttpServlet {
 
     protected void depositar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+   //         Cuenta c1 = new Cuenta(id, tipo, aux, new Moneda(tipoMoneda), saldo);
 
         Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
         int cuenta = Integer.parseInt((String) request.getParameter("txtCuentaDeposito"));
-        String nomDepos = (String) request.getParameter("text_name");
-        String idDepos = (String) request.getParameter("text_id");
-        String detalle = (String) request.getParameter("txtDetalle");
-
+        
         List lista = modelo.getCuentas();
         for (int i = 0; i < lista.size(); i++) {
             if (cuenta == ((Cuenta) lista.get(i)).getId()) {
-                modelo.realizarDeposito((Cuenta) lista.get(i), monto, nomDepos, idDepos, detalle);
+
+        String nomDepos = (String)request.getParameter("text_name");
+        String idDepos = (String)request.getParameter("text_id");
+        String detalle = (String)request.getParameter("txtDetalle");
+        
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
                 dispatcher.forward(request, response);
             }
@@ -257,3 +258,4 @@ public class controlador extends HttpServlet {
     private Modelo modelo;
 
 }
+  //modelo.realizarDeposito((Cuenta) lista.get(i), monto,nomDepos,idDepos,detalle);

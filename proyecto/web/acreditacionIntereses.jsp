@@ -25,6 +25,16 @@
                             String rol = (String) request.getSession().getAttribute("rol");
 
                             Usuario usr = null;
+                            if (rol == null) {
+                        %>
+                        <div id="realized">
+                            <h2>ACCESO DENEGADO</h2>
+                            <div id="url">
+                                <input type="submit" name= "btnLogOut" value="Volver al inicio"> 
+                            </div>
+                        </div>
+                        <%
+                        } else {
                             if (rol.equals("CAJ")) {
                                 usr = (Usuario) request.getSession().getAttribute("cajero");
                                 out.println("<li><a href='aperturaCuenta.jsp'>Apertura de Cuenta</a></li>");
@@ -49,17 +59,18 @@
                     </ul>
                 </nav>   
         </header> 
-                        <form id="formulario" action="servicios" method="post" accept-charset="UTF-8">  
-                        <div id="content">
-                            <h3>Acreditación de Intereses</h3>
-                            <label>Porcentaje de interés USD:</label><input type="text" name="aUSD" readonly="readonly" value="1.5">
-                            <p></p>
-                            <label>Porcentaje de interés CRC:</label><input type="text" name="aCRC" readonly="readonly" value="1.8">
-                            <p></p>
-                            <label>Porcentaje de interés EUR:</label><input type="text" name="aEUR" readonly="readonly" value="2.1">
-                            <p></p>
-                            <input class="vincular" type="submit" name="btnAcreditacion" value="Acreditar">
-                        </div>
-                            </form>
+        <form id="formulario" action="servicios" method="post" accept-charset="UTF-8">  
+            <div id="content">
+                <h3>Acreditación de Intereses</h3>
+                <label>Porcentaje de interés USD:</label><input type="text" name="aUSD" readonly="readonly" value="1.5">
+                <p></p>
+                <label>Porcentaje de interés CRC:</label><input type="text" name="aCRC" readonly="readonly" value="1.8">
+                <p></p>
+                <label>Porcentaje de interés EUR:</label><input type="text" name="aEUR" readonly="readonly" value="2.1">
+                <p></p>
+                <input class="vincular" type="submit" name="btnAcreditacion" value="Acreditar">
+            </div>
+        </form>
+        <%}%>             
     </body>
 </html>

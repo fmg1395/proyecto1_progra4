@@ -4,6 +4,7 @@
     Author     : Kike
 --%>
 
+<%@page import="proyecto.modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,13 +14,29 @@
         <title>Proceso correcto</title>
         <link  rel="icon"   href="img/bank.png" type="image/png" />
     </head>
-    <body>
-        <div id="realized">
-            <h2>Proceso realizado con éxito.</h2>
-            <div id="url">
-                <a href="/sesion.jsp">Volver al menú principal</a>
-                <a href="/index.jsp">  Cerrar sesión</a>  
+    <form action="servicios" method="post">
+        <body>
+            <div id="realized">
+
+                <%
+                    String rol = (String) request.getSession().getAttribute("rol");
+
+                    if (rol == null) {
+                %>
+                <h2>ACCESO DENEGADO</h2>
+                <div id="url">
+                <input type="submit" name= "btnLogOut" value="Volver al inicio"> 
+                </div>
+                <%
+                } else {
+                %>
+                <h2>Proceso realizado con éxito.</h2>
+                <div id="url">
+                    <a href="/sesion.jsp">Volver al menú principal</a>
+                    <input type="submit" name= "btnLogOut" value="Cerrar sesión"> 
+                </div>
+                <%}%>
             </div>
-        </div>
-    </body>
+    </form>
+</body>
 </html>
