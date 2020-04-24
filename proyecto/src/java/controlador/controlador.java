@@ -65,10 +65,9 @@ public class controlador extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (btnCuentaPorCedula != null||btnCuentaPorNumero != null) {
+        } else if (btnCuentaPorCedula != null || btnCuentaPorNumero != null) {
             buscarCuenta(request, response, "cedula");
-        } 
-         else if (btnDepositar != null) {
+        } else if (btnDepositar != null) {
             depositar(request, response);
         } else if (btnCuentaA != null) {
             buscarCuentaA(request, response);
@@ -189,12 +188,12 @@ public class controlador extends HttpServlet {
         String txtCuenta = (String) request.getParameter("cedExistente");
         String nCuenta = Integer.toString(Modelo.cont);//Id incrementable
         String tipoMoneda = (String) request.getParameter("drone");
-        String tipoCuenta=(String) request.getParameter("tCuenta");
+        String tipoCuenta = (String) request.getParameter("tCuenta");
         String limiteTransferencias = (String) request.getParameter("transferencia");
         Usuario aux = DAO.obtenerInstancia().recuperarUsuario(txtCuenta);
         TipoCuenta tipo = DAO.obtenerInstancia().recuperarTipoCuenta(Integer.parseInt(tipoCuenta));
         int saldo = 0;
-        Cuenta c1 = new Cuenta(aux,tipo,DAO.obtenerInstancia().recuperarMoneda(tipoMoneda),saldo,Integer.parseInt(limiteTransferencias));
+        Cuenta c1 = new Cuenta(aux, tipo, DAO.obtenerInstancia().recuperarMoneda(tipoMoneda), saldo, Integer.parseInt(limiteTransferencias));
         modelo.insertarCuenta(c1);
         Modelo.cont++;
         RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
@@ -216,7 +215,7 @@ public class controlador extends HttpServlet {
             int id = Integer.parseInt(nCuenta) + 1;
             int saldo = 0;
             TipoCuenta tipo = DAO.obtenerInstancia().recuperarTipoCuenta(0);
-        Cuenta c1 = new Cuenta(aux,tipo, DAO.obtenerInstancia().recuperarMoneda(tipoMoneda), saldo,Integer.parseInt(limiteTransferencias));
+            Cuenta c1 = new Cuenta(aux, tipo, DAO.obtenerInstancia().recuperarMoneda(tipoMoneda), saldo, Integer.parseInt(limiteTransferencias));
 
             modelo.insertarUsuario(aux);
             modelo.insertarCuenta(c1);
@@ -231,19 +230,19 @@ public class controlador extends HttpServlet {
 
     protected void depositar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-   //         Cuenta c1 = new Cuenta(id, tipo, aux, new Moneda(tipoMoneda), saldo);
+        //         Cuenta c1 = new Cuenta(id, tipo, aux, new Moneda(tipoMoneda), saldo);
 
         Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
         int cuenta = Integer.parseInt((String) request.getParameter("txtCuentaDeposito"));
-        
+
         List lista = modelo.getCuentas();
         for (int i = 0; i < lista.size(); i++) {
             if (cuenta == ((Cuenta) lista.get(i)).getId()) {
 
-        String nomDepos = (String)request.getParameter("text_name");
-        String idDepos = (String)request.getParameter("text_id");
-        String detalle = (String)request.getParameter("txtDetalle");
-        
+                String nomDepos = (String) request.getParameter("text_name");
+                String idDepos = (String) request.getParameter("text_id");
+                String detalle = (String) request.getParameter("txtDetalle");
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
                 dispatcher.forward(request, response);
             }

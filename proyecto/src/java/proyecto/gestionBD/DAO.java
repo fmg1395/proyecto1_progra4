@@ -292,18 +292,18 @@ public class DAO {
         }
         return -1;
     }
-    public boolean acreditacion(float valor, String moneda) throws SQLException
-    {
-         try(Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(CMD_BATCH))
-        {
+
+    public boolean acreditacion(float valor, String moneda) throws SQLException {
+        try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_BATCH)) {
             stm.clearParameters();
-            stm.setFloat(1, valor/100);
+            stm.setFloat(1, valor / 100);
             stm.setString(2, moneda);
-            
-            return stm.executeUpdate()==1;
+
+            return stm.executeUpdate() == 1;
         }
     }
+
     //Metodo devuelve a un cliente por medio
     //de su id
     public Usuario recuperarUsuario(String id) throws SQLException {
@@ -333,17 +333,16 @@ public class DAO {
         return usr;
     }
 
-    
-     //De acuerdo a la cuenta devuelve
+    //De acuerdo a la cuenta devuelve
     // el porcentaje que corresponde a la tasa de interes
-   //que la cuenta tiene asociada
+    //que la cuenta tiene asociada
     public double buscarTasaInteres(Cuenta c) throws SQLException {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_TASA_INTERES)) {
             stm.clearParameters();
             stm.setInt(1, c.getTipoCuenta().getId());
             stm.setString(2, c.getMoneda().getId());
-            
+
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     return rs.getDouble("tasa_interes");
@@ -353,13 +352,37 @@ public class DAO {
         return -1;
     }
 
+    public List cuentasVinculadas(Cuenta c) throws SQLException {
+        try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_CUENTAS_VINCULADAS)) {
+            List vinculadas = new ArrayList<>();
+            stm.clearParameters();
+            stm.setInt(1, c.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    vinculadas.add(this.recuperarCuenta(rs.getInt("id_c2")));
+                }
+                return vinculadas;
+            }
+        }
+    }
+    
+    //Metodo permite registrar en la base de datos
+    //que dos cuentas estan vinculadas 
+    //para poder hacer transacciones entre ellas de forma rapida
+    
+    public boolean vincularCuentas()
+    {
+        return true;
+    }
+
     private static DAO instancia = null;
 
     private static final String CMD_AGREGAR_USUARIO
             = "INSERT INTO usuarios (id,nombre,clave,telefono,rol) "
             + "VALUES (?,?,?,?,?); ";
     private static final String CMD_BATCH
-            ="UPDATE cuentas SET monto=monto+monto*? WHERE moneda=?;";
+            = "UPDATE cuentas SET monto=monto+monto*? WHERE moneda=?;";
     private static final String CMD_RECUPERAR_USUARIO
             = "SELECT id,nombre,clave,telefono,rol FROM usuarios WHERE id = ?;";
     private static final String CMD_CREAR_CUENTA
@@ -387,16 +410,18 @@ public class DAO {
             = "SELECT id, descripcion FROM tipo_cuentas where id = ?;";
     private static final String CMD_TASA_INTERES
             = "SELECT tasa_interes FROM intereses where tipo_cuenta = ? and moneda = ?;";
+    private static final String CMD_CUENTAS_VINCULADAS
+            = "SELECT id_c2 from vinculadas where id_c1 = ?";
 
     public static void main(String[] args) {
-        Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");
+        //Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");
 
         DAO prueba = DAO.obtenerInstancia();
 
         try {
+            Cuenta cuenta = prueba.recuperarCuenta(1);
+            List lista = prueba.cuentasVinculadas(cuenta);
 
-            List lista = prueba.recuperarCuentas("504250570");
-            
             System.out.println();
         } catch (SQLException ex) {
             System.err.printf("FALLO Recuperar CLIENTE: %s", ex.getMessage());
