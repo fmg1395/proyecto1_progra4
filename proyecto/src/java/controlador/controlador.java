@@ -54,6 +54,7 @@ public class controlador extends HttpServlet {
         String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
         String btnAcreditacion = (String) request.getParameter("btnAcreditacion");
         String btnLogOut = (String) request.getParameter("btnLogOut");
+        String btnVinculacion = (String) request.getParameter("btnVinculacion");
 
         if (btnLogIn != null) {
             logIn(request, response);
@@ -85,6 +86,21 @@ public class controlador extends HttpServlet {
             }
         } else if (btnCuentaRetiro != null) {
             buscarCuenta(request, response, btnCuentaRetiro);
+        } else if (btnVinculacion != null) {
+            vinculacionCuentas(request, response);
+        }
+    }
+
+    private void vinculacionCuentas(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            int cuenta_origen = Integer.parseInt((String) request.getParameter("text_cuenta_ori"));
+            int cuenta_destino = Integer.parseInt((String) request.getParameter("text_cuenta_des"));
+            if (modelo.vinculacionDeCuenta(cuenta_origen, cuenta_destino)) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
+                dispatcher.forward(request, response);
+            }
+        } catch (ServletException|java.io.IOException ex) {
+            Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -99,6 +115,8 @@ public class controlador extends HttpServlet {
             switch (modelo.getUltimoRol()) {
                 case "CLI":
                     request.getSession().setAttribute("usuario", modelo.getCliente());
+                    List lista = modelo.recuperarCuentas(modelo.getCliente().getId());
+                    request.getSession().setAttribute("listaCuentas", lista);
                     request.getSession().setAttribute("rol", modelo.getUltimoRol());
                     break;
                 case "CAJ":
@@ -242,7 +260,7 @@ public class controlador extends HttpServlet {
                 String nomDepos = (String) request.getParameter("text_name");
                 String idDepos = (String) request.getParameter("text_id");
                 String detalle = (String) request.getParameter("txtDetalle");
-
+                modelo.realizarDeposito((Cuenta) lista.get(i), monto, nomDepos, idDepos, detalle);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
                 dispatcher.forward(request, response);
             }

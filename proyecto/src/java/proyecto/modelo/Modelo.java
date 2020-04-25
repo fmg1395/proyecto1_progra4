@@ -30,16 +30,15 @@ public class Modelo {
         DAO cnx = DAO.obtenerInstancia();
         cnx.crearUsuario(u);
     }
-    public void acreditacion(float n, String p) throws SQLException
-    {
-        DAO cnx=DAO.obtenerInstancia();
+
+    public void acreditacion(float n, String p) throws SQLException {
+        DAO cnx = DAO.obtenerInstancia();
         cnx.acreditacion(n, p);
     }
-    
+
     //Devuelve tasa de interes de la cuenta
     //Depende del tipo de cuenta y de la moneda
-    public double recuperarTasaInteres(Cuenta c) throws SQLException
-    {
+    public double recuperarTasaInteres(Cuenta c) throws SQLException {
         DAO cnx = DAO.obtenerInstancia();
         return cnx.buscarTasaInteres(c);
     }
@@ -78,11 +77,12 @@ public class Modelo {
                 if (!detalle.isEmpty()) {
                     m.setDetalle(detalle);
                 }
-                if(!nomDepos.isEmpty())
+                if (!nomDepos.isEmpty()) {
                     m.setNombreDepos(nomDepos);
-                
-                c.setMonto(c.getMonto()+monto);
-                return cnx.ingresarMovimiento(m,c);
+                }
+
+                c.setMonto(c.getMonto() + monto);
+                return cnx.ingresarMovimiento(m, c);
             }
 
         } catch (SQLException ex) {
@@ -90,6 +90,17 @@ public class Modelo {
             return false;
         }
         return false;
+    }
+
+    public boolean vinculacionDeCuenta(int c1, int c2) {
+        DAO cnx = DAO.obtenerInstancia();
+        try 
+        {
+            return cnx.vincularCuentas(c1, c2);
+        } catch (SQLException ex) {
+            System.err.printf("Exception Model: vincular cuentas, %s", ex.getMessage());
+            return false;
+        }
     }
 
     public Usuario getCliente() {

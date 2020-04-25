@@ -370,12 +370,19 @@ public class DAO {
     //Metodo permite registrar en la base de datos
     //que dos cuentas estan vinculadas 
     //para poder hacer transacciones entre ellas de forma rapida
-    
-    public boolean vincularCuentas()
+    //Siendo el parametro c1 la cuenta del dueño
+    public boolean vincularCuentas(int c1, int c2)throws SQLException 
     {
-        return true;
-    }
+        try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_AGREGAR_VINCULACION)) {
+            stm.clearParameters();
+            stm.setInt(1,c1);
+            stm.setInt(2,c2);
 
+            return stm.executeUpdate() == 1;
+        }
+    }
+  
     private static DAO instancia = null;
 
     private static final String CMD_AGREGAR_USUARIO
@@ -411,7 +418,9 @@ public class DAO {
     private static final String CMD_TASA_INTERES
             = "SELECT tasa_interes FROM intereses where tipo_cuenta = ? and moneda = ?;";
     private static final String CMD_CUENTAS_VINCULADAS
-            = "SELECT id_c2 from vinculadas where id_c1 = ?";
+            = "SELECT id_c2 from vinculadas where id_c1 = ?;";
+    private static final String CMD_AGREGAR_VINCULACION
+            ="INSERT INTO vinculadas (id_c1,id_c2) VALUES (?,?);";
 
     public static void main(String[] args) {
         //Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");

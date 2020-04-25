@@ -57,7 +57,7 @@
                                 out.println("<li><a href='#'>Consulta de movimientos</a></li>");
                                 out.println("</ul>");
                                 out.println("</li>");
-                                out.println("<li><a href='#'>Vinculación de cuentas</a></li>");
+                                out.println("<li><a href='vinculacion.jsp'>Vinculación de cuentas</a></li>");
                                 out.println("<li><a href='#'>Transferencia remota</a></li>");
                             }
                         %>
