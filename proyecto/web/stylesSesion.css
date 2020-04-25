@@ -178,7 +178,21 @@ body{
     width:200px;
 }
 
-
+.buscarC{
+      border:none;
+    width: 200px;
+    height: 22px;
+    margin-left: 5px;
+    border-radius: 20px;
+    background: black;
+    color:white;
+    position: absolute;
+  left: 42%;
+}
+.buscarC:hover
+{
+    font-weight: bold;
+}
 .buscar, .vincular{
     border:none;
     width: 70px;
@@ -298,8 +312,12 @@ input[type="radio"]:checked ~ .reveal-if-active{
     padding: 5px;
 }
 
-
-.table
+.tableC{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:4%;
+}
+.table, .tableC
 {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -307,23 +325,23 @@ input[type="radio"]:checked ~ .reveal-if-active{
 
 }
 
-.table tr:nth-child(even)
+.table tr:nth-child(even) ,.tableC tr:nth-child(even)
 {
     background-color: #f2f2f2; 
 }
-.table tr:hover 
+.table tr:hover, .tableC tr:hover
 {
     background-color: #ddd;
 }
 
 .table
-th
+th, .tableC th
 {
     padding-right: 30px;
     padding-left: 7px;
 }
 .table
-td
+td ,.tableC td
 {
     padding-right: 30px;
     padding-left: 7px;

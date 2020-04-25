@@ -150,7 +150,16 @@ public class Modelo {
         }
         return null;
     }
-
+   public List recuperarMovimientos(int cuenta) throws SQLException{
+      try{ DAO cnx=DAO.obtenerInstancia();
+       List movimientos=cnx.recuperarMovimientos(cuenta);
+      return movimientos;
+   }
+    catch(SQLException ex){
+        System.err.printf("Exception Model: recuperar movimientos,%s",ex.getMessage());
+    }  
+      return null;
+   }
     //Recupera solo una cuenta por
     //medio de su ID
     public Cuenta recuperaCuenta(int id) {
@@ -164,9 +173,10 @@ public class Modelo {
         }
         return null;
     }
-
-    public void limpiarCliente() {
+    
+    public void limpiarUsuario() {
         this.setCliente(null);
+        this.setCajero(null);
     }
 
     public boolean idDuplicada(String id) {

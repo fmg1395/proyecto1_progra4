@@ -44,11 +44,7 @@
                                 out.println("<li><a href='acreditacionIntereses.jsp'>Acreditación de intereses</a></li>");
                             } else if (rol.equals("CLI")) {
                                 usr = (Usuario) request.getSession().getAttribute("usuario");
-                                out.println("<li><a href='#'>Consultas</a>");
-                                out.println("<ul class='submenu'>");
-                                out.println("<li><a href='#'>Consulta de cuenta</a></li>");
-                                out.println("<li><a href='#'>Consulta de movimientos</a></li>");
-                                out.println("</ul>");
+                                out.println("<li><a href='consultaCuenta.jsp'>Consultas de Cuenta</a>");
                                 out.println("</li>");
                                 out.println("<li><a href='#'>Vinculación de cuentas</a></li>");
                                 out.println("<li><a href='#'>Transferencia remota</a></li>");

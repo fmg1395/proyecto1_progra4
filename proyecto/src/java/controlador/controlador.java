@@ -54,7 +54,8 @@ public class controlador extends HttpServlet {
         String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
         String btnAcreditacion = (String) request.getParameter("btnAcreditacion");
         String btnLogOut = (String) request.getParameter("btnLogOut");
-
+        String btnListar=(String)request.getParameter("btnListar");
+        String btnListarMov=(String)request.getParameter("btnListarMov");
         if (btnLogIn != null) {
             logIn(request, response);
         } else if (btnLogOut != null) {
@@ -85,6 +86,17 @@ public class controlador extends HttpServlet {
             }
         } else if (btnCuentaRetiro != null) {
             buscarCuenta(request, response, btnCuentaRetiro);
+        }
+        else if(btnListar!=null){
+            listarCuentas(request,response);
+        }
+        else if(btnListarMov!=null)
+        {
+            try {
+                listarMovimientos(request,response);
+            } catch (SQLException ex) {
+                Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -120,14 +132,35 @@ public class controlador extends HttpServlet {
             case "CLI":
                 session.removeAttribute("usuario");
                 session.removeAttribute("rol");
+                modelo.limpiarUsuario();
                 break;
             case "CAJ":
                 session.removeAttribute("cajero");
                 session.removeAttribute("rol");
+                modelo.limpiarUsuario();
+
         }
         session.invalidate();
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
+    }
+
+    protected void listarCuentas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String aidi = null;
+        switch (modelo.getUltimoRol()) {
+            case "CLI":
+                aidi = modelo.getCliente().getId();
+                break;
+            case "CAJ":
+                aidi = modelo.getCliente().getId();
+        }
+        List lista = new ArrayList<>();
+        lista = modelo.recuperarCuentas(aidi);
+        if (lista.size() > 0) {
+            request.setAttribute("cuentas", lista);
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/consultaCuenta.jsp");
+            dispatcher.forward(request, response);
     }
 
     protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response, String boton)
@@ -253,7 +286,16 @@ public class controlador extends HttpServlet {
             }
         }
     }
-
+    protected void listarMovimientos(HttpServletRequest request,HttpServletResponse response) throws SQLException, ServletException, IOException{
+        Integer numCuenta=Integer.parseInt((String)request.getParameter("numCuenta"));
+         List lista = new ArrayList<>();
+        lista = modelo.recuperarMovimientos(numCuenta);
+        if (lista.size() > 0) {
+            request.setAttribute("movimientos", lista);
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/consultaCuenta.jsp");
+        dispatcher.forward(request, response);
+    }
     @Override
     public String getServletInfo() {
         return "Short description";

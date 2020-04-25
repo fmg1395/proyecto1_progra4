@@ -181,7 +181,7 @@ public class DAO {
             Movimientos m = null;
             stm.clearParameters();
             stm.setInt(1, id);
-
+            stm.setInt(2, id);
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     m = new Movimientos(
@@ -191,10 +191,15 @@ public class DAO {
                             rs.getString("id_depos"),
                             rs.getInt("cuenta_des")
                     );
-
+                    
                     String detalle = rs.getString("detalle");
                     String nomDep = rs.getString("nombre_depos");
                     Integer id_origen = rs.getInt("cuenta_org");
+                    if(id_origen==id)
+                    {
+                       m.setMonto(-m.getMonto());
+                    }
+                   
                     if (detalle != null) {
                         m.setDetalle(detalle);
                     }
@@ -375,7 +380,7 @@ public class DAO {
             = "UPDATE cuentas SET monto = ? WHERE id = ?;";
     private static final String CMD_RECUPERAR_MOVIMIENTO
             = "SELECT id, cuenta_org, cuenta_des, monto, fecha, id_depos, nombre_depos, detalle"
-            + " FROM movimientos WHERE cuenta_des = ?;";
+            + " FROM movimientos WHERE (cuenta_des = ?) OR (cuenta_org=?);";
     private static final String CMD_RECUPERAR_CUENTA
             = "SELECT id, cliente, moneda, monto,tipo_cuenta FROM cuentas WHERE id = ?;";
     private static final String CMD_AGREGAR_MOVIMIENTO
