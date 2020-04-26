@@ -379,4 +379,8 @@ span
     color:white;
     position: absolute;
     left: 42%;
+    top:50%;
+}
+#botonTransferir:hover{
+    font-weight: bold;
 }

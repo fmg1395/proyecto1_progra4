@@ -90,10 +90,10 @@
                         }
                         out.print("</table>");
                 %>
-                <label>Cuenta origen: </label>
-                <input type="number" id="transRem">
-                <label>Cuenta destino: </label>
-                <input type="number" id="transRem">
+                <label>Cuenta origen:
+                    <input type="number" id="transRem"> </label>
+                <label>Cuenta destino:
+                    <input type="number" id="transRem"> </label>
                 <input type="submit" value="Transferir" name="btnTransRemota" id="botonTransferir">
 
                 <%
