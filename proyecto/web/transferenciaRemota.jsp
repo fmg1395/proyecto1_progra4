@@ -94,10 +94,12 @@
                     <input type="number" id="transRem"> </label>
                 <label>Cuenta destino:
                     <input type="number" id="transRem"> </label>
+                <label> Monto:
+                    <input type="number" id="transRem"></label>
                 <input type="submit" value="Transferir" name="btnTransRemota" id="botonTransferir">
 
                 <%
-                    } else if (listaMov != null && listaMov.size() == 1) {
+                    } else if (listaVinculadas != null && listaVinculadas.size() == 1) {
                         out.print("<label>");
                         out.print("<table id='tablaVinculadas' class='tableC'>");
                         out.print("<caption>Lista Cuentas vinculadas");
@@ -116,10 +118,11 @@
                         out.print("</tr>");
 
                         out.print("</table>");
-                        out.print("<label>Cuenta origen: </label>");
-                        out.print("<input type='number' id='transRem' readonly='readonly' value='" + ((Vinculacion) listaVinculadas.get(0)).getId_c1() + "'>");
-                        out.print("<label>Cuenta destino: </label>");
-                        out.print("<input type='number' id='transRem'>");
+                        out.print("<label>Cuenta origen:");
+                        out.print("<input type='number' id='transRem' readonly='readonly' value='" + ((Vinculacion) listaVinculadas.get(0)).getId_c1() + "'></label>");
+                        out.print("<label>Cuenta destino:");
+                        out.print("<input type='number' id='transRem'></label>");
+                        out.print("<label> Monto: <input type='number' id='transRem'></label>");
                         out.print("<input type='submit' value='Transferir' name='btnTransRemota' id='botonTransferir'>");
 
                     } else {
