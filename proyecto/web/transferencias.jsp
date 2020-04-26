@@ -54,7 +54,7 @@
                             out.println("</ul>");
                             out.println("</li>");
                             out.println("<li><a href='vinculacion.jsp'>Vinculación de cuentas</a></li>");
-                            out.println("<li><a href='#'>Transferencia remota</a></li>");
+                            out.println("<li><a href='transferencias.jsp'>Transferencia remota</a></li>");
                         }
                     %>
                     <li class="salir"><a href="index.jsp">Cerrar sesión</a></li>
@@ -62,45 +62,15 @@
             </nav>
         </header>
         <form id="buscarCuentas" name='form_transferencias' action="servicios" method="post" accept-charset="UTF-8">
-            <%
-                request.getSession().setAttribute("formulario", "deposito");
-            %>
             <div id='content'>
                 <div id = 'Elección'>
-                    <label>Transferencias: <br> Buscar Cuenta Origen: <br><br></label>
+                    <label>Transferencias: <br> Buscar Cuentas vinculadas: <br><br></label>
                     <div id='Yes'>
-                        <input type='radio' id='ansY' name='drone2' value='yes'>
+                        <input type='radio' id='ansY' name='drone2' value='yes' checked>
                         <label>Por cédula:</label>
-                        <div class='reveal-if-active'>
+                        <div class='reveal-if-active' >
                             <input type='text' name='txt_buscar' placeholder='Ingrese cédula'>
-                            <input type='submit' name='btnBuscarPorCedula1' value='Buscar'>
-                        </div>
-                    </div>
-                    <div id='No'>
-                        <input type='radio' id='ansN' name='drone2' value='no'>
-                        <label>Por número de cuenta:</label>
-                        <div class='reveal-if-active'>
-                            <input type='text' name='txt_buscar2' placeholder='Ingrese número de cuenta'>
-                            <input type='submit' name='btnBuscarPorCuenta1' value='Buscar'>
-                        </div>
-                    </div>
-                </div>
-                <div id = 'Elección2'>
-                    <label>Buscar Cuenta Destino <br><br></label>
-                    <div id='Yes'>
-                        <input type='radio' id='ansY' name='drone3' value='yes'>
-                        <label>Por cédula:</label>
-                        <div class='reveal-if-active'>
-                            <input type='text' name='txt_buscar' placeholder='Ingrese cédula'>
-                            <input type='submit' name='btnBuscarPorCedula2' value='Buscar'>
-                        </div>
-                    </div>
-                    <div id='No'>
-                        <input type='radio' id='ansN' name='drone3' value='no'>
-                        <label>Por número de cuenta:</label>
-                        <div class='reveal-if-active'>
-                            <input type='text' name='txt_buscar2' placeholder='Ingrese número de cuenta'>
-                            <input type='submit' name='btnBuscarPorCuenta2' value='Buscar'>
+                            <input type='submit' name='btnBuscarVinculadas' value='Buscar'>
                         </div>
                     </div>
                 </div>

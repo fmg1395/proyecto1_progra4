@@ -43,6 +43,83 @@ public class Modelo {
         return cnx.buscarTasaInteres(c);
     }
 
+    //devuelve una lista con las cuentas que estan vinculadas
+    //a todas las cuentas del cliente
+    public List recuperarCuentasVinculadasPorUsuario(String cedula) {
+        try {
+            List cuentasOrigen = recuperarCuentas(cedula);
+            List vinculadas = new ArrayList<>();
+            for (Object c : (cuentasOrigen)) {
+                DAO cnx = DAO.obtenerInstancia();
+                vinculadas.addAll(cnx.cuentasVinculadas((Cuenta) c));
+            }
+            return vinculadas;
+        } catch (SQLException ex) {
+
+        }
+        return null;
+    }
+
+    public boolean realizarTransferencia(int cuentaOrigen, int cuentaDestino, float monto) {
+        // m = new Movimientos(0, monto, new Date(), idDepos, c.getId());
+        DAO cnx = DAO.obtenerInstancia();
+        try {
+            Cuenta cntOrigen = cnx.recuperarCuenta(cuentaOrigen);
+            Cuenta cntDestino = cnx.recuperarCuenta(cuentaDestino);
+
+            if (cntOrigen.getMonto() > monto) {
+
+                cntOrigen.setMonto(cntOrigen.getMonto() - monto);
+
+                //Movimiento que ira a la cuenta del cliente con la rebaja del saldo
+                Movimientos movOrigen = new Movimientos(0, monto * -1, new Date(),
+                        cntOrigen.getUsuarios().getId(), cuentaDestino);
+                movOrigen.setDetalle("Transferencia");
+                movOrigen.setNombreDepos(cntOrigen.getUsuarios().getNombre());
+                movOrigen.setCuentaOrg(cuentaOrigen);
+
+                if (cnx.ingresarMovimiento(movOrigen, cntOrigen)) {
+
+                    //Movimiento que vera el cliente al cual le han despositado
+                    Movimientos movDestino = movOrigen;
+                    if (!revisarDivisa(cntOrigen, cntDestino)) 
+                    {
+                        Moneda org = cntOrigen.getMoneda();
+                        Moneda des = cntDestino.getMoneda();
+                        float cambio = conversionDeDivisa(monto,org,des);
+                        cntDestino.setMonto(cntDestino.getMonto()+cambio);
+                        movDestino.setMonto(cambio);
+                    }
+                    else
+                         movDestino.setMonto(monto);
+                    
+                    return cnx.ingresarMovimiento(movDestino, cntDestino);
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.printf("Error metodo realizarTransaccion en modelo: %s", ex);
+        }
+        return false;
+    }
+
+    public boolean revisarDivisa(Cuenta cuentaOrigen, Cuenta cuentaDestino) {
+        return cuentaOrigen.getMoneda().equals(cuentaDestino.getMoneda());
+    }
+
+    //El monto se va a encontrar en la divisa de la Moneda org
+    // se debe hacer la conversion a la Moneda des
+    //Como regla de negocio la moneda local no debera tener
+    //tipo de cambio para que el metodo funcione en general
+    public float conversionDeDivisa(float monto, Moneda org, Moneda des) {
+        float tipoCambio = des.getTipoCambio();
+
+        if (org.getTipoCambio() != 0) {
+            return (float) ((monto * org.getTipoCambio()) / tipoCambio);
+        } else {
+            return (float) (monto * tipoCambio);
+        }
+    }
+
     public void recuperarUsuario(String id) {
         DAO cnx = DAO.obtenerInstancia();
 
@@ -91,7 +168,7 @@ public class Modelo {
         }
         return false;
     }
-    
+
     public boolean realizarRetiro(Cuenta c, float monto, String nomDepos, String idDepos, String detalle) {
 
         Movimientos m;
@@ -117,13 +194,11 @@ public class Modelo {
         }
         return false;
     }
-    
-    
 
+    //Vincula cuentas
     public boolean vinculacionDeCuenta(int c1, int c2) {
         DAO cnx = DAO.obtenerInstancia();
-        try 
-        {
+        try {
             return cnx.vincularCuentas(c1, c2);
         } catch (SQLException ex) {
             System.err.printf("Exception Model: vincular cuentas, %s", ex.getMessage());

@@ -352,6 +352,7 @@ public class DAO {
         return -1;
     }
 
+    //Devuelve todas las cuentas vinculadas de una cuenta
     public List cuentasVinculadas(Cuenta c) throws SQLException {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_CUENTAS_VINCULADAS)) {
@@ -366,6 +367,7 @@ public class DAO {
             }
         }
     }
+    
     
     //Metodo permite registrar en la base de datos
     //que dos cuentas estan vinculadas 

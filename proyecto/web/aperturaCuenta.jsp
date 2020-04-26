@@ -58,7 +58,7 @@
                                 out.println("</ul>");
                                 out.println("</li>");
                                 out.println("<li><a href='vinculacion.jsp'>Vinculación de cuentas</a></li>");
-                                out.println("<li><a href='#'>Transferencia remota</a></li>");
+                                out.println("<li><a href='transferencias.jsp'>Transferencia remota</a></li>");
                             }
                         %>
                         <li><input type="submit" name= "btnLogOut" value="Cerrar sesión"></li>

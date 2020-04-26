@@ -117,7 +117,7 @@ public class Cuenta implements Serializable {
     public void setMovimientosList(List<Movimientos> movimientosList) {
         this.movimientosList = movimientosList;
     }
-
+    
     @Override
     public String toString() {
         return "proyecto.modelo.Cuentas[ id=" + id + " ]";

@@ -15,14 +15,14 @@ import java.util.Date;
 
 public class Movimientos implements Serializable {
 
-    private Integer id;
-    private Integer cuentaOrg;
-    private float monto;
-    private Date fecha;
-    private String idDepos;
-    private String nombreDepos;
-    private String detalle;
-    private Integer cuenta_des;
+    private Integer id;//
+    private Integer cuentaOrg; //
+    private float monto; //
+    private Date fecha; //
+    private String idDepos; //
+    private String nombreDepos; //
+    private String detalle; //
+    private Integer cuenta_des; //
     
     // (cuenta_org, cuenta_des, monto, fecha, id_depos, nombre_depos, detalle)
 

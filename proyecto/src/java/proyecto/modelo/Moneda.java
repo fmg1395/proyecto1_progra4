@@ -49,4 +49,12 @@ public class Moneda implements Serializable {
     public void setCuentasList(List<Cuenta> cuentasList) {
         this.cuentasList = cuentasList;
     }  
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        return this.id.equals(((Moneda)o).id);
+    }
+    
+    
 }

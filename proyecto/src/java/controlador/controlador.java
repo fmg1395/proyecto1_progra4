@@ -55,6 +55,7 @@ public class controlador extends HttpServlet {
         String btnAcreditacion = (String) request.getParameter("btnAcreditacion");
         String btnLogOut = (String) request.getParameter("btnLogOut");
         String btnVinculacion = (String) request.getParameter("btnVinculacion");
+        String btnBuscarVinculadas = (String) request.getParameter("btnBuscarVinculadas");
 
         if (btnLogIn != null) {
             logIn(request, response);
@@ -90,6 +91,8 @@ public class controlador extends HttpServlet {
             retirar(request, response);
         } else if (btnVinculacion != null) {
             vinculacionCuentas(request, response);
+        } else if (btnBuscarVinculadas != null) {
+            buscarCuentasVinculadas(request, response);
         }
     }
 
@@ -149,6 +152,43 @@ public class controlador extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
     }
+
+    protected void buscarCuentasVinculadas(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            //Input de texto para la cedula
+            String cedula = (String) request.getParameter("");
+            List cuentasOrigen = modelo.recuperarCuentas(cedula);
+            
+            
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (ServletException | IOException ex) {
+            System.out.printf("Error metodo retirar: %s", ex);
+        }
+    }
+    
+    protected void realizarTrasaccion(HttpServletRequest request, HttpServletResponse response)
+    {
+         try {
+            //Input del text field de la cuenta origen
+            int cuentaOrigen = Integer.parseInt((String)request.getParameter(""));
+            //Input del text field de la cuenta destino
+            int cuentaDestino = Integer.parseInt((String)request.getParameter(""));
+            //Falta monto que se va a transferir
+            float monto = Float.parseFloat((String)request.getParameter(""));
+            
+            modelo.realizarTransferencia(cuentaOrigen,cuentaDestino,monto);
+              
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (ServletException | IOException ex) {
+            System.out.printf("Error metodo retirar: %s", ex);
+        }
+    }
+    
 
     protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response, String boton) {
         try {
@@ -280,12 +320,12 @@ public class controlador extends HttpServlet {
             int cuenta = Integer.parseInt((String) request.getParameter("txtCuentaRetiro"));
             List lista = modelo.getCuentas();
             for (int i = 0; i < lista.size(); i++) {
-                if (cuenta == ((Cuenta) lista.get(i)).getId() && ((Cuenta) lista.get(i)).getMonto() > monto ) {
+                if (cuenta == ((Cuenta) lista.get(i)).getId() && ((Cuenta) lista.get(i)).getMonto() > monto) {
 
                     String nomDepos = (String) request.getParameter("text_name");
                     String idDepos = (String) request.getParameter("text_id");
                     String detalle = (String) request.getParameter("txtDetalle");
-                    modelo.realizarRetiro((Cuenta) lista.get(i), monto*-1, nomDepos, idDepos, detalle);
+                    modelo.realizarRetiro((Cuenta) lista.get(i), monto * -1, nomDepos, idDepos, detalle);
 
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
                     dispatcher.forward(request, response);
