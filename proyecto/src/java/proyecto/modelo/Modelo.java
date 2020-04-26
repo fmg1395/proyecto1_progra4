@@ -177,6 +177,8 @@ public class Modelo {
     public void limpiarUsuario() {
         this.setCliente(null);
         this.setCajero(null);
+        this.setCuentas(null);
+        this.setUltimoRol(null);
     }
 
     public boolean idDuplicada(String id) {
@@ -201,6 +203,23 @@ public class Modelo {
         return false;
     }
 
+    public List recuperarVinculadas() throws SQLException {
+        DAO cnx=DAO.obtenerInstancia();
+        List lista=null,listaVinculadas=new ArrayList<>();
+           lista=cnx.recuperarVinculadas();//recuperamos tabla vinculadas
+         
+           for(int i=0;i<this.getCuentas().size();i++)
+         {
+             for(int j=0;j<lista.size();j++)
+             {
+                if(((Vinculacion)lista.get(j)).getId_c1()==this.getCuentas().get(i).getId())
+                {
+                    listaVinculadas.add(lista.get(j));
+                }
+             }
+         }
+    
+            return listaVinculadas;}
     //ultimoRol va a tener el ultimo roll
     //que ingresó credenciales
     private String ultimoRol;
@@ -208,4 +227,5 @@ public class Modelo {
     private Usuario cliente;
     private Usuario cajero;
     private List<Cuenta> cuentas;
+
 }

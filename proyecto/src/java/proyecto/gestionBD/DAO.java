@@ -12,6 +12,7 @@ import proyecto.modelo.Moneda;
 import proyecto.modelo.Movimientos;
 import proyecto.modelo.TipoCuenta;
 import proyecto.modelo.Usuario;
+import proyecto.modelo.Vinculacion;
 
 /**
  *
@@ -358,6 +359,26 @@ public class DAO {
         return -1;
     }
 
+    public List recuperarVinculadas() throws SQLException {
+         try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_RECUPERAR_VINCULADAS)) {
+            List<Vinculacion> lista = new ArrayList<>();
+            Vinculacion m = null;
+            stm.clearParameters();
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    m = new Vinculacion(
+                            rs.getInt("id_c1"),
+                            rs.getInt("id_c2")
+                    );
+                    
+                    lista.add(m);
+                }
+                return lista;
+            }
+        }
+    }
+
     private static DAO instancia = null;
 
     private static final String CMD_AGREGAR_USUARIO
@@ -392,7 +413,8 @@ public class DAO {
             = "SELECT id, descripcion FROM tipo_cuentas where id = ?;";
     private static final String CMD_TASA_INTERES
             = "SELECT tasa_interes FROM intereses where tipo_cuenta = ? and moneda = ?;";
-
+    private static final String CMD_RECUPERAR_VINCULADAS
+            ="SELECT * FROM vinculadas;";
     public static void main(String[] args) {
         Usuario c = new Usuario("998161237", "Edgar Silva", "ES@05", "CLI");
 

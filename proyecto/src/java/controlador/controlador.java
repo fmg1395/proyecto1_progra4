@@ -58,7 +58,11 @@ public class controlador extends HttpServlet {
         String btnListarMov = (String) request.getParameter("btnListarMov");
         String btnRegresar = (String) request.getParameter("btnVolverConsulta");
         if (btnLogIn != null) {
-            logIn(request, response);
+            try {
+                logIn(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (btnLogOut != null) {
             logOut(request, response);
         } else if (btnAcreditacion != null) {
@@ -103,21 +107,28 @@ public class controlador extends HttpServlet {
     }
 
     protected void logIn(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         String usr = request.getParameter("logUsuario");
         String pass = request.getParameter("logPass");
+        List lista = new ArrayList<>();
         boolean verificacion = modelo.revisarCredenciales(usr, pass);
-
-        if (verificacion) {
-
+        if (verificacion) {          
             switch (modelo.getUltimoRol()) {
                 case "CLI":
                     request.getSession().setAttribute("usuario", modelo.getCliente());
                     request.getSession().setAttribute("rol", modelo.getUltimoRol());
+                    modelo.recuperarCuentas(modelo.getCliente().getId());
+
                     break;
                 case "CAJ":
                     request.getSession().setAttribute("cajero", modelo.getCajero());
                     request.getSession().setAttribute("rol", modelo.getUltimoRol());
+                    modelo.recuperarCuentas(modelo.getCajero().getId());
+            }
+              lista = modelo.recuperarVinculadas();
+            if(lista.size()>0)
+            {
+                request.getSession().setAttribute("cuentasVinculadas",lista);
             }
             RequestDispatcher dispatcher = request.getRequestDispatcher("/sesion.jsp");
             dispatcher.forward(request, response);
