@@ -131,7 +131,7 @@ body{
     padding:1em;
     text-align: center;
     display:inline-block;   
- text-decoration: none;
+    text-decoration: none;
     font-family: arial;
 
     font-size: 16px;
@@ -142,10 +142,10 @@ body{
     color:black;
 }
 #url input{
-     padding:1em;
+    padding:1em;
     text-align: center;
     display:inline-block;   
- text-decoration: none;
+    text-decoration: none;
     font-size: 16px;
     line-height: 20px;
     color:grey;
@@ -157,8 +157,8 @@ body{
     color:black;
 }
 #url{
-  width: 100%;
-  text-align: center;
+    width: 100%;
+    text-align: center;
 }
 #content input[type="text"] 
 {
@@ -179,7 +179,8 @@ body{
 }
 
 .buscarC{
-      border:none;
+
+    border:none;
     width: 200px;
     height: 22px;
     margin-left: 5px;
@@ -187,7 +188,18 @@ body{
     background: black;
     color:white;
     position: absolute;
-  left: 42%;
+    left: 42%;
+}
+.volver{
+    border:none;
+    width: 200px;
+    height: 22px;
+    margin-left: 5px;
+    border-radius: 20px;
+    background: black;
+    color:white;
+    position: absolute;
+    left: 42%;
 }
 .buscarC:hover
 {
@@ -246,19 +258,19 @@ body{
     transition: 0.5s;
 }
 .usuarioNuevo span{
-  animation-name: esconder;
-  color:transparent;
+    animation-name: esconder;
+    color:transparent;
     animation-duration: 6s;  
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 
 }
 @keyframes esconder{
     from{
-         color:red;
+        color:red;
     }
     to{
         color:transparent;  
@@ -315,7 +327,8 @@ input[type="radio"]:checked ~ .reveal-if-active{
 .tableC{
     margin-left: auto;
     margin-right: auto;
-    margin-top:4%;
+    margin-bottom:2%;
+    margin-top: 4%;
 }
 .table, .tableC
 {

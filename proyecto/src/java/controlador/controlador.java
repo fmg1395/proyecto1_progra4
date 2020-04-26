@@ -54,8 +54,9 @@ public class controlador extends HttpServlet {
         String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
         String btnAcreditacion = (String) request.getParameter("btnAcreditacion");
         String btnLogOut = (String) request.getParameter("btnLogOut");
-        String btnListar=(String)request.getParameter("btnListar");
-        String btnListarMov=(String)request.getParameter("btnListarMov");
+        String btnListar = (String) request.getParameter("btnListar");
+        String btnListarMov = (String) request.getParameter("btnListarMov");
+        String btnRegresar = (String) request.getParameter("btnVolverConsulta");
         if (btnLogIn != null) {
             logIn(request, response);
         } else if (btnLogOut != null) {
@@ -66,8 +67,10 @@ public class controlador extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (btnCuentaPorCedula != null || btnCuentaPorNumero != null) {
+        } else if (btnCuentaPorCedula != null) {
             buscarCuenta(request, response, "cedula");
+        } else if (btnCuentaPorNumero != null) {
+            buscarCuenta(request, response, "cuenta");
         } else if (btnDepositar != null) {
             depositar(request, response);
         } else if (btnCuentaA != null) {
@@ -84,16 +87,15 @@ public class controlador extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else if (btnRegresar != null) {
+            regresarCuenta(request, response);
         } else if (btnCuentaRetiro != null) {
             buscarCuenta(request, response, btnCuentaRetiro);
-        }
-        else if(btnListar!=null){
-            listarCuentas(request,response);
-        }
-        else if(btnListarMov!=null)
-        {
+        } else if (btnListar != null) {
+            listarCuentas(request, response);
+        } else if (btnListarMov != null) {
             try {
-                listarMovimientos(request,response);
+                listarMovimientos(request, response);
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -160,7 +162,7 @@ public class controlador extends HttpServlet {
             request.setAttribute("cuentas", lista);
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("/consultaCuenta.jsp");
-            dispatcher.forward(request, response);
+        dispatcher.forward(request, response);
     }
 
     protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response, String boton)
@@ -286,9 +288,10 @@ public class controlador extends HttpServlet {
             }
         }
     }
-    protected void listarMovimientos(HttpServletRequest request,HttpServletResponse response) throws SQLException, ServletException, IOException{
-        Integer numCuenta=Integer.parseInt((String)request.getParameter("numCuenta"));
-         List lista = new ArrayList<>();
+
+    protected void listarMovimientos(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        Integer numCuenta = Integer.parseInt((String) request.getParameter("numCuenta"));
+        List lista = new ArrayList<>();
         lista = modelo.recuperarMovimientos(numCuenta);
         if (lista.size() > 0) {
             request.setAttribute("movimientos", lista);
@@ -296,6 +299,12 @@ public class controlador extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/consultaCuenta.jsp");
         dispatcher.forward(request, response);
     }
+
+    private void regresarCuenta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/consultaCuenta.jsp");
+        dispatcher.forward(request, response);
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";

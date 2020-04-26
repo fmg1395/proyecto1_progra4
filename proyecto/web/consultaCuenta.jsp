@@ -36,7 +36,7 @@
                                 nombre = ((Cuenta) lista.get(0)).getUsuarios().getNombre();
                                 ced = ((Cuenta) lista.get(0)).getUsuarios().getId();
                             }
-                            
+
                             Usuario usr = (Usuario) request.getSession().getAttribute("cajero");
                             if (rol == null) {
                         %>
@@ -58,7 +58,7 @@
                                 out.println("<li><a href='consultaCuenta.jsp'>Consultas de Cuenta</a>");
                                 out.println("</li>");
                                 out.println("<li><a href='#'>Vinculación de cuentas</a></li>");
-                                out.println("<li><a href='#'>Transferencia remota</a></li>");
+                                out.println("<li><a href='transferenciaRemota.jsp'>Transferencia remota</a></li>");
                             }
                         %>
                         <li><input type="submit" name= "btnLogOut" value="Cerrar sesión"></li>
@@ -68,8 +68,9 @@
         </header>   
         <form id="formulario" action="servicios" method="post" accept-charset="UTF-8">  
             <div id="content">
+                <%if (listaMov == null) {%>
                 <input class="buscarC" type = "submit" name="btnListar" value=" buscar ">
-                <%
+                <%}
                     if (listaMov != null && listaMov.size() > 1) {
                         int numMovs = listaMov.size();
                         out.print("<label>");
@@ -87,16 +88,17 @@
                         for (int i = 0; i < numMovs; i++) {
                             Integer id = ((Movimientos) listaMov.get(i)).getId();
                             String fecha = String.valueOf(((Movimientos) listaMov.get(i)).getFecha());
-                            Integer monto=(int)((Movimientos)listaMov.get(i)).getMonto();
+                            Integer monto = (int) ((Movimientos) listaMov.get(i)).getMonto();
                             String detalle = String.valueOf(((Movimientos) listaMov.get(i)).getDetalle());
                             out.print("<tr>");
                             out.print("<td>" + id + "</td>");
                             out.print("<td>" + fecha + "</td>");
-                            out.print("<td>"+monto+"</td>");
+                            out.print("<td>" + monto + "</td>");
                             out.print("<td>" + detalle + "</td>");
                             out.print("</tr>");
                         }
                         out.print("</table>");
+                        out.print("<input class='volver' type = 'submit' name='btnVolverConsulta' value='regresar'>");
 
                     } else if (listaMov != null && listaMov.size() == 1) {
                         out.print("<label>");
@@ -114,16 +116,16 @@
                         out.print("</tr>");
                         Integer id = ((Movimientos) lista.get(0)).getId();
                         String fecha = String.valueOf(((Movimientos) listaMov.get(0)).getFecha());
-                        Integer monto=(int)((Movimientos)listaMov.get(0)).getMonto();
-                            String detalle = String.valueOf(((Movimientos) listaMov.get(0)).getDetalle());
-                            out.print("<tr>");
-                            out.print("<td>" + id + "</td>");
-                            out.print("<td>" + fecha + "</td>");
-                            out.print("<td>"+monto+"</td>");
-                            out.print("<td>" + detalle + "</td>");
-                            out.print("</tr>");
+                        Integer monto = (int) ((Movimientos) listaMov.get(0)).getMonto();
+                        String detalle = String.valueOf(((Movimientos) listaMov.get(0)).getDetalle());
+                        out.print("<tr>");
+                        out.print("<td>" + id + "</td>");
+                        out.print("<td>" + fecha + "</td>");
+                        out.print("<td>" + monto + "</td>");
+                        out.print("<td>" + detalle + "</td>");
+                        out.print("</tr>");
                         out.print("</table>");
-
+                        out.print("<input class='buscar' type = 'submit' name='btnListarMov' value='regresar'>");
 
                     } else {
                         if (lista != null && lista.size() > 1) {
@@ -153,7 +155,7 @@
                             out.print("</table>");
                             out.print(" <label for='CuentaMov'>Cuenta por mostrar movimientos:</label>");
                             out.print("<input type='number' id='cuentaExistente' name='numCuenta' placeholder='Ingrese cuenta'>");
-                            out.print("<input class='buscar' type = 'submit' name='btnListarMov' value='buscar movimientos'>");
+                            out.print("<input class='buscar' type = 'submit' name='btnListarMov' value='buscar'>");
                         } else if (lista != null && lista.size() == 1) {
                             out.print("<label>");
                             out.print("<table id='tablaCuentas' class='tableC'>");
@@ -180,7 +182,7 @@
                             out.print("</table>");
                             out.print(" <label for='CuentaMov'>Cuenta por mostrar movimientos:</label>");
                             out.print("<input type='number' id='cuentaExistente' name='numCuenta' placeholder='Ingrese cuenta'>");
-                            out.print("<input class='buscar' type = 'submit' name='btnListarMov' value='buscar movimientos'>");
+                            out.print("<input class='buscar' type = 'submit' name='btnListarMov' value='buscar'>");
 
                         }
                     }

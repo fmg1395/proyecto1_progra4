@@ -47,7 +47,7 @@
                                 out.println("<li><a href='consultaCuenta.jsp'>Consultas de Cuenta</a>");
                                 out.println("</li>");
                                 out.println("<li><a href='#'>Vinculación de cuentas</a></li>");
-                                out.println("<li><a href='#'>Transferencia remota</a></li>");
+                                out.println("<li><a href='transferenciaRemota.jsp'>Transferencia remota</a></li>");
                             }
 
                         %>
