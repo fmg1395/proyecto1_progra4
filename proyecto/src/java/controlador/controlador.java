@@ -51,7 +51,7 @@ public class controlador extends HttpServlet {
         String btnCuentaPorNumero = (String) request.getParameter("btnBuscarPorCuenta");
         String btnDepositar = (String) request.getParameter("btnDepositar");
         String btnCrearUsuario = (String) request.getParameter("crearUsuario");
-        String btnCuentaRetiro = (String) request.getParameter("btnCuentaRetiro");
+        String btnCuentaRetiro = (String) request.getParameter("btnRetirar");
         String btnAcreditacion = (String) request.getParameter("btnAcreditacion");
         String btnLogOut = (String) request.getParameter("btnLogOut");
         String btnVinculacion = (String) request.getParameter("btnVinculacion");
@@ -66,8 +66,10 @@ public class controlador extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (btnCuentaPorCedula != null || btnCuentaPorNumero != null) {
+        } else if (btnCuentaPorCedula != null) {
             buscarCuenta(request, response, "cedula");
+        } else if (btnCuentaPorNumero != null) {
+            buscarCuenta(request, response, "cuenta");
         } else if (btnDepositar != null) {
             depositar(request, response);
         } else if (btnCuentaA != null) {
@@ -85,7 +87,7 @@ public class controlador extends HttpServlet {
                 Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (btnCuentaRetiro != null) {
-            buscarCuenta(request, response, btnCuentaRetiro);
+            retirar(request, response);
         } else if (btnVinculacion != null) {
             vinculacionCuentas(request, response);
         }
@@ -99,7 +101,7 @@ public class controlador extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
                 dispatcher.forward(request, response);
             }
-        } catch (ServletException|java.io.IOException ex) {
+        } catch (ServletException | java.io.IOException ex) {
             Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -148,30 +150,34 @@ public class controlador extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response, String boton)
-            throws ServletException, IOException {
-        String formulario = (String) request.getSession().getAttribute("formulario");
-        String cedula = (String) request.getParameter("txt_buscar");
-        String cuenta = (String) request.getParameter("txt_buscar2");
-        List lista = new ArrayList<>();
-        switch (boton) {
-            case "cedula":
-                lista = modelo.recuperarCuentas(cedula);
-                break;
-            case "cuenta":
-                lista.add(modelo.recuperaCuenta(Integer.parseInt(cuenta)));
-                break;
-        }
-        if (lista.size() > 0) {
-            request.setAttribute("cuentas", lista);
-        }
-        if (formulario.equals("deposito")) {
+    protected void buscarCuenta(HttpServletRequest request, HttpServletResponse response, String boton) {
+        try {
+            String formulario = (String) request.getSession().getAttribute("formulario");
+            String cedula = (String) request.getParameter("txt_buscar");
+            String cuenta = (String) request.getParameter("txt_buscar2");
+            List lista = new ArrayList<>();
+            switch (boton) {
+                case "cedula":
+                    lista = modelo.recuperarCuentas(cedula);
+                    break;
+                case "cuenta":
+                    lista.add(modelo.recuperaCuenta(Integer.parseInt(cuenta)));
+                    break;
+            }
+            if (lista.size() > 0) {
+                request.setAttribute("cuentas", lista);
+            }
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
-            dispatcher.forward(request, response);
-        } else if (formulario.equals("retiro")) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/retiro.jsp");
-            dispatcher.forward(request, response);
+            if (formulario.equals("deposito")) {
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/deposito.jsp");
+                dispatcher.forward(request, response);
+            } else if (formulario.equals("retiro")) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/retiro.jsp");
+                dispatcher.forward(request, response);
+            }
+        } catch (ServletException | IOException ex) {
+            System.out.printf("Problema en buscar cuenta: %s", ex);
         }
     }
 
@@ -261,9 +267,32 @@ public class controlador extends HttpServlet {
                 String idDepos = (String) request.getParameter("text_id");
                 String detalle = (String) request.getParameter("txtDetalle");
                 modelo.realizarDeposito((Cuenta) lista.get(i), monto, nomDepos, idDepos, detalle);
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
                 dispatcher.forward(request, response);
             }
+        }
+    }
+
+    protected void retirar(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Float monto = Float.parseFloat(((String) request.getParameter("txtMonto")));
+            int cuenta = Integer.parseInt((String) request.getParameter("txtCuentaRetiro"));
+            List lista = modelo.getCuentas();
+            for (int i = 0; i < lista.size(); i++) {
+                if (cuenta == ((Cuenta) lista.get(i)).getId() && ((Cuenta) lista.get(i)).getMonto() > monto ) {
+
+                    String nomDepos = (String) request.getParameter("text_name");
+                    String idDepos = (String) request.getParameter("text_id");
+                    String detalle = (String) request.getParameter("txtDetalle");
+                    modelo.realizarRetiro((Cuenta) lista.get(i), monto*-1, nomDepos, idDepos, detalle);
+
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/procesoCorrecto.jsp");
+                    dispatcher.forward(request, response);
+                }
+            }
+        } catch (ServletException | IOException ex) {
+            System.out.printf("Error metodo retirar: %s", ex);
         }
     }
 

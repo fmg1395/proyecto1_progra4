@@ -91,6 +91,34 @@ public class Modelo {
         }
         return false;
     }
+    
+    public boolean realizarRetiro(Cuenta c, float monto, String nomDepos, String idDepos, String detalle) {
+
+        Movimientos m;
+        DAO cnx = DAO.obtenerInstancia();
+
+        try {
+            if (monto < 0) {
+                m = new Movimientos(0, monto, new Date(), idDepos, c.getId());
+                if (!detalle.isEmpty()) {
+                    m.setDetalle(detalle);
+                }
+                if (!nomDepos.isEmpty()) {
+                    m.setNombreDepos(nomDepos);
+                }
+
+                c.setMonto(c.getMonto() + monto);
+                return cnx.ingresarMovimiento(m, c);
+            }
+
+        } catch (SQLException ex) {
+            System.err.printf("Exception Model: recuperar usuario, %s", ex.getMessage());
+            return false;
+        }
+        return false;
+    }
+    
+    
 
     public boolean vinculacionDeCuenta(int c1, int c2) {
         DAO cnx = DAO.obtenerInstancia();
